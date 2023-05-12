@@ -7,7 +7,7 @@ Dự án của chúng tôi là một ứng dụng web bán giày được phát 
 
 Phía máy chủ của dự án được xây dựng trên ASP.NET Web API và sử dụng Entity Framework để tương tác với cơ sở dữ liệu SQL Server. Chúng tôi đã xây dựng các API để cho phép người dùng tìm kiếm sản phẩm theo các tiêu chí như tên, thương hiệu, giá, kích cỡ, màu sắc, v.v. Ngoài ra, chúng tôi cũng cung cấp các API để cho phép người dùng tạo và quản lý tài khoản, thêm sản phẩm vào giỏ hàng, và thanh toán đơn hàng.
 
-Phía máy khách của dự án được xây dựng bằng HTML, CSS và JavaScript, và sử dụng các thư viện như jQuery và Bootstrap để tạo giao diện người dùng thân thiện. Chúng tôi đã tích hợp các API của phía máy chủ vào phía máy khách bằng cách sử dụng AJAX để tương tác với máy chủ và cập nhật các thông tin sản phẩm và đơn hàng trực tiếp trên giao diện người dùng.
+Phía máy khách của dự án được xây dựng bằng HTML, CSS và JavaScript, và sử dụng các thư viện như jQuery và Bootstrap để tạo giao diện người dùng thân thiện.
 
 Để bắt đầu sử dụng dự án của chúng tôi, bạn có thể tải mã nguồn từ kho lưu trữ của chúng tôi và cài đặt các phụ thuộc bằng NuGet. Sau đó, bạn có thể cấu hình cơ sở dữ liệu SQL Server của mình và chạy ứng dụng trên máy chủ của mình. Nếu bạn muốn đóng góp cho dự án của chúng tôi, bạn có thể tạo một nhánh mới và gửi yêu cầu kéo để chúng tôi xem xét và tích hợp các thay đổi của bạn vào dự án.
 
