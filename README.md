@@ -1,8 +1,15 @@
 
 # Shoes Online
 
-Đây là dự án được thực hiển bởi nhóm 5 lớp SD17302 
+Chào bạn, đây là mô tả về dự án bán giày sử dụng ASP.NET Web API và SQL Server.
 
+Dự án của chúng tôi là một ứng dụng web bán giày được phát triển trên nền tảng ASP.NET Web API và sử dụng cơ sở dữ liệu SQL Server để lưu trữ thông tin sản phẩm và người dùng. Ứng dụng này được thiết kế để giúp người dùng tìm kiếm và mua các sản phẩm giày từ các thương hiệu khác nhau.
+
+Phía máy chủ của dự án được xây dựng trên ASP.NET Web API và sử dụng Entity Framework để tương tác với cơ sở dữ liệu SQL Server. Chúng tôi đã xây dựng các API để cho phép người dùng tìm kiếm sản phẩm theo các tiêu chí như tên, thương hiệu, giá, kích cỡ, màu sắc, v.v. Ngoài ra, chúng tôi cũng cung cấp các API để cho phép người dùng tạo và quản lý tài khoản, thêm sản phẩm vào giỏ hàng, và thanh toán đơn hàng.
+
+Phía máy khách của dự án được xây dựng bằng HTML, CSS và JavaScript, và sử dụng các thư viện như jQuery và Bootstrap để tạo giao diện người dùng thân thiện. Chúng tôi đã tích hợp các API của phía máy chủ vào phía máy khách bằng cách sử dụng AJAX để tương tác với máy chủ và cập nhật các thông tin sản phẩm và đơn hàng trực tiếp trên giao diện người dùng.
+
+Để bắt đầu sử dụng dự án của chúng tôi, bạn có thể tải mã nguồn từ kho lưu trữ của chúng tôi và cài đặt các phụ thuộc bằng NuGet. Sau đó, bạn có thể cấu hình cơ sở dữ liệu SQL Server của mình và chạy ứng dụng trên máy chủ của mình. Nếu bạn muốn đóng góp cho dự án của chúng tôi, bạn có thể tạo một nhánh mới và gửi yêu cầu kéo để chúng tôi xem xét và tích hợp các thay đổi của bạn vào dự án.
 
 ## Related
 
