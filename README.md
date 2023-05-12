@@ -51,5 +51,5 @@ This project is used by the following companies:
 
 ## Support
 
-For support, [https://github.com/PhamDuong39] or join our Slack channel.
+For support [PhamDuong39](https://github.com/PhamDuong39) or join our Slack channel.
 
