@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.DbContext
+namespace Data.Configurations
 {
-    public class AppDbContext
+    public class UserConfiguration
     {
-        public AppDbContext()
-        {
-            
-        }
+
     }
 }
