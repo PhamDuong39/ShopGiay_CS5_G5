@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Data.Configurations
-{
+{//
     public class CartConfiguration
     {
     }
