@@ -20,7 +20,7 @@ namespace Data.Models
 
         public List<Bills> Bills { get; set; }
         public List<Feedbacks> Feedbacks { get; set; }
-        public virtual Carts Carts { get; set; }
+        //public virtual Carts Carts { get; set; }
         public List<favouriteShoes> FavoriteShoes { get; set; }
 
         public virtual Roles Roles { get; set; }

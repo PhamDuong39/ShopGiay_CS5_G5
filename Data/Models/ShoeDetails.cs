@@ -34,6 +34,6 @@ namespace Data.Models
         public List<BillDetails> BillDetails { get; set; }
         public List<Feedbacks> Feedbacks { get; set; }
         public List<CartDetails> CartDetails { get; set; }
-        public virtual favouriteShoes FavouriteShoes { get; set; }
+        //public virtual favouriteShoes FavouriteShoes { get; set; }
     }
 }

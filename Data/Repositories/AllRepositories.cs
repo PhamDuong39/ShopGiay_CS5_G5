@@ -1,4 +1,4 @@
-﻿using Data.DbContext;
+﻿using Data.ShopContext;
 using Data.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
