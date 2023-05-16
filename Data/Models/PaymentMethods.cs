@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    internal class PaymentMethods
+    public class PaymentMethods
     {
+        public Guid Id { get; set; }
+        public string NameMethod { get; set; }
+        public int Status { get; set; }
+        public virtual Bills Bills { get; set; } 
     }
 }

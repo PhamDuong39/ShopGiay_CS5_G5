@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,11 +9,11 @@ namespace Data.Models
     public class Location
     {
         public Guid Id { get; set; }
-        public string Stage { get; set; } // T?nh or Th�nh ph?
-        public string District { get; set; } // Huy?n
-        public string Ward { get; set; } // X�
-        public string Street { get; set; } // ???ng
-        public string Address { get; set; } // ??a ch? 
+        public string Stage { get; set; } // Tỉnh or Thành phố
+        public string District { get; set; } // Huyện
+        public string Ward { get; set; } // Xã
+        public string Street { get; set; } // Đường
+        public string Address { get; set; } // Địa chỉ 
         public virtual Bills Bills { get; set; } // 1-1
     }
 }
