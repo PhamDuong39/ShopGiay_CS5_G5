@@ -14,11 +14,8 @@ namespace Data.Models
         public string Note { get; set; }
         public int Status { get; set; }
         public Guid IdVoucher { get; set; }
-
         public List<BillDetails> BillDetails { get; set; }
         public List<Coupons> Coupons { get; set; }
         public virtual Users Users { get; set; }
-
-
     }
 }

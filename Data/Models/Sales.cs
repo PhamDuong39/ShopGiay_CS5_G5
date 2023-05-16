@@ -13,7 +13,6 @@ namespace Data.Models
         public string SaleName { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-
         public List<ShoeDetails> ShoeDetails { get; set; }
     }
 }

@@ -10,7 +10,6 @@ namespace Data.Models
     {
         public Guid Id { get; set; }
         public string ColorName { get; set; }
-
         public List<Color_ShoeDetails> Color_ShoeDetails { get; set; }
     }
 }

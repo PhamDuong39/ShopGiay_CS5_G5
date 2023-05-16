@@ -12,9 +12,7 @@ namespace Data.Models
         public Guid IdCart { get; set; }
         public Guid IdShoeDetail { get; set; }
         public int Quantity { get; set; }
-
         public virtual ShoeDetails ShoeDetails { get; set; }
         public virtual Carts Carts { get; set; }
-
     }
 }

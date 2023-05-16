@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Configurations
+namespace Data.Models
 {
-    public class CartConfiguration
+    internal class PaymentMethods
     {
     }
 }
