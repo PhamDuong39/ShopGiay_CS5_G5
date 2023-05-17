@@ -17,13 +17,12 @@ namespace Data.Models
         public string Email { get; set; }
         public int Status { get; set; }
         public string Fullname { get; set; }
-
         public List<Bills> Bills { get; set; }
         public List<Feedbacks> Feedbacks { get; set; }
         //public virtual Carts Carts { get; set; }
-        public List<favouriteShoes> FavoriteShoes { get; set; }
-
+        public List<FavouriteShoes> FavoriteShoes { get; set; }
         public virtual Roles Roles { get; set; }
-        public List<AchivePoint> achivePoints { get; set; }
+        public List<AchivePoint> AchivePoints { get; set; }
+        public List<PaymentMethodDetails> PaymentMethodDetails { get; set; }
     }
 }

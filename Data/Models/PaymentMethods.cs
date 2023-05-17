@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    public class AchivePoint
+    public class PaymentMethods
     {
         public Guid Id { get; set; }
-        public Guid IdUser { get; set; }
-        public int PointValue { get; set; } 
-        public virtual Users Users { get; set; } 
+        public string NameMethod { get; set; }
+        public int Status { get; set; }
+        public virtual Bills Bills { get; set; } 
     }
 }

@@ -13,8 +13,7 @@ namespace Data.Models
         public Guid IdBill { get; set; }
         public int Price { get; set; }
         public int Quantity { get; set; }
-
-        public virtual ShoeDetails ShoeDetails { get; set; }
+        public virtual ShoeDetails ShoeDetails { get; set;}
         public virtual Bills Bills { get; set; }
 
     }

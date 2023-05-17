@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    public class FavouriteShoes
+    public class ShipAdressMethod
     {
         public Guid Id { get; set; }
-        public Guid IdShoeDetail { get; set; }
+        public string NameAddress { get; set; }
         public int Status { get; set; }
-        public Guid IdUser { get; set; }
-        public virtual ShoeDetails ShoeDetails { get; set; }
-        public virtual Users Users { get; set; }
+        public Decimal Price { get; set; }
+        public virtual Bills Bills { get; set; }
     }
 }
