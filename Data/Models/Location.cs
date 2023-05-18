@@ -14,6 +14,8 @@ namespace Data.Models
         public string Ward { get; set; } // Xã
         public string Street { get; set; } // Đường
         public string Address { get; set; } // Địa chỉ 
-        public virtual Bills Bills { get; set; } // 1-1
+
+
+        public List<Bills> Bills { get; set; } // 1-n
     }
 }

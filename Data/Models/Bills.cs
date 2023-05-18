@@ -15,7 +15,12 @@ namespace Data.Models
         public int Status { get; set; }
         public Guid IdVoucher { get; set; }
         public List<BillDetails> BillDetails { get; set; }
-        public List<Coupons> Coupons { get; set; }
+        public virtual Coupons Coupons { get; set; }
         public virtual Users Users { get; set; }
+
+        public virtual PaymentMethods PaymentMethods { get; set; }
+
+        public virtual ShipAdressMethod ShipAdressMethod { get; set; }
+        public virtual Location Location { get; set; }
     }
 }

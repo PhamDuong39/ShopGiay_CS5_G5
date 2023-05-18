@@ -11,7 +11,7 @@ namespace Data.Models
         public Guid Id { get; set; }
         public string NameAddress { get; set; }
         public int Status { get; set; }
-        public Decimal Price { get; set; }
-        public virtual Bills Bills { get; set; }
+        public int Price { get; set; }
+        public List<Bills> Bills { get; set; }
     }
 }

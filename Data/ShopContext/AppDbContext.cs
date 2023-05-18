@@ -24,7 +24,7 @@ namespace Data.ShopContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-50K05FU\\SQLEXPRESS;Initial Catalog = ShoesShopDB;Integrated Security=True;Trust Server Certificate=True");
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-50K05FU\\SQLEXPRESS;Initial Catalog = ShoesShopDB_Final;Integrated Security=True;Trust Server Certificate=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,8 +43,13 @@ namespace Data.ShopContext
         public DbSet<Colors> Colors { get; set; }
         public DbSet<Coupons> Coupons { get; set; }
         public DbSet<Descriptions> Descriptions { get; set; }
-        public DbSet<favouriteShoes> favouriteShoes { get; set; }
+        public DbSet<FavouriteShoes> FavouriteShoes { get; set; }
         public DbSet<Feedbacks> Feedbacks { get; set; }
+
+        public DbSet<Location> Location { get; set; }
+        public DbSet<ShipAdressMethod> ShipAdressMethods { get; set; }
+        public DbSet<PaymentMethods> PaymentMethods { get; set; }
+        
 
         public DbSet<Images> Images { get; set; }
         public DbSet<Roles> Roles { get; set; }
