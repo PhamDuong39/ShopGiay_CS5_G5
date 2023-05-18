@@ -23,6 +23,5 @@ namespace Data.Models
         public List<FavouriteShoes> FavoriteShoes { get; set; }
         public virtual Roles Roles { get; set; }
         public List<AchivePoint> AchivePoints { get; set; }
-        public List<PaymentMethodDetails> PaymentMethodDetails { get; set; }
     }
 }

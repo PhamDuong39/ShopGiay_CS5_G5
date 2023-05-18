@@ -14,6 +14,6 @@ namespace Data.Models
         public string VoucherName { get; set; }
         public DateTime TimeStart { get; set; }
         public DateTime TimeEnd { get; set; }
-        public virtual Bills Bills { get; set; }
+        public List<Bills> Bills { get; set; }
     }
 }
