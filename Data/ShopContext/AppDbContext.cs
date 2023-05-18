@@ -45,7 +45,6 @@ namespace Data.ShopContext
     public DbSet<Descriptions> Descriptions { get; set; }
     public DbSet<FavouriteShoes> favouriteShoes { get; set; }
     public DbSet<Feedbacks> Feedbacks { get; set; }
-
     public DbSet<Images> Images { get; set; }
     public DbSet<Roles> Roles { get; set; }
     public DbSet<Sales> Sales { get; set; }
