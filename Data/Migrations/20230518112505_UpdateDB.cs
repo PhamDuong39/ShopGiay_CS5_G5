@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class InitialDB : Migration
+    public partial class UpdateDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,51 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Coupons",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DiscountValue = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    VoucherName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TimeStart = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TimeEnd = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Coupons", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Location",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Stage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    District = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Ward = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Location", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PaymentMethods",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NameMethod = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaymentMethods", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -71,6 +116,20 @@ namespace Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sales", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ShipAdressMethods",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NameAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShipAdressMethods", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -201,11 +260,39 @@ namespace Data.Migrations
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     IdVoucher = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CouponsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PaymentMethodsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ShipAdressMethodId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LocationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bills", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bills_Coupons_CouponsId",
+                        column: x => x.CouponsId,
+                        principalTable: "Coupons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Bills_Location_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Location",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Bills_PaymentMethods_PaymentMethodsId",
+                        column: x => x.PaymentMethodsId,
+                        principalTable: "PaymentMethods",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Bills_ShipAdressMethods_ShipAdressMethodId",
+                        column: x => x.ShipAdressMethodId,
+                        principalTable: "ShipAdressMethods",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Bills_users_UsersId",
                         column: x => x.UsersId,
@@ -283,7 +370,7 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "favouriteShoes",
+                name: "FavouriteShoes",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -295,15 +382,15 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_favouriteShoes", x => x.Id);
+                    table.PrimaryKey("PK_FavouriteShoes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_favouriteShoes_ShoeDetails_ShoeDetailsId",
+                        name: "FK_FavouriteShoes_ShoeDetails_ShoeDetailsId",
                         column: x => x.ShoeDetailsId,
                         principalTable: "ShoeDetails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_favouriteShoes_users_UsersId",
+                        name: "FK_FavouriteShoes_users_UsersId",
                         column: x => x.UsersId,
                         principalTable: "users",
                         principalColumn: "Id",
@@ -416,27 +503,6 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Coupons",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DiscountValue = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    VoucherName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BillsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Coupons", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Coupons_Bills_BillsId",
-                        column: x => x.BillsId,
-                        principalTable: "Bills",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CartDetails",
                 columns: table => new
                 {
@@ -480,6 +546,26 @@ namespace Data.Migrations
                 column: "ShoeDetailsId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Bills_CouponsId",
+                table: "Bills",
+                column: "CouponsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bills_LocationId",
+                table: "Bills",
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bills_PaymentMethodsId",
+                table: "Bills",
+                column: "PaymentMethodsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bills_ShipAdressMethodId",
+                table: "Bills",
+                column: "ShipAdressMethodId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Bills_UsersId",
                 table: "Bills",
                 column: "UsersId");
@@ -510,23 +596,18 @@ namespace Data.Migrations
                 column: "ShoeDetailsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Coupons_BillsId",
-                table: "Coupons",
-                column: "BillsId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Descriptions_ShoeDetailsId",
                 table: "Descriptions",
                 column: "ShoeDetailsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_favouriteShoes_ShoeDetailsId",
-                table: "favouriteShoes",
+                name: "IX_FavouriteShoes_ShoeDetailsId",
+                table: "FavouriteShoes",
                 column: "ShoeDetailsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_favouriteShoes_UsersId",
-                table: "favouriteShoes",
+                name: "IX_FavouriteShoes_UsersId",
+                table: "FavouriteShoes",
                 column: "UsersId");
 
             migrationBuilder.CreateIndex(
@@ -595,13 +676,10 @@ namespace Data.Migrations
                 name: "Color_ShoeDetails");
 
             migrationBuilder.DropTable(
-                name: "Coupons");
-
-            migrationBuilder.DropTable(
                 name: "Descriptions");
 
             migrationBuilder.DropTable(
-                name: "favouriteShoes");
+                name: "FavouriteShoes");
 
             migrationBuilder.DropTable(
                 name: "Feedbacks");
@@ -613,19 +691,31 @@ namespace Data.Migrations
                 name: "Sizes_ShoeDetails");
 
             migrationBuilder.DropTable(
+                name: "Bills");
+
+            migrationBuilder.DropTable(
                 name: "Carts");
 
             migrationBuilder.DropTable(
                 name: "Colors");
 
             migrationBuilder.DropTable(
-                name: "Bills");
-
-            migrationBuilder.DropTable(
                 name: "ShoeDetails");
 
             migrationBuilder.DropTable(
                 name: "Sizes");
+
+            migrationBuilder.DropTable(
+                name: "Coupons");
+
+            migrationBuilder.DropTable(
+                name: "Location");
+
+            migrationBuilder.DropTable(
+                name: "PaymentMethods");
+
+            migrationBuilder.DropTable(
+                name: "ShipAdressMethods");
 
             migrationBuilder.DropTable(
                 name: "users");

@@ -11,6 +11,6 @@ namespace Data.Models
         public Guid Id { get; set; }
         public string NameMethod { get; set; }
         public int Status { get; set; }
-        public virtual Bills Bills { get; set; } 
+        public List<Bills> Bills { get; set; } 
     }
 }

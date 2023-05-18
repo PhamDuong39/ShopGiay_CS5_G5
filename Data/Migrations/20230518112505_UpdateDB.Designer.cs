@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230515082459_InitialDB")]
-    partial class InitialDB
+    [Migration("20230518112505_UpdateDB")]
+    partial class UpdateDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -85,6 +85,9 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CouponsId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -94,9 +97,18 @@ namespace Data.Migrations
                     b.Property<Guid>("IdVoucher")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("LocationId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Note")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("PaymentMethodsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ShipAdressMethodId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -105,6 +117,14 @@ namespace Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CouponsId");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("PaymentMethodsId");
+
+                    b.HasIndex("ShipAdressMethodId");
 
                     b.HasIndex("UsersId");
 
@@ -238,22 +258,23 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("BillsId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("DiscountValue")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("TimeEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("TimeStart")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("VoucherName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BillsId");
 
                     b.ToTable("Coupons");
                 });
@@ -289,7 +310,7 @@ namespace Data.Migrations
                     b.ToTable("Descriptions");
                 });
 
-            modelBuilder.Entity("Data.Models.favouriteShoes", b =>
+            modelBuilder.Entity("Data.Models.FavouriteShoes", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -316,7 +337,7 @@ namespace Data.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("favouriteShoes");
+                    b.ToTable("FavouriteShoes");
                 });
 
             modelBuilder.Entity("Data.Models.Feedbacks", b =>
@@ -376,6 +397,55 @@ namespace Data.Migrations
                     b.ToTable("Images");
                 });
 
+            modelBuilder.Entity("Data.Models.Location", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("District")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Stage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ward")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Location");
+                });
+
+            modelBuilder.Entity("Data.Models.PaymentMethods", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NameMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PaymentMethods");
+                });
+
             modelBuilder.Entity("Data.Models.Roles", b =>
                 {
                     b.Property<Guid>("Id")
@@ -416,6 +486,27 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sales");
+                });
+
+            modelBuilder.Entity("Data.Models.ShipAdressMethod", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NameAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ShipAdressMethods");
                 });
 
             modelBuilder.Entity("Data.Models.ShoeDetails", b =>
@@ -582,7 +673,7 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Models.AchivePoint", b =>
                 {
                     b.HasOne("Data.Models.Users", "Users")
-                        .WithMany("achivePoints")
+                        .WithMany("AchivePoints")
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -611,11 +702,43 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.Bills", b =>
                 {
+                    b.HasOne("Data.Models.Coupons", "Coupons")
+                        .WithMany("Bills")
+                        .HasForeignKey("CouponsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.Location", "Location")
+                        .WithMany("Bills")
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.PaymentMethods", "PaymentMethods")
+                        .WithMany("Bills")
+                        .HasForeignKey("PaymentMethodsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.ShipAdressMethod", "ShipAdressMethod")
+                        .WithMany("Bills")
+                        .HasForeignKey("ShipAdressMethodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Data.Models.Users", "Users")
                         .WithMany("Bills")
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Coupons");
+
+                    b.Navigation("Location");
+
+                    b.Navigation("PaymentMethods");
+
+                    b.Navigation("ShipAdressMethod");
 
                     b.Navigation("Users");
                 });
@@ -669,17 +792,6 @@ namespace Data.Migrations
                     b.Navigation("ShoeDetails");
                 });
 
-            modelBuilder.Entity("Data.Models.Coupons", b =>
-                {
-                    b.HasOne("Data.Models.Bills", "Bills")
-                        .WithMany("Coupons")
-                        .HasForeignKey("BillsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Bills");
-                });
-
             modelBuilder.Entity("Data.Models.Descriptions", b =>
                 {
                     b.HasOne("Data.Models.ShoeDetails", "ShoeDetails")
@@ -691,10 +803,10 @@ namespace Data.Migrations
                     b.Navigation("ShoeDetails");
                 });
 
-            modelBuilder.Entity("Data.Models.favouriteShoes", b =>
+            modelBuilder.Entity("Data.Models.FavouriteShoes", b =>
                 {
                     b.HasOne("Data.Models.ShoeDetails", "ShoeDetails")
-                        .WithMany()
+                        .WithMany("FavoriteShoes")
                         .HasForeignKey("ShoeDetailsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -808,8 +920,6 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Models.Bills", b =>
                 {
                     b.Navigation("BillDetails");
-
-                    b.Navigation("Coupons");
                 });
 
             modelBuilder.Entity("Data.Models.Brands", b =>
@@ -832,6 +942,21 @@ namespace Data.Migrations
                     b.Navigation("Color_ShoeDetails");
                 });
 
+            modelBuilder.Entity("Data.Models.Coupons", b =>
+                {
+                    b.Navigation("Bills");
+                });
+
+            modelBuilder.Entity("Data.Models.Location", b =>
+                {
+                    b.Navigation("Bills");
+                });
+
+            modelBuilder.Entity("Data.Models.PaymentMethods", b =>
+                {
+                    b.Navigation("Bills");
+                });
+
             modelBuilder.Entity("Data.Models.Roles", b =>
                 {
                     b.Navigation("Users");
@@ -840,6 +965,11 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Models.Sales", b =>
                 {
                     b.Navigation("ShoeDetails");
+                });
+
+            modelBuilder.Entity("Data.Models.ShipAdressMethod", b =>
+                {
+                    b.Navigation("Bills");
                 });
 
             modelBuilder.Entity("Data.Models.ShoeDetails", b =>
@@ -851,6 +981,8 @@ namespace Data.Migrations
                     b.Navigation("Color_ShoeDetails");
 
                     b.Navigation("Descriptions");
+
+                    b.Navigation("FavoriteShoes");
 
                     b.Navigation("Feedbacks");
 
@@ -871,13 +1003,13 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.Users", b =>
                 {
+                    b.Navigation("AchivePoints");
+
                     b.Navigation("Bills");
 
                     b.Navigation("FavoriteShoes");
 
                     b.Navigation("Feedbacks");
-
-                    b.Navigation("achivePoints");
                 });
 #pragma warning restore 612, 618
         }
