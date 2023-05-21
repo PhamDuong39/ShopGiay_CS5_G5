@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Data.Models;
 
-namespace Data.Models
+public class Carts
 {
-    public class Carts
-    {
-        public Guid Id { get; set; }
-        public Guid IdUser { get; set; }
-        public List<CartDetails> CartDetails { get; set; }
-        public virtual Users Users { get; set; }
-    }
+    public List<CartDetails> CartDetails { get; set; }
+
+    public Guid Id { get; set; }
+
+    public Guid IdUser { get; set; }
+
+    public virtual Users Users { get; set; }
 }

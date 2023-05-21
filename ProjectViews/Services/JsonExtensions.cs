@@ -1,6 +1,5 @@
-﻿namespace ProjectViews.Services
+﻿namespace ProjectViews.Services;
+
+public class JsonExtensions
 {
-    public class JsonExtensions
-    {
-    }
 }

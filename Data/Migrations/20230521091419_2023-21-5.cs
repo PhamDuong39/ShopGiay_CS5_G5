@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class InitialDB : Migration
+    public partial class _2023215 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,51 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Coupons",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DiscountValue = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    TimeEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TimeStart = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    VoucherName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Coupons", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Location",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    District = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Stage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Ward = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Location", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PaymentMethods",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NameMethod = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaymentMethods", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -64,13 +109,27 @@ namespace Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DiscountValue = table.Column<int>(type: "int", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SaleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sales", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ShipAddressMethods",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NameAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShipAddressMethods", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -102,15 +161,15 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdRole = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phonenumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
                     Fullname = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RolesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    IdRole = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phonenumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RolesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -128,19 +187,19 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdSupplier = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdCategory = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdBrand = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CostPrice = table.Column<int>(type: "int", nullable: false),
-                    SellPrice = table.Column<int>(type: "int", nullable: false),
                     AvailableQuantity = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    IdSale = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SupplierId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CategoriesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BrandsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SalesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CategoriesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CostPrice = table.Column<int>(type: "int", nullable: false),
+                    IdBrand = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdCategory = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdSale = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdSupplier = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SalesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SellPrice = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    SupplierId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -196,16 +255,44 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdUser = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CouponsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
+                    IdUser = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdVoucher = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LocationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PaymentMethodsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ShipAdressMethodId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     UsersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bills", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bills_Coupons_CouponsId",
+                        column: x => x.CouponsId,
+                        principalTable: "Coupons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Bills_Location_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Location",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Bills_PaymentMethods_PaymentMethodsId",
+                        column: x => x.PaymentMethodsId,
+                        principalTable: "PaymentMethods",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Bills_ShipAddressMethods_ShipAdressMethodId",
+                        column: x => x.ShipAdressMethodId,
+                        principalTable: "ShipAddressMethods",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Bills_users_UsersId",
                         column: x => x.UsersId,
@@ -238,9 +325,9 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ColorsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdColor = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdShoeDetail = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ColorsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ShoeDetailsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -288,9 +375,9 @@ namespace Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdShoeDetail = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
                     IdUser = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ShoeDetailsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     UsersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -315,8 +402,8 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdUser = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdShoeDetail = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdUser = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RatingStar = table.Column<int>(type: "int", nullable: false),
                     ShoeDetailsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -364,10 +451,10 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdSize = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdShoeDetails = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SizesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ShoeDetailsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    IdSize = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ShoeDetailsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SizesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -391,12 +478,12 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdShoeDetail = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BillsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdBill = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdShoeDetail = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    ShoeDetailsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BillsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ShoeDetailsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -416,36 +503,15 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Coupons",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DiscountValue = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    VoucherName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BillsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Coupons", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Coupons_Bills_BillsId",
-                        column: x => x.BillsId,
-                        principalTable: "Bills",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CartDetails",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CartsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdCart = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdShoeDetail = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    ShoeDetailsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CartsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ShoeDetailsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -480,6 +546,26 @@ namespace Data.Migrations
                 column: "ShoeDetailsId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Bills_CouponsId",
+                table: "Bills",
+                column: "CouponsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bills_LocationId",
+                table: "Bills",
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bills_PaymentMethodsId",
+                table: "Bills",
+                column: "PaymentMethodsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bills_ShipAdressMethodId",
+                table: "Bills",
+                column: "ShipAdressMethodId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Bills_UsersId",
                 table: "Bills",
                 column: "UsersId");
@@ -508,11 +594,6 @@ namespace Data.Migrations
                 name: "IX_Color_ShoeDetails_ShoeDetailsId",
                 table: "Color_ShoeDetails",
                 column: "ShoeDetailsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Coupons_BillsId",
-                table: "Coupons",
-                column: "BillsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Descriptions_ShoeDetailsId",
@@ -595,9 +676,6 @@ namespace Data.Migrations
                 name: "Color_ShoeDetails");
 
             migrationBuilder.DropTable(
-                name: "Coupons");
-
-            migrationBuilder.DropTable(
                 name: "Descriptions");
 
             migrationBuilder.DropTable(
@@ -613,19 +691,31 @@ namespace Data.Migrations
                 name: "Sizes_ShoeDetails");
 
             migrationBuilder.DropTable(
+                name: "Bills");
+
+            migrationBuilder.DropTable(
                 name: "Carts");
 
             migrationBuilder.DropTable(
                 name: "Colors");
 
             migrationBuilder.DropTable(
-                name: "Bills");
-
-            migrationBuilder.DropTable(
                 name: "ShoeDetails");
 
             migrationBuilder.DropTable(
                 name: "Sizes");
+
+            migrationBuilder.DropTable(
+                name: "Coupons");
+
+            migrationBuilder.DropTable(
+                name: "Location");
+
+            migrationBuilder.DropTable(
+                name: "PaymentMethods");
+
+            migrationBuilder.DropTable(
+                name: "ShipAddressMethods");
 
             migrationBuilder.DropTable(
                 name: "users");

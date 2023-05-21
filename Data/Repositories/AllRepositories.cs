@@ -1,137 +1,124 @@
-﻿using Data.ShopContext;
+﻿namespace Data.Repositories;
+
 using Data.IRepositories;
+using Data.ShopContext;
+
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Data.Repositories
+public class AllRepositories<T> : IAllRepositories<T>
+    where T : class
 {
-    internal class AllRepositories<KEntities> : AllIRepositories<KEntities> where KEntities : class
+    private readonly AppDbContext _context;
+
+    private readonly DbSet<T> _dbSet;
+
+    public AllRepositories()
     {
-        private readonly AppDbContext DbContext;
+    }
 
-        // Tao 1 DBSet de truy cap, Thao tac voi cac tap hop doi tuong KEntities  trong CSDL. 
-        // Day la 1 Attribute duoc khoi tao trong repos
-        public DbSet<KEntities> Entities { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public AllRepositories(AppDbContext context, DbSet<T> dbSet)
+    {
+        this._context = context;
+        this._dbSet = dbSet;
+    }
 
-
-        // Day la 1 trien khai cua thuoc tinh Entities duoc dinh nghia trong Interface  
-
-        DbSet<KEntities> AllIRepositories<KEntities>.Entities { get; set; }
-        public AllRepositories()
+    public bool CreateItem(T item)
+    {
+        try
         {
-            
+            this._dbSet.Add(item);
+            this._context.SaveChanges();
+            return true;
         }
-
-        public AllRepositories(AppDbContext DbContext)
+        catch (Exception e)
         {
-            this.DbContext = DbContext;
+            Console.WriteLine(e.Message);
+            return false;
         }
+    }
 
-        public bool AddManyAsync(IEnumerable<KEntities> entity)
+    public bool CreateMany(List<T> items)
+    {
+        try
         {
-            try
-            {
-                Entities.AddRange(entity);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            this._dbSet.AddRange(items);
+            this._context.SaveChanges();
+            return true;
         }
-
-        public bool AddOneAsync(KEntities entity)
+        catch (Exception e)
         {
-            try
-            {
-                Entities.Add(entity);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-
-            }
+            Console.WriteLine(e.Message);
+            return false;
         }
+    }
 
-        public bool DeleteManyAsync(IEnumerable<KEntities> entity)
+    public bool DeleteItem(T item)
+    {
+        try
         {
-            try
-            {
-                Entities.RemoveRange(entity); 
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-
-            }
+            this._dbSet.Remove(item);
+            this._context.SaveChanges();
+            return true;
         }
-
-        public bool DeleteOneAsync(KEntities entity)
+        catch (Exception e)
         {
-            try
-            {
-                Entities.Remove(entity); 
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            Console.WriteLine(e.Message);
+            return false;
         }
+    }
 
-        // async, await => thuc hien cac hoat dong bat dong bo trong cac method
-
-        // async : cho phep method thuc hien cac tac vu (TASK) khong dong bo ma khong chan luong chinh. 
-        // Luong chinh co the tiep tuc thuc thi cac tac vu khac trong khi cac TASK dang chay
-
-        // await : doi 1 TASK hoan thanh truoc khi tiep tuc thuc thi cac cau lenh tiep trong method.
-        // Khi gap Await , luong chinh se tam dung va cho doi TASK ket thuc.
-
-        // => Cai thien hieu suat, kha nang phan hoi = cach cho phep luong chinh hoat dong tiep tuc ma khong bi chan 
-        // Khi cho doi cac TASK hoan thanh.
-        public async Task<IEnumerable<KEntities>> GetAllAsync()
+    public bool DeleteMany(List<T> items)
+    {
+        try
         {
-            
-            return await Entities.ToListAsync(); // Lấy tất cả ra từ DBSet
+            this._dbSet.RemoveRange(items);
+            this._context.SaveChanges();
+            return true;
         }
-
-        public async Task<KEntities> GetOneAsync(IKey key)
+        catch (Exception e)
         {
-            return await Entities.FindAsync(key); // Dùng find để tìm
+            Console.WriteLine(e.Message);
+            return false;
         }
+    }
 
-        public bool UpdateManyAsync(IEnumerable<KEntities> entity)
+    public IEnumerable<T> GetAll()
+    {
+        return this._dbSet.ToList();
+    }
+
+    public T GetItem(Guid id)
+    {
+        return this._dbSet.Find(id);
+    }
+
+    public bool UpdateItem(T item)
+    {
+        try
         {
-            try
-            {
-                Entities.UpdateRange(entity); 
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            this._dbSet.Remove(item);
+            this._context.SaveChanges();
+            return true;
         }
-
-        public bool UpdateOneAsync(KEntities entity)
+        catch (Exception e)
         {
-            try
-            {
-                Entities.Update(entity);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            Console.WriteLine(e.Message);
+            return false;
+        }
+    }
+
+    public bool UpdateMany(List<T> items)
+    {
+        try
+        {
+            this._dbSet.UpdateRange(items);
+            this._context.SaveChanges();
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            return false;
         }
     }
 }
