@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230518112505_UpdateDB")]
-    partial class UpdateDB
+    [Migration("20230522033416_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,12 +36,9 @@ namespace Data.Migrations
                     b.Property<int>("PointValue")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UsersId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UsersId");
+                    b.HasIndex("IdUser");
 
                     b.ToTable("AchivePoints");
                 });
@@ -50,9 +47,6 @@ namespace Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("BillsId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdBill")
@@ -67,14 +61,11 @@ namespace Data.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ShoeDetailsId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("BillsId");
+                    b.HasIndex("IdBill");
 
-                    b.HasIndex("ShoeDetailsId");
+                    b.HasIndex("IdShoeDetail");
 
                     b.ToTable("BillDetails");
                 });
@@ -85,48 +76,42 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CouponsId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("IdCoupon")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdLocation")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdPaymentMethod")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdShipAdressMethod")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("IdUser")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdVoucher")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("LocationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Note")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("PaymentMethodsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ShipAdressMethodId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UsersId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("CouponsId");
+                    b.HasIndex("IdCoupon");
 
-                    b.HasIndex("LocationId");
+                    b.HasIndex("IdLocation");
 
-                    b.HasIndex("PaymentMethodsId");
+                    b.HasIndex("IdPaymentMethod");
 
-                    b.HasIndex("ShipAdressMethodId");
+                    b.HasIndex("IdShipAdressMethod");
 
-                    b.HasIndex("UsersId");
+                    b.HasIndex("IdUser");
 
                     b.ToTable("Bills");
                 });
@@ -152,45 +137,33 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CartsId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("IdCart")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdShoeDetail")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("IdUser")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ShoeDetailsId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("CartsId");
+                    b.HasIndex("IdShoeDetail");
 
-                    b.HasIndex("ShoeDetailsId");
+                    b.HasIndex("IdUser");
 
                     b.ToTable("CartDetails");
                 });
 
             modelBuilder.Entity("Data.Models.Carts", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("IdUser")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UsersId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UsersId");
+                    b.HasKey("IdUser");
 
                     b.ToTable("Carts");
                 });
@@ -216,23 +189,17 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ColorsId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("IdColor")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdShoeDetail")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ShoeDetailsId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ColorsId");
+                    b.HasIndex("IdColor");
 
-                    b.HasIndex("ShoeDetailsId");
+                    b.HasIndex("IdShoeDetail");
 
                     b.ToTable("Color_ShoeDetails");
                 });
@@ -300,12 +267,9 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ShoeDetailsId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ShoeDetailsId");
+                    b.HasIndex("IdShoeDetail");
 
                     b.ToTable("Descriptions");
                 });
@@ -322,20 +286,14 @@ namespace Data.Migrations
                     b.Property<Guid>("IdUser")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ShoeDetailsId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UsersId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ShoeDetailsId");
+                    b.HasIndex("IdShoeDetail");
 
-                    b.HasIndex("UsersId");
+                    b.HasIndex("IdUser");
 
                     b.ToTable("FavouriteShoes");
                 });
@@ -359,17 +317,11 @@ namespace Data.Migrations
                     b.Property<int>("RatingStar")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ShoeDetailsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UsersId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ShoeDetailsId");
+                    b.HasIndex("IdShoeDetail");
 
-                    b.HasIndex("UsersId");
+                    b.HasIndex("IdUser");
 
                     b.ToTable("Feedbacks");
                 });
@@ -387,12 +339,9 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ShoeDetailsId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ShoeDetailsId");
+                    b.HasIndex("IdShoeDetail");
 
                     b.ToTable("Images");
                 });
@@ -518,12 +467,6 @@ namespace Data.Migrations
                     b.Property<int>("AvailableQuantity")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("BrandsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CategoriesId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("CostPrice")
                         .HasColumnType("int");
 
@@ -543,27 +486,21 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SalesId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("SellPrice")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("SupplierId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("BrandsId");
+                    b.HasIndex("IdBrand");
 
-                    b.HasIndex("CategoriesId");
+                    b.HasIndex("IdCategory");
 
-                    b.HasIndex("SalesId");
+                    b.HasIndex("IdSale");
 
-                    b.HasIndex("SupplierId");
+                    b.HasIndex("IdSupplier");
 
                     b.ToTable("ShoeDetails");
                 });
@@ -594,17 +531,11 @@ namespace Data.Migrations
                     b.Property<Guid>("IdSize")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ShoeDetailsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("SizesId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ShoeDetailsId");
+                    b.HasIndex("IdShoeDetails");
 
-                    b.HasIndex("SizesId");
+                    b.HasIndex("IdSize");
 
                     b.ToTable("Sizes_ShoeDetails");
                 });
@@ -653,9 +584,6 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("RolesId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -665,7 +593,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RolesId");
+                    b.HasIndex("IdRole");
 
                     b.ToTable("users");
                 });
@@ -674,7 +602,7 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Models.Users", "Users")
                         .WithMany("AchivePoints")
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("IdUser")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -685,13 +613,13 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Models.Bills", "Bills")
                         .WithMany("BillDetails")
-                        .HasForeignKey("BillsId")
+                        .HasForeignKey("IdBill")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Models.ShoeDetails", "ShoeDetails")
                         .WithMany("BillDetails")
-                        .HasForeignKey("ShoeDetailsId")
+                        .HasForeignKey("IdShoeDetail")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -704,31 +632,31 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Models.Coupons", "Coupons")
                         .WithMany("Bills")
-                        .HasForeignKey("CouponsId")
+                        .HasForeignKey("IdCoupon")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Models.Location", "Location")
                         .WithMany("Bills")
-                        .HasForeignKey("LocationId")
+                        .HasForeignKey("IdLocation")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Models.PaymentMethods", "PaymentMethods")
                         .WithMany("Bills")
-                        .HasForeignKey("PaymentMethodsId")
+                        .HasForeignKey("IdPaymentMethod")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Models.ShipAdressMethod", "ShipAdressMethod")
                         .WithMany("Bills")
-                        .HasForeignKey("ShipAdressMethodId")
+                        .HasForeignKey("IdShipAdressMethod")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Models.Users", "Users")
                         .WithMany("Bills")
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("IdUser")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -745,15 +673,15 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.CartDetails", b =>
                 {
-                    b.HasOne("Data.Models.Carts", "Carts")
+                    b.HasOne("Data.Models.ShoeDetails", "ShoeDetails")
                         .WithMany("CartDetails")
-                        .HasForeignKey("CartsId")
+                        .HasForeignKey("IdShoeDetail")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Data.Models.ShoeDetails", "ShoeDetails")
+                    b.HasOne("Data.Models.Carts", "Carts")
                         .WithMany("CartDetails")
-                        .HasForeignKey("ShoeDetailsId")
+                        .HasForeignKey("IdUser")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -765,8 +693,8 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Models.Carts", b =>
                 {
                     b.HasOne("Data.Models.Users", "Users")
-                        .WithMany()
-                        .HasForeignKey("UsersId")
+                        .WithOne("Carts")
+                        .HasForeignKey("Data.Models.Carts", "IdUser")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -777,13 +705,13 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Models.Colors", "Colors")
                         .WithMany("Color_ShoeDetails")
-                        .HasForeignKey("ColorsId")
+                        .HasForeignKey("IdColor")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Models.ShoeDetails", "ShoeDetails")
                         .WithMany("Color_ShoeDetails")
-                        .HasForeignKey("ShoeDetailsId")
+                        .HasForeignKey("IdShoeDetail")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -796,7 +724,7 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Models.ShoeDetails", "ShoeDetails")
                         .WithMany("Descriptions")
-                        .HasForeignKey("ShoeDetailsId")
+                        .HasForeignKey("IdShoeDetail")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -807,13 +735,13 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Models.ShoeDetails", "ShoeDetails")
                         .WithMany("FavoriteShoes")
-                        .HasForeignKey("ShoeDetailsId")
+                        .HasForeignKey("IdShoeDetail")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Models.Users", "Users")
                         .WithMany("FavoriteShoes")
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("IdUser")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -826,13 +754,13 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Models.ShoeDetails", "ShoeDetails")
                         .WithMany("Feedbacks")
-                        .HasForeignKey("ShoeDetailsId")
+                        .HasForeignKey("IdShoeDetail")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Models.Users", "Users")
                         .WithMany("Feedbacks")
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("IdUser")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -845,7 +773,7 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Models.ShoeDetails", "ShoeDetails")
                         .WithMany("Images")
-                        .HasForeignKey("ShoeDetailsId")
+                        .HasForeignKey("IdShoeDetail")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -856,25 +784,25 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Models.Brands", "Brands")
                         .WithMany("ShoeDetails")
-                        .HasForeignKey("BrandsId")
+                        .HasForeignKey("IdBrand")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Models.Categories", "Categories")
                         .WithMany("ShoeDetails")
-                        .HasForeignKey("CategoriesId")
+                        .HasForeignKey("IdCategory")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Models.Sales", "Sales")
                         .WithMany("ShoeDetails")
-                        .HasForeignKey("SalesId")
+                        .HasForeignKey("IdSale")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Models.Supplier", "Supplier")
                         .WithMany("ShoeDetails")
-                        .HasForeignKey("SupplierId")
+                        .HasForeignKey("IdSupplier")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -891,13 +819,13 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Models.ShoeDetails", "ShoeDetails")
                         .WithMany("Sizes_ShoeDetails")
-                        .HasForeignKey("ShoeDetailsId")
+                        .HasForeignKey("IdShoeDetails")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Models.Sizes", "Sizes")
                         .WithMany("Sizes_ShoeDetails")
-                        .HasForeignKey("SizesId")
+                        .HasForeignKey("IdSize")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -910,7 +838,7 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Models.Roles", "Roles")
                         .WithMany("Users")
-                        .HasForeignKey("RolesId")
+                        .HasForeignKey("IdRole")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1006,6 +934,9 @@ namespace Data.Migrations
                     b.Navigation("AchivePoints");
 
                     b.Navigation("Bills");
+
+                    b.Navigation("Carts")
+                        .IsRequired();
 
                     b.Navigation("FavoriteShoes");
 
