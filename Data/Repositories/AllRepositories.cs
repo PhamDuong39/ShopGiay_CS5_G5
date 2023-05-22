@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace Data.Repositories
 {
-    internal class AllRepositories<KEntities> : AllIRepositories<KEntities> where KEntities : class
+    public class AllRepositories<KEntities> : AllIRepositories<KEntities> where KEntities : class
     {
-        private readonly AppDbContext DbContext;
+        private AppDbContext DbContext;
 
         // Tao 1 DBSet de truy cap, Thao tac voi cac tap hop doi tuong KEntities  trong CSDL. 
         // Day la 1 Attribute duoc khoi tao trong repos
-        public DbSet<KEntities> Entities { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public DbSet<KEntities> Entities;
 
 
         // Day la 1 trien khai cua thuoc tinh Entities duoc dinh nghia trong Interface  
@@ -28,9 +28,10 @@ namespace Data.Repositories
             
         }
 
-        public AllRepositories(AppDbContext DbContext)
+        public AllRepositories(AppDbContext DbContext, DbSet<KEntities> dbset)
         {
             this.DbContext = DbContext;
+            this.Entities = dbset;
         }
 
         public bool AddManyAsync(IEnumerable<KEntities> entity)
@@ -99,7 +100,7 @@ namespace Data.Repositories
         public async Task<IEnumerable<KEntities>> GetAllAsync()
         {
             
-            return await Entities.ToListAsync(); // Lấy tất cả ra từ DBSet
+            return await Entities.ToListAsync(); //  Lấy tất cả ra từ DBSet
         }
 
         public async Task<KEntities> GetOneAsync(IKey key)

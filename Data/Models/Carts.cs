@@ -8,7 +8,7 @@ namespace Data.Models
 {
     public class Carts
     {
-        public Guid Id { get; set; }
+        
         public Guid IdUser { get; set; }
         public List<CartDetails> CartDetails { get; set; }
         public virtual Users Users { get; set; }

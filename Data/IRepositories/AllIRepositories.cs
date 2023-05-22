@@ -11,7 +11,7 @@ namespace Data.IRepositories
     // Interface chap nhan moi class (Generic)
     // where TEntities : class la 1 rang buoc kieu generic
     // No dinhj nghia kieu TEntities phai la 1 class (Ko the la kieu gia tri int, float)
-    internal interface AllIRepositories<TEntities> where TEntities : class
+    public interface AllIRepositories<TEntities> where TEntities : class
     {
         // Tao 1 DBSet de CRUD data
         DbSet<TEntities> Entities { get; set; }

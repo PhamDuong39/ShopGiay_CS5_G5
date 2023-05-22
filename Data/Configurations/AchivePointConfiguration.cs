@@ -9,13 +9,12 @@ using System.Threading.Tasks;
 
 namespace Data.Configurations
 {
-    public class UserConfiguration : IEntityTypeConfiguration<Users>
+    public class AchivePointConfiguration : IEntityTypeConfiguration<AchivePoint>
     {
-        public void Configure(EntityTypeBuilder<Users> builder)
+        public void Configure(EntityTypeBuilder<AchivePoint> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.HasOne(p => p.Roles).WithMany(p => p.Users).HasForeignKey(p => p.IdRole);
-            builder.HasOne(p => p.Carts).WithOne(p => p.Users).HasForeignKey<Carts>(p => p.IdUser);
+            builder.HasOne(p => p.Users).WithMany(p => p.AchivePoints).HasForeignKey(p => p.IdUser);
         }
     }
 }

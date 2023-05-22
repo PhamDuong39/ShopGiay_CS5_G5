@@ -24,5 +24,6 @@ namespace Data.Models
         public virtual Roles Roles { get; set; }
         public List<AchivePoint> AchivePoints { get; set; }
         
+        public virtual Carts Carts { get; set; }
     }
 }
