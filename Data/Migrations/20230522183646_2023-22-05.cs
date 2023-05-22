@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class _2023215 : Migration
+    public partial class _20232205 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -26,7 +26,7 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    CategoryName = table.Column<string>(type: "nvarchar(100)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,7 +62,7 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Location",
+                name: "Locations",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -74,7 +74,7 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Location", x => x.Id);
+                    table.PrimaryKey("PK_Locations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -119,7 +119,7 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ShipAddressMethods",
+                name: "ShipAddress",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -129,7 +129,7 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShipAddressMethods", x => x.Id);
+                    table.PrimaryKey("PK_ShipAddress", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -137,7 +137,7 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SizeNumber = table.Column<float>(type: "real", nullable: false)
+                    SizeNumber = table.Column<string>(type: "nvarchar(30)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -149,7 +149,7 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Address = table.Column<string>(type: "nvarchar(100)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -157,7 +157,7 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "users",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -173,9 +173,9 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_users", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_users_Roles_RolesId",
+                        name: "FK_Users_Roles_RolesId",
                         column: x => x.RolesId,
                         principalTable: "Roles",
                         principalColumn: "Id",
@@ -188,43 +188,39 @@ namespace Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AvailableQuantity = table.Column<int>(type: "int", nullable: false),
-                    BrandsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CategoriesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CostPrice = table.Column<int>(type: "int", nullable: false),
                     IdBrand = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdCategory = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdSale = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdSupplier = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SalesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     SellPrice = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    SupplierId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ShoeDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ShoeDetails_Brands_BrandsId",
-                        column: x => x.BrandsId,
+                        name: "FK_ShoeDetails_Brands_IdBrand",
+                        column: x => x.IdBrand,
                         principalTable: "Brands",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ShoeDetails_Categories_CategoriesId",
-                        column: x => x.CategoriesId,
+                        name: "FK_ShoeDetails_Categories_IdCategory",
+                        column: x => x.IdCategory,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ShoeDetails_Sales_SalesId",
-                        column: x => x.SalesId,
+                        name: "FK_ShoeDetails_Sales_IdSale",
+                        column: x => x.IdSale,
                         principalTable: "Sales",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ShoeDetails_Suppliers_SupplierId",
-                        column: x => x.SupplierId,
+                        name: "FK_ShoeDetails_Suppliers_IdSupplier",
+                        column: x => x.IdSupplier,
                         principalTable: "Suppliers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -243,9 +239,9 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_AchivePoints", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AchivePoints_users_UsersId",
+                        name: "FK_AchivePoints_Users_UsersId",
                         column: x => x.UsersId,
-                        principalTable: "users",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -276,9 +272,9 @@ namespace Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Bills_Location_LocationId",
+                        name: "FK_Bills_Locations_LocationId",
                         column: x => x.LocationId,
-                        principalTable: "Location",
+                        principalTable: "Locations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -288,15 +284,15 @@ namespace Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Bills_ShipAddressMethods_ShipAdressMethodId",
+                        name: "FK_Bills_ShipAddress_ShipAdressMethodId",
                         column: x => x.ShipAdressMethodId,
-                        principalTable: "ShipAddressMethods",
+                        principalTable: "ShipAddress",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Bills_users_UsersId",
+                        name: "FK_Bills_Users_UsersId",
                         column: x => x.UsersId,
-                        principalTable: "users",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -313,9 +309,9 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_Carts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Carts_users_UsersId",
+                        name: "FK_Carts_Users_UsersId",
                         column: x => x.UsersId,
-                        principalTable: "users",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -325,23 +321,21 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ColorsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdColor = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdShoeDetail = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ShoeDetailsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    IdShoeDetail = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Color_ShoeDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Color_ShoeDetails_Colors_ColorsId",
-                        column: x => x.ColorsId,
+                        name: "FK_Color_ShoeDetails_Colors_IdColor",
+                        column: x => x.IdColor,
                         principalTable: "Colors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Color_ShoeDetails_ShoeDetails_ShoeDetailsId",
-                        column: x => x.ShoeDetailsId,
+                        name: "FK_Color_ShoeDetails_ShoeDetails_IdShoeDetail",
+                        column: x => x.IdShoeDetail,
                         principalTable: "ShoeDetails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -355,15 +349,14 @@ namespace Data.Migrations
                     IdShoeDetail = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Note1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Note2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Note3 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ShoeDetailsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Note3 = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Descriptions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Descriptions_ShoeDetails_ShoeDetailsId",
-                        column: x => x.ShoeDetailsId,
+                        name: "FK_Descriptions_ShoeDetails_IdShoeDetail",
+                        column: x => x.IdShoeDetail,
                         principalTable: "ShoeDetails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -390,9 +383,9 @@ namespace Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_favouriteShoes_users_UsersId",
+                        name: "FK_favouriteShoes_Users_UsersId",
                         column: x => x.UsersId,
-                        principalTable: "users",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -419,9 +412,9 @@ namespace Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Feedbacks_users_UsersId",
+                        name: "FK_Feedbacks_Users_UsersId",
                         column: x => x.UsersId,
-                        principalTable: "users",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -432,15 +425,14 @@ namespace Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdShoeDetail = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ImageSource = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ShoeDetailsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ImageSource = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Images", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Images_ShoeDetails_ShoeDetailsId",
-                        column: x => x.ShoeDetailsId,
+                        name: "FK_Images_ShoeDetails_IdShoeDetail",
+                        column: x => x.IdShoeDetail,
                         principalTable: "ShoeDetails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -452,22 +444,20 @@ namespace Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdShoeDetails = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdSize = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ShoeDetailsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SizesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    IdSize = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sizes_ShoeDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Sizes_ShoeDetails_ShoeDetails_ShoeDetailsId",
-                        column: x => x.ShoeDetailsId,
+                        name: "FK_Sizes_ShoeDetails_ShoeDetails_IdShoeDetails",
+                        column: x => x.IdShoeDetails,
                         principalTable: "ShoeDetails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Sizes_ShoeDetails_Sizes_SizesId",
-                        column: x => x.SizesId,
+                        name: "FK_Sizes_ShoeDetails_Sizes_IdSize",
+                        column: x => x.IdSize,
                         principalTable: "Sizes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -586,19 +576,19 @@ namespace Data.Migrations
                 column: "UsersId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Color_ShoeDetails_ColorsId",
+                name: "IX_Color_ShoeDetails_IdColor",
                 table: "Color_ShoeDetails",
-                column: "ColorsId");
+                column: "IdColor");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Color_ShoeDetails_ShoeDetailsId",
+                name: "IX_Color_ShoeDetails_IdShoeDetail",
                 table: "Color_ShoeDetails",
-                column: "ShoeDetailsId");
+                column: "IdShoeDetail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Descriptions_ShoeDetailsId",
+                name: "IX_Descriptions_IdShoeDetail",
                 table: "Descriptions",
-                column: "ShoeDetailsId");
+                column: "IdShoeDetail");
 
             migrationBuilder.CreateIndex(
                 name: "IX_favouriteShoes_ShoeDetailsId",
@@ -621,43 +611,43 @@ namespace Data.Migrations
                 column: "UsersId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Images_ShoeDetailsId",
+                name: "IX_Images_IdShoeDetail",
                 table: "Images",
-                column: "ShoeDetailsId");
+                column: "IdShoeDetail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoeDetails_BrandsId",
+                name: "IX_ShoeDetails_IdBrand",
                 table: "ShoeDetails",
-                column: "BrandsId");
+                column: "IdBrand");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoeDetails_CategoriesId",
+                name: "IX_ShoeDetails_IdCategory",
                 table: "ShoeDetails",
-                column: "CategoriesId");
+                column: "IdCategory");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoeDetails_SalesId",
+                name: "IX_ShoeDetails_IdSale",
                 table: "ShoeDetails",
-                column: "SalesId");
+                column: "IdSale");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoeDetails_SupplierId",
+                name: "IX_ShoeDetails_IdSupplier",
                 table: "ShoeDetails",
-                column: "SupplierId");
+                column: "IdSupplier");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sizes_ShoeDetails_ShoeDetailsId",
+                name: "IX_Sizes_ShoeDetails_IdShoeDetails",
                 table: "Sizes_ShoeDetails",
-                column: "ShoeDetailsId");
+                column: "IdShoeDetails");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sizes_ShoeDetails_SizesId",
+                name: "IX_Sizes_ShoeDetails_IdSize",
                 table: "Sizes_ShoeDetails",
-                column: "SizesId");
+                column: "IdSize");
 
             migrationBuilder.CreateIndex(
-                name: "IX_users_RolesId",
-                table: "users",
+                name: "IX_Users_RolesId",
+                table: "Users",
                 column: "RolesId");
         }
 
@@ -709,16 +699,16 @@ namespace Data.Migrations
                 name: "Coupons");
 
             migrationBuilder.DropTable(
-                name: "Location");
+                name: "Locations");
 
             migrationBuilder.DropTable(
                 name: "PaymentMethods");
 
             migrationBuilder.DropTable(
-                name: "ShipAddressMethods");
+                name: "ShipAddress");
 
             migrationBuilder.DropTable(
-                name: "users");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Brands");

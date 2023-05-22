@@ -96,7 +96,7 @@ public class AllRepositories<T> : IAllRepositories<T>
     {
         try
         {
-            this._dbSet.Remove(item);
+            this._dbSet.Update(item);
             this._context.SaveChanges();
             return true;
         }

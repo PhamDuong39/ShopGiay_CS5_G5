@@ -45,9 +45,13 @@ public class AppDbContext : DbContext
 
     public DbSet<Images> Images { get; set; }
 
+    public DbSet<Location> Locations { get; set; }
+
     public DbSet<Roles> Roles { get; set; }
 
     public DbSet<Sales> Sales { get; set; }
+
+    public DbSet<ShipAddressMethods> ShipAddress { get; set; }
 
     public DbSet<ShoeDetails> ShoeDetails { get; set; }
 
@@ -58,10 +62,6 @@ public class AppDbContext : DbContext
     public DbSet<Supplier> Suppliers { get; set; }
 
     public DbSet<Users> Users { get; set; }
-
-    public DbSet<Location>Locations {get; set; }
-
-    public DbSet<ShipAddressMethods> ShipAddress { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

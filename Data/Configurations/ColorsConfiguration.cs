@@ -11,7 +11,6 @@ public class ColorsConfiguration : IEntityTypeConfiguration<Colors>
     {
         builder.HasKey(x => x.Id);
         builder.Property(p => p.ColorName).HasColumnType("nvarchar(30)");
-
-        // builder.HasOne(p => p.Id).WithMany()
+         
     }
 }
