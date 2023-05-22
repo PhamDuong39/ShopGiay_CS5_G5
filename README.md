@@ -30,10 +30,6 @@ Here are some related projects
 To run tests, run the following command (using reactjs)
 
 ```bash
-  npm run test
-```
-
-```bash
  cd Project
  dotnet watch run
 ```
