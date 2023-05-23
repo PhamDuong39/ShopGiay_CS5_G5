@@ -1,6 +1,5 @@
-﻿namespace ProjectViews.Utilities
+﻿namespace ProjectViews.Utilities;
+
+public class Validates
 {
-    public class Validates
-    {
-    }
 }

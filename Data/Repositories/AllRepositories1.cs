@@ -56,6 +56,26 @@ namespace Data.Repositories
             }
         }
 
+        public bool DeleteMany(List<T> items)
+        {
+            try
+            {
+                dbset.RemoveRange(items);
+                DbContext.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+
+        public T GetItem(Guid id)
+        {
+            return this.dbset.Find(id); 
+        }
+
         public IEnumerable<T> GetAll()
         {
             return  dbset.ToList();
