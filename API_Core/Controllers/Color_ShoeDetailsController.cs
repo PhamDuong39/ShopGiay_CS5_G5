@@ -31,7 +31,6 @@ public class Color_ShoeDetailsController : ControllerBase
         color_shoeDetails.Id = Guid.NewGuid();
         color_shoeDetails.IdShoeDetail = idShoeDetails;
         color_shoeDetails.IdColor = idColor;
-
         return this._iColor_ShoeDtails.Create(color_shoeDetails); // tạo color_shoeDetails mới
     }
 

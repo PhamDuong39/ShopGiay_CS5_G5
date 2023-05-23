@@ -32,24 +32,7 @@ public class SIzes_ShoeDetailsController : ControllerBase
         sizeShoeDetails.Id = Guid.NewGuid();
         sizeShoeDetails.IdSize = sizeId;
         sizeShoeDetails.IdShoeDetails = shoeDetailsId;
-
-        // check trung ten size
-        if (this._iSizeShoeDetailsRepos.GetAll().Select(p => p.IdSize == sizeId && p.IdShoeDetails == shoeDetailsId)
-                .Count() == 1)
-        {
-            Console.WriteLine("SizeShoeDetails is existed");
-        }
-        else if (sizeId == null || shoeDetailsId == null)
-        {
-            Console.WriteLine("SizeId or ShoeDetailsId is null or empty");
-        }
-        else
-        {
-            Console.WriteLine("Create Done!");
-            return this._iSizeShoeDetailsRepos.Create(sizeShoeDetails); // tạo size mới
-        }
-
-        return false;
+        return this._iSizeShoeDetailsRepos.Create(sizeShoeDetails); // tạo size mới
     }
 
     [HttpDelete("delete-many-size-shoe-details")]
