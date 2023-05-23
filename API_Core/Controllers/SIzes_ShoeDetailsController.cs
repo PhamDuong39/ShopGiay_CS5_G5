@@ -1,6 +1,5 @@
-﻿
+﻿// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 namespace API_Core.Controllers;
 
 using Data.IRepositories;
@@ -25,7 +24,6 @@ public class SIzes_ShoeDetailsController : ControllerBase
         this._iSizeShoeDetailsRepos = iSizeShoeDetailsRepos;
     }
 
-    
     // create
     [HttpPost("create-size-shoe-details")]
     public bool CreateSizeShoeDetails(Guid sizeId, Guid shoeDetailsId)
@@ -60,8 +58,8 @@ public class SIzes_ShoeDetailsController : ControllerBase
         var sizeShoeDetails = new List<Sizes_ShoeDetails>();
         for (var i = 0; i < idSizes.Count; i++)
         {
-            var sizeShoeDetail = this._iSizeShoeDetailsRepos.GetAll()
-                .Where(p => p.IdSize == idSizes[i]).FirstOrDefault();
+            var sizeShoeDetail = this._iSizeShoeDetailsRepos.GetAll().Where(p => p.IdSize == idSizes[i])
+                .FirstOrDefault();
             sizeShoeDetails.Add(sizeShoeDetail);
         }
 
@@ -76,7 +74,7 @@ public class SIzes_ShoeDetailsController : ControllerBase
             .Where(p => p.IdSize == sizeId && p.IdShoeDetails == shoeDetailsId).FirstOrDefault();
 
         // check trung ten size
-         if (sizeId == null || shoeDetailsId == null)
+        if (sizeId == null || shoeDetailsId == null)
         {
             Console.WriteLine("SizeId or ShoeDetailsId is null or empty");
         }

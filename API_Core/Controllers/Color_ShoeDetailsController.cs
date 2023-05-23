@@ -1,6 +1,5 @@
-﻿
+﻿// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 namespace API_Core.Controllers;
 
 using Data.IRepositories;
@@ -32,9 +31,10 @@ public class Color_ShoeDetailsController : ControllerBase
         color_shoeDetails.Id = Guid.NewGuid();
         color_shoeDetails.IdShoeDetail = idShoeDetails;
         color_shoeDetails.IdColor = idColor;
-        
+
         return this._iColor_ShoeDtails.Create(color_shoeDetails); // tạo color_shoeDetails mới
     }
+
     // delete
     [HttpDelete("delete-color-shoeDetails")]
     public bool DeleteColor_ShoeDetails(Guid id)

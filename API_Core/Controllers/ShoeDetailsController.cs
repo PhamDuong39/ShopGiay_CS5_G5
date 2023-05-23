@@ -1,6 +1,5 @@
-﻿
+﻿// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 namespace API_Core.Controllers;
 
 using Data.IRepositories;
@@ -37,31 +36,28 @@ public class ShoeDetailsController : ControllerBase
         int status,
         Guid idSale)
     {
-        if (string.IsNullOrEmpty(name))
-        {
-            return false;
-        }
+        if (string.IsNullOrEmpty(name)) return false;
+
         // Check if brandName already exists
         if (this._iShoesDetails.GetAll().Any(p => p.Name == name))
         {
             return false;
         }
-        else
-        {
-            var shoeDetails = new ShoeDetails();
-            shoeDetails.Id = Guid.NewGuid();
-            shoeDetails.IdSupplier = idSupplier;
-            shoeDetails.IdCategory = idCategory;
-            shoeDetails.IdBrand = idBrand;
-            shoeDetails.Name = name;
-            shoeDetails.CostPrice = costPrice;
-            shoeDetails.SellPrice = sellPrice;
-            shoeDetails.AvailableQuantity = availableQuantity;
-            shoeDetails.Status = status;
-            shoeDetails.IdSale = idSale;
-            //check name trung nhau
-            return this._iShoesDetails.Create(shoeDetails); // tạo shoeDetails mới
-        }
+
+        var shoeDetails = new ShoeDetails();
+        shoeDetails.Id = Guid.NewGuid();
+        shoeDetails.IdSupplier = idSupplier;
+        shoeDetails.IdCategory = idCategory;
+        shoeDetails.IdBrand = idBrand;
+        shoeDetails.Name = name;
+        shoeDetails.CostPrice = costPrice;
+        shoeDetails.SellPrice = sellPrice;
+        shoeDetails.AvailableQuantity = availableQuantity;
+        shoeDetails.Status = status;
+        shoeDetails.IdSale = idSale;
+
+        // check name trung nhau
+        return this._iShoesDetails.Create(shoeDetails); // tạo shoeDetails mới
     }
 
     // delete many
@@ -114,28 +110,24 @@ public class ShoeDetailsController : ControllerBase
         int status,
         Guid idSale)
     {
-        if (string.IsNullOrEmpty(name))
-        {
-            return false;
-        }
+        if (string.IsNullOrEmpty(name)) return false;
+
         // Check if brandName already exists
         if (this._iShoesDetails.GetAll().Any(p => p.Name == name))
         {
             return false;
         }
-        else
-        {
-            var shoeDetails = this._iShoesDetails.GetAll().FirstOrDefault(p => p.Id == id);
-            shoeDetails.IdSupplier = idSupplier;
-            shoeDetails.IdCategory = idCategory;
-            shoeDetails.IdBrand = idBrand;
-            shoeDetails.Name = name;
-            shoeDetails.CostPrice = costPrice;
-            shoeDetails.SellPrice = sellPrice;
-            shoeDetails.AvailableQuantity = availableQuantity;
-            shoeDetails.Status = status;
-            shoeDetails.IdSale = idSale;
-            return this._iShoesDetails.Update(shoeDetails);
-        }
+
+        var shoeDetails = this._iShoesDetails.GetAll().FirstOrDefault(p => p.Id == id);
+        shoeDetails.IdSupplier = idSupplier;
+        shoeDetails.IdCategory = idCategory;
+        shoeDetails.IdBrand = idBrand;
+        shoeDetails.Name = name;
+        shoeDetails.CostPrice = costPrice;
+        shoeDetails.SellPrice = sellPrice;
+        shoeDetails.AvailableQuantity = availableQuantity;
+        shoeDetails.Status = status;
+        shoeDetails.IdSale = idSale;
+        return this._iShoesDetails.Update(shoeDetails);
     }
 }

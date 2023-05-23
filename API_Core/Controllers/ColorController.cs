@@ -11,9 +11,9 @@ using Microsoft.AspNetCore.Mvc;
 [ApiController]
 public class ColorController : Controller
 {
-    private readonly AppDbContext _context = new();
-
     private readonly IAllRepositories<Colors> _colorIrepos;
+
+    private readonly AppDbContext _context = new();
 
     public ColorController()
     {
@@ -29,7 +29,7 @@ public class ColorController : Controller
         color.ColorName = colorName;
 
         // check trung ten mau   
-        if (this._colorIrepos.GetAll().Select(p => p.ColorName == colorName).Count()> 1)
+        if (this._colorIrepos.GetAll().Select(p => p.ColorName == colorName).Count() > 1)
         {
             Console.WriteLine("Color name is existed");
         }
@@ -46,7 +46,6 @@ public class ColorController : Controller
         return false;
     }
 
-    
     [HttpDelete("delete-color-by-id")]
     public bool DeleteColor(Guid Id)
     {
@@ -63,9 +62,11 @@ public class ColorController : Controller
             var color = new Colors { Id = id };
             colors.Add(color);
         }
+
         return this._colorIrepos.DeleteMany(colors); // xóa nhiều màu
     }
-   // GET : api/Colors
+
+    // GET : api/Colors
     [HttpGet("get-all-colors")]
     public IEnumerable<Colors> GetAllColors()
     {

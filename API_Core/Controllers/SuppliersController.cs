@@ -1,6 +1,5 @@
-﻿
+﻿// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 namespace API_Core.Controllers;
 
 using Data.IRepositories;
@@ -24,27 +23,22 @@ public class SuppliersController : ControllerBase
         this._suppliersIRepos = _suppliersRepos;
     }
 
-    
     // create
     [HttpPost("create-supplier")]
     public bool CreateSupplier(string addressSupplier)
     {
-        if (string.IsNullOrEmpty(addressSupplier))
-        {
-            return false;
-        }
+        if (string.IsNullOrEmpty(addressSupplier)) return false;
+
         // Check if brandName already exists
         if (this._suppliersIRepos.GetAll().Any(p => p.Address == addressSupplier))
         {
             return false;
         }
-        else
-        {
-            var supplier = new Supplier();
-            supplier.Id = Guid.NewGuid();
-            supplier.Address = addressSupplier;
-            return this._suppliersIRepos.Create(supplier); // Create a new brand
-        }
+
+        var supplier = new Supplier();
+        supplier.Id = Guid.NewGuid();
+        supplier.Address = addressSupplier;
+        return this._suppliersIRepos.Create(supplier); // Create a new brand
     }
 
     [HttpDelete("delete-many-supplier")]

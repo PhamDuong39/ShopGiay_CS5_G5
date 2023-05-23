@@ -1,6 +1,5 @@
-﻿
+﻿// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 namespace API_Core.Controllers;
 
 using Data.IRepositories;
@@ -29,22 +28,17 @@ public class ImagesController : ControllerBase
     [HttpPost("create-image")]
     public bool CreateImage(string imageUrl, Guid idShoesDetails)
     {
-        if (string.IsNullOrEmpty(imageUrl))
-        {
-            return false;
-        }
+        if (string.IsNullOrEmpty(imageUrl)) return false;
         if (this._imagesIRepos.GetAll().Any(p => p.ImageSource == imageUrl))
         {
             return false;
         }
-        else
-        {
-            var image = new Images();
-            image.Id = Guid.NewGuid();
-            image.ImageSource = imageUrl;
-            image.IdShoeDetail = idShoesDetails;
-            return this._imagesIRepos.Create(image); // tạo image mới
-        }
+
+        var image = new Images();
+        image.Id = Guid.NewGuid();
+        image.ImageSource = imageUrl;
+        image.IdShoeDetail = idShoesDetails;
+        return this._imagesIRepos.Create(image); // tạo image mới
     }
 
     // delete
@@ -64,8 +58,10 @@ public class ImagesController : ControllerBase
             var image = this._imagesIRepos.GetAll().FirstOrDefault(p => p.Id == id);
             imagesDel.Add(image);
         }
+
         return this._imagesIRepos.DeleteMany(imagesDel);
     }
+
     // get
     [HttpGet("get-all-image")]
     public List<Images> GetAllImages()

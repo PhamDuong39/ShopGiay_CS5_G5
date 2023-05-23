@@ -1,6 +1,5 @@
-﻿
+﻿// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 namespace API_Core.Controllers;
 
 using Data.IRepositories;
@@ -9,7 +8,6 @@ using Data.Repositories;
 using Data.ShopContext;
 
 using Microsoft.AspNetCore.Mvc;
-using System.Xml.Linq;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -26,7 +24,6 @@ public class SizeController : ControllerBase
         this._sizeIrepos = _sizeRepos;
     }
 
-
     // create
     [HttpPost("create-size")]
     public bool CreateSize(float sizeNumberCreate)
@@ -36,20 +33,16 @@ public class SizeController : ControllerBase
         size.SizeNumber = sizeNumberCreate;
 
         // check trung ten size
-        if (float.IsNaN(sizeNumberCreate))
-        {
-            return false;
-        }
+        if (float.IsNaN(sizeNumberCreate)) return false;
+
         // Check if brandName already exists
         if (this._sizeIrepos.GetAll().Any(p => p.SizeNumber == sizeNumberCreate))
         {
             return false;
         }
-        else
-        {
-            Console.WriteLine("Create Done!");
-            return this._sizeIrepos.Create(size); // tạo size mới
-        }
+
+        Console.WriteLine("Create Done!");
+        return this._sizeIrepos.Create(size); // tạo size mới
     }
 
     [HttpDelete("delete-many-sizes")]

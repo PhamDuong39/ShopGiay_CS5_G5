@@ -1,6 +1,5 @@
-﻿
+﻿// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 namespace API_Core.Controllers;
 
 using Data.IRepositories;
@@ -14,10 +13,10 @@ using Microsoft.AspNetCore.Mvc;
 [ApiController]
 public class CategoriesController : ControllerBase
 {
-    private readonly AppDbContext _context = new();
-
     // GET: api/<CategoriesController>
     private readonly IAllRepositories<Categories> _categoriesIRepos;
+
+    private readonly AppDbContext _context = new();
 
     public CategoriesController()
     {
@@ -29,22 +28,18 @@ public class CategoriesController : ControllerBase
     [HttpPost("create-category")]
     public bool CreateCategory(string categoryName)
     {
-        if (string.IsNullOrEmpty(categoryName))
-        {
-            return false;
-        }
+        if (string.IsNullOrEmpty(categoryName)) return false;
+
         // Check if brandName already exists
         if (this._categoriesIRepos.GetAll().Any(p => p.CategoryName == categoryName))
         {
             return false;
         }
-        else
-        {
-            var category = new Categories();
-            category.Id = Guid.NewGuid();
-            category.CategoryName = categoryName;
-            return this._categoriesIRepos.Create(category); // Create a new brand
-        }
+
+        var category = new Categories();
+        category.Id = Guid.NewGuid();
+        category.CategoryName = categoryName;
+        return this._categoriesIRepos.Create(category); // Create a new brand
     }
 
     // delete
@@ -61,6 +56,7 @@ public class CategoriesController : ControllerBase
             Console.WriteLine("Delete Done!");
             return this._categoriesIRepos.Delete(category);
         }
+
         return false;
     }
 
@@ -86,11 +82,17 @@ public class CategoriesController : ControllerBase
         }
     }
 
-    //get
+    // get
     [HttpGet("get-all-categories")]
     public IEnumerable<Categories> GetAllCategories()
     {
         return this._categoriesIRepos.GetAll();
+    }
+
+    [HttpGet("get-categories-by-id")]
+    public Categories GetCategoriesById(Guid id)
+    {
+        return this._categoriesIRepos.GetAll().FirstOrDefault(p => p.Id == id);
     }
 
     [HttpGet("get-categories-by-name")]
@@ -99,11 +101,6 @@ public class CategoriesController : ControllerBase
         return this._categoriesIRepos.GetAll().Where(p => p.CategoryName.Contains(categoryName)).ToList();
     }
 
-    [HttpGet("get-categories-by-id")]
-    public Categories GetCategoriesById(Guid id)
-    {
-        return this._categoriesIRepos.GetAll().FirstOrDefault(p => p.Id == id);
-    }
     // update
     [HttpPut("update-category")]
     public bool UpdateCategory(Guid id, string categoryName)

@@ -1,112 +1,102 @@
-﻿using Data.IRepositories;
+﻿namespace Data.Repositories;
+
+using Data.IRepositories;
 using Data.ShopContext;
+
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Data.Repositories
+public class AllRepositories1<T> : IAllRepositories<T>
+    where T : class
 {
-    public class AllRepositories1<T> : IAllRepositories<T> where T : class
+    private readonly AppDbContext DbContext;
+
+    private readonly DbSet<T> dbset;
+
+    public AllRepositories1()
     {
-        AppDbContext DbContext;
-        DbSet<T> dbset;
+    }
 
-        public AllRepositories1()
+    public AllRepositories1(AppDbContext dbContext, DbSet<T> dbset)
+    {
+        this.DbContext = dbContext;
+        this.dbset = dbset;
+    }
+
+    public bool Create(T item)
+    {
+        try
         {
-            
+            this.dbset.Add(item);
+            this.DbContext.SaveChanges();
+            return true;
         }
-
-        public AllRepositories1(AppDbContext dbContext, DbSet<T> dbset)
+        catch (Exception)
         {
-            DbContext = dbContext;
-            this.dbset = dbset;
+            return false;
         }
+    }
 
-        public bool Create(T item)
+    public bool Delete(T item)
+    {
+        try
         {
-            try
-            {
-                dbset.Add(item);
-                 DbContext.SaveChanges();
-                return true;
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
+            this.dbset.Remove(item);
+            this.DbContext.SaveChanges();
+            return true;
         }
-
-        public bool Delete(T item)
+        catch (Exception)
         {
-            try
-            {
-                dbset.Remove(item);
-                 DbContext.SaveChanges();
-                return true;
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
+            return false;
         }
+    }
 
-        public bool DeleteMany(List<T> items)
+    public bool DeleteMany(List<T> items)
+    {
+        try
         {
-            try
-            {
-                dbset.RemoveRange(items);
-                DbContext.SaveChanges();
-                return true;
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
+            this.dbset.RemoveRange(items);
+            this.DbContext.SaveChanges();
+            return true;
         }
-
-        public T GetItem(Guid id)
+        catch (Exception)
         {
-            return this.dbset.Find(id); 
+            return false;
         }
+    }
 
-        public IEnumerable<T> GetAll()
+    public IEnumerable<T> GetAll()
+    {
+        return this.dbset.ToList();
+    }
+
+    public T GetItem(Guid id)
+    {
+        return this.dbset.Find(id);
+    }
+
+    // public async Task<T> GetOne(Guid id)
+    // {
+    // try
+    // {
+    // return T;
+    // }
+    // catch (Exception)
+    // {
+
+    // throw;
+    // }
+    // }
+    public bool Update(T item)
+    {
+        try
         {
-            return  dbset.ToList();
+            this.dbset.Update(item);
+            this.DbContext.SaveChanges();
+            return true;
         }
-
-        //public async Task<T> GetOne(Guid id)
-        //{
-        //    try
-        //    {
-        //        return T;
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        throw;
-        //    }
-        //}
-
-        public bool Update(T item)
+        catch (Exception)
         {
-            try
-            {
-                dbset.Update(item);
-                 DbContext.SaveChanges();
-                return true;
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
+            return false;
         }
     }
 }

@@ -1,6 +1,5 @@
-﻿
+﻿// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 namespace API_Core.Controllers;
 
 using Data.IRepositories;
@@ -14,9 +13,9 @@ using Microsoft.AspNetCore.Mvc;
 [ApiController]
 public class BrandsController : ControllerBase
 {
-    private readonly AppDbContext _context = new AppDbContext();
-
     private readonly IAllRepositories<Brands> _brandsIRepos;
+
+    private readonly AppDbContext _context = new();
 
     public BrandsController()
     {
@@ -27,22 +26,18 @@ public class BrandsController : ControllerBase
     [HttpPost("create-brand")]
     public bool CreateBrand(string brandName)
     {
-        if (string.IsNullOrEmpty(brandName))
-        {
-            return false;
-        }
+        if (string.IsNullOrEmpty(brandName)) return false;
+
         // Check if brandName already exists
         if (this._brandsIRepos.GetAll().Any(p => p.Name == brandName))
         {
             return false;
         }
-        else
-        {
-            var brand = new Brands();
-            brand.Id = Guid.NewGuid();
-            brand.Name = brandName;
-            return this._brandsIRepos.Create(brand); // Create a new brand
-        }
+
+        var brand = new Brands();
+        brand.Id = Guid.NewGuid();
+        brand.Name = brandName;
+        return this._brandsIRepos.Create(brand); // Create a new brand
     }
 
     // delete
@@ -87,6 +82,7 @@ public class BrandsController : ControllerBase
     {
         return this._brandsIRepos.GetItem(Id);
     }
+
     [HttpGet("get-brand-by-name")]
     public List<Brands> GetBrandByName(string name)
     {
