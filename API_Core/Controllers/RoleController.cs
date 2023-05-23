@@ -39,7 +39,7 @@ namespace API_Core.Controllers
             return _roleIrepos.Create(role);
         }
         [HttpDelete("delete-role-by-id")]
-        public bool DeleteRole(Guid id) 
+        public bool DeleteRole(Guid id)
         {
             var DeleteRole = _roleIrepos.GetAll().FirstOrDefault(x => x.Id == id);
             return _roleIrepos.Delete(DeleteRole);
@@ -47,7 +47,7 @@ namespace API_Core.Controllers
         [HttpDelete("delete-many-role")]
         public bool DeleteManyRole(List<Guid> id)
         {
-            List<Roles> roles= _roleIrepos.GetAll().Where(x=>id.Contains(x.Id)).ToList();
+            List<Roles> roles = _roleIrepos.GetAll().Where(x => id.Contains(x.Id)).ToList();
             return _roleIrepos.DeleteMany(roles);
         }
         [HttpPut("Edit-role-by-id")]

@@ -52,19 +52,18 @@ namespace API_Core.Controllers
             string Fullname
         )
         {
-           
-                Users user = new Users();
-                user.Id = Guid.NewGuid();
-                user.Username = Username;
-                user.Password = Password;
-                user.Address = Address;
-                user.Phonenumber = Phonenumber;
-                user.Email = Email;
-                user.Status = Status;
-                user.Fullname = Fullname;
-                user.IdRole = idrole;
-                return _userIrepos.Create(user);
-          
+            Users user = new Users();
+            user.Id = Guid.NewGuid();
+            user.Username = Username;
+            user.Password = Password;
+            user.Address = Address;
+            user.Phonenumber = Phonenumber;
+            user.Email = Email;
+            user.Status = Status;
+            user.Fullname = Fullname;
+            user.IdRole = idrole;
+            return _userIrepos.Create(user);
+
         }
 
         [HttpDelete("delete-user-by-id")]
@@ -94,7 +93,6 @@ namespace API_Core.Controllers
             Guid IdRole
         )
         {
-           
             var update = _userIrepos.GetAll().FirstOrDefault(i => i.Id == id);
             update.Username = Username;
             update.Password = Password;
