@@ -31,12 +31,12 @@ namespace API_Core.Controllers
             return _irepos.GetAll();
         }
 
-        //// GET api/<BillDetailsController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        // GET api/<BillDetailsController>/5
+        [HttpGet("{id}")]
+        public BillDetails Getone(Guid id)
+        {
+            return _irepos.GetAll().FirstOrDefault(p => p.Id  == id);
+        }
 
         //POST api/<BillDetailsController>
         [HttpPost]
@@ -50,11 +50,17 @@ namespace API_Core.Controllers
             return _irepos.Create(bd);
         }
 
-        //// PUT api/<BillDetailsController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        // PUT api/<BillDetailsController>/5
+        [HttpPut("{id}")]
+        public bool UpdateBilldetails(Guid id, Guid IdShoeDetail, Guid IdBill, int price, int quantity)
+        {
+            var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
+            obj.IdShoeDetail = IdShoeDetail;
+            obj.IdBill = IdBill;
+            obj.Price = price;
+            obj.Quantity = quantity;
+            return _irepos.Update(obj);
+        }
 
         // DELETE api/<BillDetailsController>/5
         [HttpDelete("{id}")]

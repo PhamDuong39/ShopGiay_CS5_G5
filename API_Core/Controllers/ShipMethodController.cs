@@ -32,9 +32,9 @@ namespace API_Core.Controllers
 
         // GET api/<ShipMethodController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ShipAdressMethod Getone(Guid id)
         {
-            return "value";
+            return _irepos.GetAll().FirstOrDefault(p => p.Id == id);
         }
 
         // POST api/<ShipMethodController>
@@ -51,12 +51,12 @@ namespace API_Core.Controllers
 
         // PUT api/<ShipMethodController>/5
         [HttpPut("{id}")]
-        public bool Put(Guid id, ShipAdressMethod shipAdressMethod)
+        public bool Put(Guid id, string Name, int status, int price)
         {
             var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
-            obj.NameAddress = shipAdressMethod.NameAddress;
-            obj.Status = shipAdressMethod.Status;
-            obj.Price = shipAdressMethod.Price;
+            obj.NameAddress = Name;
+            obj.Status = status;
+            obj.Price = price;
 
             return _irepos.Update(obj);
         }

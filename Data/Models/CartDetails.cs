@@ -9,7 +9,7 @@ namespace Data.Models
     public class CartDetails
     {
         public Guid Id { get; set; }
-        public Guid IdCart { get; set; }
+        
         public Guid IdShoeDetail { get; set; }
         public Guid IdUser { get; set; }
         public int Quantity { get; set; }
