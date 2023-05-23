@@ -32,9 +32,9 @@ namespace API_Core.Controllers
 
         // GET api/<PaymentMethodController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public PaymentMethods Getone(Guid id)
         {
-            return "value";
+            return _irepos.GetAll().FirstOrDefault(p => p.Id == id);
         }
 
         // POST api/<PaymentMethodController>
@@ -49,11 +49,11 @@ namespace API_Core.Controllers
 
         // PUT api/<PaymentMethodController>/5
         [HttpPut("{id}")]
-        public bool UpdatePaymentMethod(Guid id, PaymentMethods paymentMethods)
+        public bool UpdatePaymentMethod(Guid id, int status, string Name)
         {
             var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
-            obj.NameMethod = paymentMethods.NameMethod;
-            obj.Status = paymentMethods.Status;
+            obj.NameMethod = Name;
+            obj.Status = status;
             return _irepos.Update(obj);
         }
 
