@@ -6,13 +6,25 @@ using System.Threading.Tasks;
 
 namespace Data.IRepositories
 {
-    public interface IAllRepositories<T> where T : class
+    public interface IAllRepositories<T> 
     {
+        public bool Create(T item);
+
+        public bool CreateMany(List<T> items);
+
+        public bool Delete(T item);
+
+        public bool DeleteMany(List<T> items);
+
         public IEnumerable<T> GetAll();
 
-        public bool Create(T item);
+        public T GetItem(Guid id);
+
         public bool Update(T item);
-        public bool Delete(T item);
-        //public Task<T> GetOne(Guid id);
+
+        public bool UpdateMany(List<T> items);
+        
+
+  
     }
 }

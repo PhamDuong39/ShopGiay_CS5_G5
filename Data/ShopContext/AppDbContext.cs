@@ -24,7 +24,9 @@ namespace Data.ShopContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+
             optionsBuilder.UseSqlServer("Data Source=LAPTOP-25M23VCQ\\SQLEXPRESS;Initial Catalog = ShoeShop_DB;Integrated Security=True;Trust Server Certificate=True");
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
