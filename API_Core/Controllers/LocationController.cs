@@ -30,6 +30,13 @@ namespace API_Core.Controllers
             return  _irepos.GetAll();
         }
 
+        // GET api/<Location>/5
+        [HttpGet("{id}")]
+        public Location Get(Guid id)
+        {
+            return _irepos.GetAll().FirstOrDefault(p => p.Id == id);
+        }
+
         // POST api/<LocationController>
         [HttpPost]
         public bool CreateLocation(string stage, string District, string ward, string street, string Address)
@@ -55,14 +62,14 @@ namespace API_Core.Controllers
 
 
         [HttpPut("updateLocation")]
-        public bool UpdateLocation(Location location)
+        public bool UpdateLocation(Guid Id, string stage, string District, string ward, string street, string Address)
         {
-            var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == location.Id);
-            obj.Stage = location.Stage;
-            obj.District = location.District;
-            obj.Ward = location.Ward;
-            obj.Street = location.Street;
-            obj.Address = location.Address;
+            var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == Id);
+            obj.Stage = stage;
+            obj.District = District;
+            obj.Ward = ward;
+            obj.Street = street;
+            obj.Address = Address;
 
             return _irepos.Update(obj);
         }

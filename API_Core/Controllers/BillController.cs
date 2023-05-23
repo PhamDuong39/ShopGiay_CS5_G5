@@ -32,9 +32,9 @@ namespace API_Core.Controllers
 
         // GET api/<BillController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Bills Get(Guid id)
         {
-            return "value";
+            return _irepos.GetAll().FirstOrDefault(p => p.Id == id);
         }
 
         // POST api/<BillController>
@@ -55,16 +55,16 @@ namespace API_Core.Controllers
 
         // PUT api/<BillController>/5
         [HttpPut("{id}")]
-        public bool UpdateBill(Guid id, Bills bill)
+        public bool UpdateBill(Guid id, Guid IdUser, string Note, int status, Guid IdCoupon, Guid IdShipMethod, Guid IdLocation, Guid IdPaymentMethod)
         {
             var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
-            obj.IdUser = bill.IdUser;
-            obj.Note = bill.Note;
-            obj.Status = bill.Status;
-            obj.IdCoupon = bill.IdCoupon;
-            obj.IdShipAdressMethod= bill.IdShipAdressMethod;
-            obj.IdLocation = bill.IdLocation;
-            obj.IdPaymentMethod = bill.IdPaymentMethod;
+            obj.IdUser = IdUser;
+            obj.Note = Note;
+            obj.Status = status;
+            obj.IdCoupon = IdCoupon;
+            obj.IdShipAdressMethod= IdShipMethod;
+            obj.IdLocation = IdLocation;
+            obj.IdPaymentMethod = IdPaymentMethod;
             return _irepos.Update(obj);
         }
 

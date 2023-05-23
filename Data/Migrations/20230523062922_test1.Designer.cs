@@ -4,6 +4,7 @@ using Data.ShopContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230523062922_test1")]
+    partial class test1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,6 +137,9 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("IdCart")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("IdShoeDetail")
                         .HasColumnType("uniqueidentifier");
 
@@ -234,7 +239,7 @@ namespace Data.Migrations
 
                     b.Property<string>("VoucherName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
@@ -290,7 +295,7 @@ namespace Data.Migrations
 
                     b.HasIndex("IdUser");
 
-                    b.ToTable("FavouriteShoes");
+                    b.ToTable("favouriteShoes");
                 });
 
             modelBuilder.Entity("Data.Models.Feedbacks", b =>
@@ -422,7 +427,7 @@ namespace Data.Migrations
 
                     b.Property<string>("SaleName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
