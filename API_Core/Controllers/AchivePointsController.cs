@@ -12,10 +12,11 @@ namespace API_Core.Controllers
     public class AchivePointsController : ControllerBase
     {
         private IAllRepositories<AchivePoint> _achivepointIrepos;
-        private readonly AppDbContext _context = new();
+        private readonly AppDbContext _context = new AppDbContext();
         public AchivePointsController()
         {
             var _achivepoint = new AllRepositories1<AchivePoint>(_context, _context.AchivePoints);
+            _achivepointIrepos = _achivepoint;
         }
         [HttpGet("get-all-achivepoint")]
         public IEnumerable<AchivePoint> GetAllUser()
