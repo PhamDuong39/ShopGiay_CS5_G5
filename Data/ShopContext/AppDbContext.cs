@@ -26,7 +26,7 @@ namespace Data.ShopContext
         {
 
             optionsBuilder.UseSqlServer("Data Source=DESKTOP-VANLOI\\SQLEXPRESS;Initial Catalog=Group5_CSharp5_1;Integrated Security=True;User ID=PH22972;Password=123456");
-
+            //ok
 
 
         }
