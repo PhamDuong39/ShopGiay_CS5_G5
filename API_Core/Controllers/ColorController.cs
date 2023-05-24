@@ -24,26 +24,17 @@ public class ColorController : Controller
     [HttpPost("create-color")]
     public bool CreateColor(string colorName)
     {
+        if (string.IsNullOrEmpty(colorName)) return false;
+
+        // Check if brandName already exists
+        if (this._colorIrepos.GetAll().Any(p => p.ColorName == colorName))
+        {
+            return false;
+        }
         var color = new Colors();
         color.Id = Guid.NewGuid();
         color.ColorName = colorName;
-
-        // check trung ten mau   
-        if (this._colorIrepos.GetAll().Select(p => p.ColorName == colorName).Count() > 1)
-        {
-            Console.WriteLine("Color name is existed");
-        }
-        else if (string.IsNullOrEmpty(colorName))
-        {
-            Console.WriteLine("Color name is null or empty");
-        }
-        else
-        {
-            Console.WriteLine("Create Done!");
-            return this._colorIrepos.Create(color); // tạo màu mới
-        }
-
-        return false;
+        return this._colorIrepos.Create(color); // tạo màu mới
     }
 
     [HttpDelete("delete-color-by-id")]
