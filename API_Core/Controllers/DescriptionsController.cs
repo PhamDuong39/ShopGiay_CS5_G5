@@ -29,6 +29,10 @@ namespace API_Core.Controllers
         [HttpPost("create-description")]
         public async Task<bool> CreateDescriptionAsync(Guid idShoesDetails, string note1, string note2, string note3)
         {
+            if (this._iDesRepos.GetAll().Any(p => p.IdShoeDetail == idShoesDetails))
+            {
+                return false;
+            }
             var des = new Descriptions();
             des.Id = Guid.NewGuid();
             des.Note1 = note1;
@@ -102,12 +106,14 @@ namespace API_Core.Controllers
 
         // update
         [HttpPut("update-description")]
-        public bool UpdateDescription(Guid id, string note1, string note2, string note3)
+        public bool UpdateDescription(Guid id, string note1, string note2, string note3 ,Guid idShoesDetail)
         {
+            
             var des = this._iDesRepos.GetAll().FirstOrDefault(p => p.Id == id);
             des.Note1 = note1;
             des.Note2 = note2;
             des.Note3 = note3;
+            des.IdShoeDetail = idShoesDetail;
             return this._iDesRepos.Update(des);
         }
     }

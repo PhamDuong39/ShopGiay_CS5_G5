@@ -87,7 +87,7 @@ namespace API_Core.Controllers
         {
             var image = this._imagesIRepos.GetAll().FirstOrDefault(p => p.Id == id);
             image.ImageSource = imageUrl;
-            image.ShoeDetails.Id = idshoesDetails;
+            image.IdShoeDetail = idshoesDetails;
             return this._imagesIRepos.Update(image);
         }
     }
