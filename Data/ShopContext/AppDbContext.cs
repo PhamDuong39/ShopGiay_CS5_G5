@@ -25,7 +25,9 @@ namespace Data.ShopContext
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-50K05FU\\SQLEXPRESS;Initial Catalog = DbCS5_Test;Integrated Security=True;Trust Server Certificate=True");
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-VANLOI\\SQLEXPRESS;Initial Catalog=Group5_CSharp5_1;Integrated Security=True;User ID=PH22972;Password=123456");
+
+
 
         }
 
