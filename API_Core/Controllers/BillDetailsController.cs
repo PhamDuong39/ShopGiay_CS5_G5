@@ -9,96 +9,96 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API_Core.Controllers
 {
-  [Route("api/[controller]")]
-  [ApiController]
-  public class BillDetailsController : ControllerBase
-  {
-    public IAllRepositories<BillDetails> _irepos;
-    public IAllRepositories<ShoeDetails> _ishoesrepos;
-
-    AppDbContext DbContext;
-
-    public BillDetailsController()
+    [Route("api/[controller]")]
+    [ApiController]
+    public class BillDetailsController : ControllerBase
     {
-      DbContext = new AppDbContext();
-      AllRepositories1<BillDetails> repos = new AllRepositories1<BillDetails>(DbContext, DbContext.BillDetails);
-      AllRepositories1<ShoeDetails> reposShoes = new AllRepositories1<ShoeDetails>(DbContext, DbContext.ShoeDetails);
+        public IAllRepositories<BillDetails> _irepos;
+        public IAllRepositories<ShoeDetails> _ishoesrepos;
 
-      _irepos = repos;
-      _ishoesrepos = reposShoes;
+        AppDbContext DbContext;
 
-    }
-
-    // GET: api/<BillDetailsController>
-    [HttpGet]
-    public IEnumerable<BillDetails> GetAllBillDetails()
-    {
-      return _irepos.GetAll();
-    }
-
-    // GET api/<BillDetailsController>/5
-    [HttpGet("{id}")]
-    public BillDetails Getone(Guid id)
-    {
-      return _irepos.GetAll().FirstOrDefault(p => p.Id == id);
-    }
-
-    //POST api/<BillDetailsController>
-    [HttpPost]
-    public string Post(Guid IdShoeDetail, Guid IdBill, int price, int quantity) // tra ve string ne
-    {
-      if (!_ishoesrepos.GetAll().Any(p => p.Id == IdShoeDetail))
-      {
-        return "Loại giày không tồn tại";
-      }
-      else
-      {
-        //kiem tra neu hoa don da ton tai va sp da ton tai thi tang quantity
-        if (_irepos.GetAll().Any(p => p.IdBill == IdBill && p.IdShoeDetail == IdShoeDetail))
+        public BillDetailsController()
         {
+            DbContext = new AppDbContext();
+            AllRepositories1<BillDetails> repos = new AllRepositories1<BillDetails>(DbContext, DbContext.BillDetails);
+            AllRepositories1<ShoeDetails> reposShoes = new AllRepositories1<ShoeDetails>(DbContext, DbContext.ShoeDetails);
 
-          BillDetails bds = _irepos.GetAll().FirstOrDefault(p => p.IdBill == IdBill && p.IdShoeDetail == IdShoeDetail);
-          bds.Quantity += quantity;
-          _irepos.Update(bds);
-          return "Thêm thành công";
+            _irepos = repos;
+            _ishoesrepos = reposShoes;
 
         }
-        BillDetails bd = new BillDetails();
-        bd.IdShoeDetail = IdShoeDetail;
-        bd.IdBill = IdBill;
-        bd.Price = price;
-        bd.Quantity = quantity;
-        if (_irepos.Create(bd))
+
+        // GET: api/<BillDetailsController>
+        [HttpGet]
+        public IEnumerable<BillDetails> GetAllBillDetails()
         {
-          return "Thêm thành công";
-        }
-        else
-        {
-          return "Them That bai";
+            return _irepos.GetAll();
         }
 
-      }
-    }
+        // GET api/<BillDetailsController>/5
+        [HttpGet("{id}")]
+        public BillDetails Getone(Guid id)
+        {
+            return _irepos.GetAll().FirstOrDefault(p => p.Id == id);
+        }
 
-    // PUT api/<BillDetailsController>/5
-    [HttpPut("{id}")]
-    public bool UpdateBilldetails(Guid id, Guid IdShoeDetail, Guid IdBill, int price, int quantity)
-    {
-      var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
-      obj.IdShoeDetail = IdShoeDetail;
-      obj.IdBill = IdBill;
-      obj.Price = price;
-      obj.Quantity = quantity;
-      return _irepos.Update(obj);
-    }
+        //POST api/<BillDetailsController>
+        [HttpPost]
+        public string Post(Guid IdShoeDetail, Guid IdBill, int price, int quantity) // tra ve string ne
+        {
+            if (!_ishoesrepos.GetAll().Any(p => p.Id == IdShoeDetail))
+            {
+                return "Loại giày không tồn tại";
+            }
+            else
+            {
+                //kiem tra neu hoa don da ton tai va sp da ton tai thi tang quantity
+                if (_irepos.GetAll().Any(p => p.IdBill == IdBill && p.IdShoeDetail == IdShoeDetail))
+                {
 
-    // DELETE api/<BillDetailsController>/5
-    [HttpDelete("{id}")]
-    public bool Delete(Guid id)
-    {
-      var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
-      return _irepos.Delete(obj);
+                    BillDetails bds = _irepos.GetAll().FirstOrDefault(p => p.IdBill == IdBill && p.IdShoeDetail == IdShoeDetail);
+                    bds.Quantity += quantity;
+                    _irepos.Update(bds);
+                    return "Thêm thành công";
 
+                }
+                BillDetails bd = new BillDetails();
+                bd.IdShoeDetail = IdShoeDetail;
+                bd.IdBill = IdBill;
+                bd.Price = price;
+                bd.Quantity = quantity;
+                if (_irepos.Create(bd))
+                {
+                    return "Thêm thành công";
+                }
+                else
+                {
+                    return "Them That bai";
+                }
+
+            }
+        }
+
+        // PUT api/<BillDetailsController>/5
+        [HttpPut("{id}")]
+        public bool UpdateBilldetails(Guid id, Guid IdShoeDetail, Guid IdBill, int price, int quantity)
+        {
+            var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
+            obj.IdShoeDetail = IdShoeDetail;
+            obj.IdBill = IdBill;
+            obj.Price = price;
+            obj.Quantity = quantity;
+            return _irepos.Update(obj);
+        }
+
+        // DELETE api/<BillDetailsController>/5
+        [HttpDelete("{id}")]
+        public bool Delete(Guid id)
+        {
+            var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
+            return _irepos.Delete(obj);
+
+        }
     }
-  }
 }
