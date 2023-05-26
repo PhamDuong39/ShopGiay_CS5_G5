@@ -112,7 +112,6 @@ namespace API_Core.Controllers
                 obj.IdBill = IdBill;
                 obj.Price = price;
                 obj.Quantity = quantity;
-
                 ShoeDetails sd = _ishoesrepos.GetAll().FirstOrDefault(p => p.Id == IdShoeDetail);
                 //nếu số lượng update lớn hơn số lượng ban đ    ầu thì update lại kho
                 if (obj.Quantity > quantity)
