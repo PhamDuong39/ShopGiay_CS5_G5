@@ -101,12 +101,6 @@ namespace API_Core.Controllers
         obj.Price = price;
         obj.Quantity = quantity;
         ShoeDetails sd = _ishoesrepos.GetAll().FirstOrDefault(p => p.Id == IdShoeDetail);
-        //nếu số lượng update lớn hơn số lượng ban đ    ầu thì update lại kho
-        if (obj.Quantity > quantity)
-          sd.AvailableQuantity -= (obj.Quantity - quantity);
-        else
-          sd.AvailableQuantity += sd.AvailableQuantity + (obj.Quantity - quantity); //
-        _ishoesrepos.Update(sd);
         _irepos.Update(obj);
         //khi update lại số lượng nếu số lương
         return "Sửa thành công";
