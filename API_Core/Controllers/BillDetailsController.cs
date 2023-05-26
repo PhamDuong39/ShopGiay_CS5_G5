@@ -42,12 +42,24 @@ namespace API_Core.Controllers
         [HttpPost]
         public bool Post(Guid IdShoeDetail, Guid IdBill, int price, int quantity)
         {
-            BillDetails bd = new BillDetails();
-            bd.IdShoeDetail = IdShoeDetail;
-            bd.IdBill = IdBill;
-            bd.Price = price;
-            bd.Quantity = quantity;
-            return _irepos.Create(bd);
+            var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == IdShoeDetail);
+            if (obj == null)
+            {
+                BillDetails bd = new BillDetails();
+                bd.IdShoeDetail = IdShoeDetail;
+                bd.IdBill = IdBill;
+                bd.Price = price;
+                bd.Quantity = quantity;
+                return _irepos.Create(bd);
+            }
+            else
+            {
+                obj.IdShoeDetail = IdShoeDetail;
+                obj.IdBill = IdBill;
+                obj.Price = price;
+                obj.Quantity += 1;
+                return _irepos.Update(obj);
+            }
         }
 
         // PUT api/<BillDetailsController>/5
