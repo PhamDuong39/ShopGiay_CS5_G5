@@ -56,10 +56,12 @@ namespace API_Core.Controllers
         //kiem tra neu hoa don da ton tai va sp da ton tai thi tang quantity
         if (_irepos.GetAll().Any(p => p.IdBill == IdBill && p.IdShoeDetail == IdShoeDetail))
         {
+
           BillDetails bds = _irepos.GetAll().FirstOrDefault(p => p.IdBill == IdBill && p.IdShoeDetail == IdShoeDetail);
           bds.Quantity += quantity;
           _irepos.Update(bds);
           return "Thêm thành công";
+
         }
         BillDetails bd = new BillDetails();
         bd.IdShoeDetail = IdShoeDetail;
@@ -74,6 +76,7 @@ namespace API_Core.Controllers
         {
           return "Them That bai";
         }
+
       }
     }
 
@@ -95,6 +98,7 @@ namespace API_Core.Controllers
     {
       var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
       return _irepos.Delete(obj);
+
     }
   }
 }
