@@ -69,5 +69,6 @@ namespace API_Core.Controllers
             var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
             return _irepos.Delete(obj);
         }
+        //AAAA
     }
 }
