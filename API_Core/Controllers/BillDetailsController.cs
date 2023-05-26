@@ -45,7 +45,7 @@ namespace API_Core.Controllers
 
     //POST api/<BillDetailsController>
     [HttpPost]
-    public string Post(Guid IdShoeDetail, Guid IdBill, int price, int quantity)
+    public string Post(Guid IdShoeDetail, Guid IdBill, int price, int quantity) // tra ve string ne
     {
       if (!_ishoesrepos.GetAll().Any(p => p.Id == IdShoeDetail))
       {
