@@ -31,14 +31,14 @@ namespace API_Core.Controllers
         }
 
         // GET api/<BillController>/5
-        [HttpGet("{id}")]
+        [HttpGet("GetBillByID/{id}")]
         public Bills Get(Guid id)
         {
             return _irepos.GetAll().FirstOrDefault(p => p.Id == id);
         }
 
         // POST api/<BillController>
-        [HttpPost]
+        [HttpPost("CreateBill")]
         public bool CreateBill(Guid IdUser, string Note, int status, Guid IdCoupon, Guid IdShipMethod, Guid IdLocation, Guid IdPaymentMethod)
         {
             Bills bill = new Bills();
@@ -54,7 +54,7 @@ namespace API_Core.Controllers
         }
 
         // PUT api/<BillController>/5
-        [HttpPut("{id}")]
+        [HttpPut("UpdateBill/{id}")]
         public bool UpdateBill(Guid id, Guid IdUser, string Note, int status, Guid IdCoupon, Guid IdShipMethod, Guid IdLocation, Guid IdPaymentMethod)
         {
             var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
@@ -75,5 +75,8 @@ namespace API_Core.Controllers
             var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
             return _irepos.Delete(obj);
         }
+
+
+      
     }
 }

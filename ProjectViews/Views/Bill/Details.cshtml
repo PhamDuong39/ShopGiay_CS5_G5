@@ -1,0 +1,93 @@
+﻿@model ProjectViews.Models.BillsViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+@*<h3>@Model.bill.CreateDate</h3>
+<h3>@Model.bill.Note</h3>
+<h3>@Model.bill.Status</h3>
+<h3>@Model.bill.IdUser</h3>
+<h3>@Model.bill.IdCoupon</h3>
+<h3>@Model.bill.IdPaymentMethod</h3>
+<h3>@Model.bill.IdShipAdressMethod</h3>
+<h3>@Model.bill.IdLocation</h3>*@
+
+<div class="container">
+    <table>
+        @foreach(var item in Model.lstBillDT)
+        {
+            <thead>
+                <tr>@item.Id</tr>
+                <tr>@item.IdShoeDetail</tr>
+                <tr>@item.IdBill</tr>
+                <tr>@item.Price</tr>
+                <tr>@item.Quantity</tr>
+            </thead>
+        }
+    </table>
+</div>
+
+
+@*<div class="container">
+    <table class="table">
+        @foreach (var item in Model.lstBillDT)
+        {
+            <thead>
+                <tr class="table-success">
+                    @*<td>Ngày đặt: @item.IdBill</td>*@
+                    @*<td>
+                        Trạng thái đơn hàng:
+                        @if (@item.Status == 1)
+                        {
+                            <span>Đang chờ xác nhận</span>
+                        }
+                        else if (item.Status == 2)
+                        {
+                            <span>Đang được vận chuyển</span>
+                        }
+                        else
+                        {
+                            <span>Giao hàng thành công</span>
+                        }
+                    </td>*@
+                    @*<td>Địa chỉ nhận hàng: @item.Address</td>
+                    <td>SDT người nhận: @item.SDT</td>
+                    <td>Tổng số tiền đơn hàng: @item.listBillDeatail.Where(p => p.IdHD == item.IdBill).Sum(p => p.Quantity * p.Price)</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var x in item.listBillDeatail)
+                {
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Tên sản phẩm</td>
+                        <td>Số lượng sản phẩm</td>
+                        <td>Giá tiền</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>
+
+                            @foreach (var product in ViewData["lstSlTProduct"] as SelectList)
+                            {
+                                if (product.Value == x.IdSP.ToString())
+                                {
+                                    @product.Text
+                                }
+                            }
+
+                        </td>
+                        <td>@x.Quantity</td>
+                        <td>@(x.Price * x.Quantity)</td>
+                    </tr>
+                }
+            </tbody>
+        }
+    </table>
+</div>*@
+
+
