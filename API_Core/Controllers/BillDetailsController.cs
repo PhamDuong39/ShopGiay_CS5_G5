@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API_Core.Controllers
 {
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
     [Route("api/[controller]")]
     [ApiController]
     public class BillDetailsController : ControllerBase
@@ -82,14 +83,30 @@ namespace API_Core.Controllers
 
         // PUT api/<BillDetailsController>/5
         [HttpPut("{id}")]
-        public bool UpdateBilldetails(Guid id, Guid IdShoeDetail, Guid IdBill, int price, int quantity)
+        public string UpdateBilldetails(Guid id, Guid IdShoeDetail, Guid IdBill, int price, int quantity)
         {
-            var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
-            obj.IdShoeDetail = IdShoeDetail;
-            obj.IdBill = IdBill;
-            obj.Price = price;
-            obj.Quantity = quantity;
-            return _irepos.Update(obj);
+            //check sp co ton tai khong
+            if (!_ishoesrepos.GetAll().Any(p => p.Id == IdShoeDetail))
+            {
+                return "Loại giày không tồn tại";
+            }
+            //check so luong co du khong
+            else if (_ishoesrepos.GetAll().FirstOrDefault(p => p.Id == IdShoeDetail).AvailableQuantity < quantity)
+            {
+                return "Số lượng không đủ";
+            }
+            else
+            {
+                var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
+                obj.IdShoeDetail = IdShoeDetail;
+                obj.IdBill = IdBill;
+                obj.Price = price;
+                obj.Quantity = quantity;
+                ShoeDetails sd = _ishoesrepos.GetAll().FirstOrDefault(p => p.Id == IdShoeDetail);
+                _irepos.Update(obj);
+                //khi update lại số lượng nếu số lương
+                return "Sửa thành công";
+            }
         }
 
         // DELETE api/<BillDetailsController>/5
@@ -99,6 +116,13 @@ namespace API_Core.Controllers
             var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
             return _irepos.Delete(obj);
 
+        }
+
+        // GET api/<BillDetailsController>/5
+        [HttpGet("FillterByID/{id}")]
+        public IEnumerable<BillDetails> FillterByID(Guid id)
+        {
+            return _irepos.GetAll().Where(p => p.IdBill == id);
         }
     }
 }
