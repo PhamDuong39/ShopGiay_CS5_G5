@@ -5,89 +5,60 @@
 
 <h1>Details</h1>
 
-@*<h3>@Model.bill.CreateDate</h3>
-<h3>@Model.bill.Note</h3>
-<h3>@Model.bill.Status</h3>
-<h3>@Model.bill.IdUser</h3>
-<h3>@Model.bill.IdCoupon</h3>
-<h3>@Model.bill.IdPaymentMethod</h3>
-<h3>@Model.bill.IdShipAdressMethod</h3>
-<h3>@Model.bill.IdLocation</h3>*@
 
 <div class="container">
-    <table>
-        @foreach(var item in Model.lstBillDT)
-        {
-            <thead>
-                <tr>@item.Id</tr>
-                <tr>@item.IdShoeDetail</tr>
-                <tr>@item.IdBill</tr>
-                <tr>@item.Price</tr>
-                <tr>@item.Quantity</tr>
-            </thead>
-        }
+    <table class="table">
+        <thead>
+            <tr class="table-success">
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Createdate</th>
+                <th scope="col">Status</th>
+                <th scope="col">Location</th>
+                <th scope="col">Payment Method</th>
+                <th scope="col">Delivery Method</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>@Model.bill.IdUser</td>
+                <td>@Model.bill.CreateDate</td>
+                <td>@Model.bill.Status</td>
+                <td>@Model.bill.IdLocation</td>
+                <td>@Model.bill.IdPaymentMethod</td>
+                <td>@Model.bill.IdShipAdressMethod</td>
+            </tr>
+            <table class="table">
+                <thead>
+                    <tr class="table-success">
+                        <th></th>
+                        <th>Shoe name</th>
+                        <th>Bill</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.lstBillDT)
+                {
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td>@item.IdShoeDetail</td>
+                            <td>@item.IdBill</td>
+                            <td>@item.Quantity</td>
+                            <td>@(item.Quantity * item.Price)</td>
+                        </tr>
+                     
+                    </tbody>
+                }
+            </table>
+        </tbody>
     </table>
 </div>
+<h3>Sum Price : @Model.sumPrice</h3>
 
-
-@*<div class="container">
-    <table class="table">
-        @foreach (var item in Model.lstBillDT)
-        {
-            <thead>
-                <tr class="table-success">
-                    @*<td>Ngày đặt: @item.IdBill</td>*@
-                    @*<td>
-                        Trạng thái đơn hàng:
-                        @if (@item.Status == 1)
-                        {
-                            <span>Đang chờ xác nhận</span>
-                        }
-                        else if (item.Status == 2)
-                        {
-                            <span>Đang được vận chuyển</span>
-                        }
-                        else
-                        {
-                            <span>Giao hàng thành công</span>
-                        }
-                    </td>*@
-                    @*<td>Địa chỉ nhận hàng: @item.Address</td>
-                    <td>SDT người nhận: @item.SDT</td>
-                    <td>Tổng số tiền đơn hàng: @item.listBillDeatail.Where(p => p.IdHD == item.IdBill).Sum(p => p.Quantity * p.Price)</td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var x in item.listBillDeatail)
-                {
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>Tên sản phẩm</td>
-                        <td>Số lượng sản phẩm</td>
-                        <td>Giá tiền</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>
-
-                            @foreach (var product in ViewData["lstSlTProduct"] as SelectList)
-                            {
-                                if (product.Value == x.IdSP.ToString())
-                                {
-                                    @product.Text
-                                }
-                            }
-
-                        </td>
-                        <td>@x.Quantity</td>
-                        <td>@(x.Price * x.Quantity)</td>
-                    </tr>
-                }
-            </tbody>
-        }
-    </table>
-</div>*@
-
+<div>
+    <a asp-action="Show">Back to List</a>
+</div>
 
