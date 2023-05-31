@@ -18,7 +18,6 @@ namespace ProjectViews.Controllers
             string apiUrl = "https://localhost:7109/api/Color/get-all-colors";
             var response = await _httpClient.GetAsync(apiUrl);
             string apidata = await response.Content.ReadAsStringAsync();
-
             var clor = JsonConvert.DeserializeObject<List<Colors>>(apidata);
             return View(clor);
         }

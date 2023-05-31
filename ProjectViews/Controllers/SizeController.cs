@@ -16,14 +16,14 @@ namespace ProjectViews.Controllers
         {
             this._httpClient = new HttpClient();
         }
-        // show 
+        // show
         public async Task<IActionResult> ShowSize()
         {
-            string apiURL = "https://localhost:7109/api/Size/get-all-size";
+            string apiURL = $"https://localhost:7109/api/Size/get-all-size";
             var response = await _httpClient.GetAsync(apiURL);
             string apiData = await response.Content.ReadAsStringAsync();
-            var sizes = JsonConvert.DeserializeObject<List<Sizes>>(apiData);
-            return View(sizes);
+            var sizes = JsonConvert.DeserializeObject<IEnumerable<Sizes>>(apiData);
+            return  View(sizes);
         }
         public IActionResult CreateSize()
         {
@@ -41,7 +41,7 @@ namespace ProjectViews.Controllers
             }
             return this.View();
         }
-        //Details 
+        //Details
         public async Task<IActionResult> DetailSize(Guid id)
         {
             string apiURL = $"https://localhost:7109/api/Size/get-size-by-id/{id}";
