@@ -38,7 +38,7 @@ namespace API_Core.Controllers
         }
 
         // POST api/<ShipMethodController>
-        [HttpPost]
+        [HttpPost("CreateShipMethod")]
         public bool CreateShipMethod(string Name, int status, int price)
         {
             ShipAdressMethod shipMethod = new ShipAdressMethod();
@@ -50,10 +50,10 @@ namespace API_Core.Controllers
         }
 
         // PUT api/<ShipMethodController>/5
-        [HttpPut("{id}")]
-        public bool Put(Guid id, string Name, int status, int price)
+        [HttpPut("UpdateShipMethod")]
+        public bool Put(Guid Id, string Name, int status, int price)
         {
-            var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
+            var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == Id);
             obj.NameAddress = Name;
             obj.Status = status;
             obj.Price = price;
@@ -62,10 +62,10 @@ namespace API_Core.Controllers
         }
 
         // DELETE api/<ShipMethodController>/5
-        [HttpDelete("DeleteShipMethod/{id}")]
-        public bool Delete(Guid id)
+        [HttpDelete("DeleteShipMethod")]
+        public bool Delete(Guid Id)
         {
-            var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
+            var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == Id);
             return _irepos.Delete(obj);
         }
     }
