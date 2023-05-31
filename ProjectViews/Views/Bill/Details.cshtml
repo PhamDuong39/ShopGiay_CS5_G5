@@ -1,0 +1,64 @@
+﻿@model ProjectViews.Models.BillsViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr class="table-success">
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Createdate</th>
+                <th scope="col">Status</th>
+                <th scope="col">Location</th>
+                <th scope="col">Payment Method</th>
+                <th scope="col">Delivery Method</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>@Model.bill.IdUser</td>
+                <td>@Model.bill.CreateDate</td>
+                <td>@Model.bill.Status</td>
+                <td>@Model.bill.IdLocation</td>
+                <td>@Model.bill.IdPaymentMethod</td>
+                <td>@Model.bill.IdShipAdressMethod</td>
+            </tr>
+            <table class="table">
+                <thead>
+                    <tr class="table-success">
+                        <th></th>
+                        <th>Shoe name</th>
+                        <th>Bill</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.lstBillDT)
+                {
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td>@item.IdShoeDetail</td>
+                            <td>@item.IdBill</td>
+                            <td>@item.Quantity</td>
+                            <td>@(item.Quantity * item.Price)</td>
+                        </tr>
+                     
+                    </tbody>
+                }
+            </table>
+        </tbody>
+    </table>
+</div>
+<h3>Sum Price : @Model.sumPrice</h3>
+
+<div>
+    <a asp-action="Show">Back to List</a>
+</div>
+

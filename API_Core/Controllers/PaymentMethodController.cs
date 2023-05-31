@@ -38,7 +38,7 @@ namespace API_Core.Controllers
         }
 
         // POST api/<PaymentMethodController>
-        [HttpPost]
+        [HttpPost("CreatePaymentMethod")]
         public bool CreatePaymentMethod(int status, string Name)
         {
             PaymentMethods payment = new PaymentMethods();
@@ -48,17 +48,17 @@ namespace API_Core.Controllers
         }
 
         // PUT api/<PaymentMethodController>/5
-        [HttpPut("{id}")]
-        public bool UpdatePaymentMethod(Guid id, int status, string Name)
+        [HttpPut("UpdatePaymentMethod")]
+        public bool UpdatePaymentMethod(Guid Id, int status, string Name)
         {
-            var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
+            var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == Id);
             obj.NameMethod = Name;
             obj.Status = status;
             return _irepos.Update(obj);
         }
 
         // DELETE api/<PaymentMethodController>/5
-        [HttpDelete("Delete/{id}")]
+        [HttpDelete("Delete")]
         public bool Delete(Guid id)
         {
             var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);

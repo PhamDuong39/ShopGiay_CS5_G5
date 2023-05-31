@@ -47,6 +47,10 @@ namespace API_Core.Controllers
             {
                 return "Loại giày không tồn tại";
             }
+            else if (Quantity > _irepos.GetAll().First(p => p.Id == IdShoesDetail).ShoeDetails.AvailableQuantity)
+            {
+                return "So luong san pham khong du";
+            }
             else
             {
                 // check xem user nay da co gio hang hay chua
@@ -59,32 +63,46 @@ namespace API_Core.Controllers
                     return "Thêm thành công";
 
                 }
+                CartDetails cd = new CartDetails();
+                cd.IdShoeDetail = IdShoesDetail;
+                cd.IdUser = IdUser;
+
+                cd.Quantity = Quantity;
+                if (_irepos.Create(cd))
+                {
+                    return "Thêm thành công";
+                }
+                else
+                {
+                    return "Them That bai";
+                }
             }
-            CartDetails cd = new CartDetails();
-            cd.IdShoeDetail = IdShoesDetail;
-            cd.IdUser = IdUser;
            
-            cd.Quantity = Quantity;
-            if (_irepos.Create(cd))
-            {
-                return "Thêm thành công";
-            }
-            else
-            {
-                return "Them That bai";
-            }
         }
 
         // PUT api/<ValuesController>/5
         [HttpPut]
         [Route("update-cartdetail")]
-        public bool UpdateCartDetail(Guid id, Guid idShoeDetail, Guid idUser, int quantity)
+        public string UpdateCartDetail(Guid id, Guid idShoeDetail, Guid idUser, int quantity)
         {
             CartDetails cartdetail = _irepos.GetAll().First(p => p.Id == id);
+            //check quantity have more than AvailableQuantity
+            if (quantity > _irepos.GetAll().First(p => p.Id == id).ShoeDetails.AvailableQuantity)
+            {
+                return "Quantity is not enough";
+            }
+            
             cartdetail.Quantity = quantity;
             cartdetail.IdUser = idUser;
             cartdetail.IdShoeDetail = idShoeDetail;
-            return _irepos.Update(cartdetail);
+            if (_irepos.Update(cartdetail))
+            {
+                return "Update success !";
+            }
+            else
+            {
+                return "Update fail !";
+            }
         }
 
         // DELETE api/<ValuesController>/5
