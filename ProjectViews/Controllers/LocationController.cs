@@ -1,23 +1,26 @@
 ﻿using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using NuGet.Protocol.Core.Types;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace ProjectViews.Controllers
 {
     public class LocationController  :Controller
     {
+        private readonly HttpClient _httpClient;
         public LocationController()
         {
-            
+            _httpClient = new HttpClient();
         }
 
         public async Task<IActionResult> ShowAllLocation()
         {
             // Call API
             string apiUrl = $"https://localhost:7109/api/Location";
-            var HttpClient = new HttpClient();
-            var response = await HttpClient.GetAsync(apiUrl);
+            
+            var response = await _httpClient.GetAsync(apiUrl);
             string apidata = await response.Content.ReadAsStringAsync();
 
             var locations = JsonConvert.DeserializeObject<List<Location>>(apidata);
@@ -46,6 +49,69 @@ namespace ProjectViews.Controllers
              
              
              */
+        }
+
+        public IActionResult CreateLocation()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateLocation(Location location)
+        {
+            //string apiURL = $"https://localhost:7109/api/Location?stage={location.Stage}&District={location.District}&ward={location.Ward}&street={location.Street}&Address={location.Address}";          
+            //var response = await _httpClient.PostAsync(apiURL, null);
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    return RedirectToAction("ShowAllLocation");
+            //}
+
+
+            string apiURL1 = $"https://localhost:7109/api/Location";
+            var content = new StringContent($"stage={location.Stage}&District={location.District}&ward={location.Ward}&street={location.Street}&Address={location.Address}", Encoding.UTF8, "application/x-www-form-urlencoded");
+            var response1 = await _httpClient.PostAsync(apiURL1, content);
+            
+
+
+            if (response1.IsSuccessStatusCode)
+            {
+                return RedirectToAction("ShowAllLocation");
+            }
+
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DetailLocation(Guid id)
+        {
+            string apiURL = $"https://localhost:7109/api/Location/{id}";
+            var response = await _httpClient.GetAsync(apiURL);
+            string apidata = await response.Content.ReadAsStringAsync();
+            var location = JsonConvert.DeserializeObject<Location>(apidata);
+            return View(location);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditLocation(Guid id)
+        {
+            string apiURL = $"https://localhost:7109/api/Location/{id}";
+            var response = await _httpClient.GetAsync(apiURL);
+            string apidata = await response.Content.ReadAsStringAsync();
+            var location = JsonConvert.DeserializeObject<Location>(apidata);
+            return View(location);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditLocation(Location location)
+        {
+            string apiURL = $"https://localhost:7109/api/Location/updateLocation?Id={location.Id}&stage={location.Stage}&District={location.District}&ward={location.Ward}&street={location.Street}&Address={location.Address}";
+            var response = await _httpClient.PutAsync(apiURL, null);        
+            
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("ShowAllLocation");
+            }
+            return View();
         }
     }
 }

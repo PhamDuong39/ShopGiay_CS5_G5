@@ -38,10 +38,10 @@ namespace API_Core.Controllers
 
         // POST api/<ValuesController>
         [HttpPost("create-carts")]
-        public bool CreateCarts()
+        public bool CreateCarts(Guid id)
         {
             Carts carts = new Carts();
-            carts.IdUser = Guid.NewGuid();
+            carts.IdUser = id;
             return _irepos.Create(carts);
         }
 
