@@ -31,7 +31,7 @@ namespace API_Core.Controllers
         }
 
         // GET api/<BillController>/5
-        [HttpGet("GetBillByID/{id}")]
+        [HttpGet("{id}")]
         public Bills Get(Guid id)
         {
             return _irepos.GetAll().FirstOrDefault(p => p.Id == id);
@@ -54,7 +54,7 @@ namespace API_Core.Controllers
         }
 
         // PUT api/<BillController>/5
-        [HttpPut("UpdateBill/{id}")]
+        [HttpPut("UpdateBill")]
         public bool UpdateBill(Guid id, Guid IdUser, string Note, int status, Guid IdCoupon, Guid IdShipMethod, Guid IdLocation, Guid IdPaymentMethod)
         {
             var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
@@ -69,7 +69,7 @@ namespace API_Core.Controllers
         }
 
         // DELETE api/<BillController>/5
-        [HttpDelete("Delete/{id}")]
+        [HttpDelete("Delete")]
         public bool Delete(Guid id)
         {
             var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);

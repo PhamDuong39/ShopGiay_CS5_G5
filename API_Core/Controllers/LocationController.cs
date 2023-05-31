@@ -38,7 +38,7 @@ namespace API_Core.Controllers
         }
 
         // POST api/<LocationController>
-        [HttpPost]
+        [HttpPost("Createlocation")]
         public bool CreateLocation(string stage, string District, string ward, string street, string Address)
         {
             // string stage, string District, string ward, string street, string Address
@@ -53,10 +53,10 @@ namespace API_Core.Controllers
             //return await _irepos.Create(location);
         }
 
-        [HttpDelete("deleteLocation/{id}")]
-        public bool DeleteLocation(Guid id)
+        [HttpDelete("deleteLocation")]
+        public bool DeleteLocation(Guid Id)
         {
-            var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
+            var obj = _irepos.GetAll().FirstOrDefault(p => p.Id == Id);
             return _irepos.Delete(obj);
         }
 
