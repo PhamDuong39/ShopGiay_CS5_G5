@@ -1,4 +1,6 @@
-﻿using Data.Models;
+﻿using System.Reflection;
+using System.Text;
+using Data.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -13,6 +15,7 @@ namespace ProjectViews.Controllers
         {
             _httpClient = new HttpClient();
         }
+
         // GET: ImageController
         public async Task<IActionResult> Show()
         {
@@ -28,6 +31,35 @@ namespace ProjectViews.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Images images, IFormFile file)
+        {
+            if (file != null && file.Length > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                }
+
+                images.ImageSource = fileName;
+            }
+
+            string url =
+                $"https://localhost:7109/api/Images/create-image?imageUrl={images.ImageSource}&idShoesDetails={images.IdShoeDetail}";
+            var json = JsonConvert.SerializeObject(images);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(url, data);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Show");
+            }
+
+            return View(images);
+        }
+
         //details
         public async Task<IActionResult> Detail(Guid id)
         {
@@ -38,8 +70,10 @@ namespace ProjectViews.Controllers
             {
                 return View(image);
             }
+
             return NotFound();
         }
+
         //update
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
@@ -52,7 +86,48 @@ namespace ProjectViews.Controllers
             {
                 return View(image);
             }
+
             return NotFound();
+        }
+
+        //delete
+        [HttpPost]
+        public async Task<IActionResult> Update(Images images, IFormFile file)
+        {
+            if (file != null && file.Length > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                }
+
+                images.ImageSource = fileName;
+            }
+
+            string url =
+                $"https://localhost:7109/api/Images/update-image-by-id?id={images.Id}&imageUrl={images.ImageSource}&idShoesDetails={images.IdShoeDetail}";
+            var json = JsonConvert.SerializeObject(images);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync(url, data);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Show");
+            }
+
+            return View(images);
+        }
+        //delete
+        public async Task<IActionResult> Delete(Guid Id)
+        {
+            string url = $"https://localhost:7109/api/Images/delete-image-by-id?id={Id}";
+            var response = await _httpClient.DeleteAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Show");
+            }
+            return BadRequest();
         }
     }
 }
