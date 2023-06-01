@@ -7,18 +7,17 @@
 <h1>Edit</h1>
 
 <h4>Colors</h4>
-<hr />
+<hr/>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <p>Your Chose Color : <span id="value"></span></p>
             <div class="form-group">
-                <label asp-for="ColorName" class="control-label"></label>
-                <input asp-for="ColorName" class="form-control" />
-                <span asp-validation-for="ColorName" class="text-danger"></span>
+                <input asp-for="ColorName" type="color" id="colorPicker"  value="#@Model.ColorName"/>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="form-group mt-3">
+                <input type="submit" value="Save" class="btn btn-primary"/>
             </div>
         </form>
     </div>
@@ -27,7 +26,11 @@
 <div>
     <a asp-action="Show">Back to List</a>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+<script>
+    var colorPicker = document.getElementById("colorPicker");
+    var value = document.getElementById("value");
+    value.innerHTML = colorPicker.value;
+    colorPicker.oninput = function() {
+        value.innerHTML = this.value.toString();
+    }
+</script>

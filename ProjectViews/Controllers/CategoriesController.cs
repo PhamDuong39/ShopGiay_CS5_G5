@@ -17,16 +17,11 @@ namespace ProjectViews.Controllers
         //show
         public async Task<IActionResult> Show()
         {
-            string apiUrl = "https://localhost:7109/api/Category/get-all-categories";
+            string apiUrl =$"https://localhost:7109/api/Categories/get-all-categories";
             var response = await _httpClient.GetAsync(apiUrl);
             string apidata = await response.Content.ReadAsStringAsync();
             var cat = JsonConvert.DeserializeObject<IEnumerable<Categories>>(apidata);
             //check if cat is null
-            if (cat == null)
-            {
-                return this.BadRequest();
-            }
-
             return View(cat);
         }
 
@@ -39,7 +34,7 @@ namespace ProjectViews.Controllers
         [HttpPost]
         public IActionResult Create(Categories categories)
         {
-            string apiUrl = $"https://localhost:7109/api/Category/create-category?categoryName={categories.CategoryName}";
+            string apiUrl = $"https://localhost:7109/api/Categories/create-category?categoryName={categories.CategoryName}";
             var content = new StringContent(JsonConvert.SerializeObject(categories), Encoding.UTF8, "application/json");
             var response = _httpClient.PostAsync(apiUrl, content);
             if (response.Result.IsSuccessStatusCode)
@@ -51,7 +46,7 @@ namespace ProjectViews.Controllers
         //details
         public async Task<IActionResult> Detail(Guid id)
         {
-            string apiUrl = $"https://localhost:7109/api/Category/get-categories-by-id?id={id}";
+            string apiUrl = $"https://localhost:7109/api/Categories/get-categories-by-id?id={id}";
             var response = await _httpClient.GetAsync(apiUrl);
             string apidata = await response.Content.ReadAsStringAsync();
             var cat = JsonConvert.DeserializeObject<Categories>(apidata);
@@ -61,7 +56,7 @@ namespace ProjectViews.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
-            string apiUrl = $"https://localhost:7109/api/Category/get-categories-by-id?id={id}";
+            string apiUrl = $"https://localhost:7109/api/Categories/get-categories-by-id?id={id}";
             var response = await _httpClient.GetAsync(apiUrl);
             string apidata = await response.Content.ReadAsStringAsync();
             var cat = JsonConvert.DeserializeObject<Categories>(apidata);
@@ -71,7 +66,7 @@ namespace ProjectViews.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(Categories categories)
         {
-            string apiUrl = $"https://localhost:7109/api/Category/update-category?id={categories.Id}&categoryName={categories.CategoryName}";
+            string apiUrl = $"https://localhost:7109/api/Categories/update-category?id={categories.Id}&categoryName={categories.CategoryName}";
             var content = new StringContent(JsonConvert.SerializeObject(categories), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(apiUrl, content);
             if (response.IsSuccessStatusCode)
@@ -80,10 +75,10 @@ namespace ProjectViews.Controllers
             }
             return this.View();
         }
-        //delete 
+        //delete
         public async Task<IActionResult> Delete(Guid id)
         {
-            string apiUrl = $"https://localhost:7109/api/Category/delete-category?id={id}";
+            string apiUrl = $"https://localhost:7109/api/Categories/delete-category?id={id}";
             var response = await _httpClient.DeleteAsync(apiUrl);
             if (response.IsSuccessStatusCode)
             {

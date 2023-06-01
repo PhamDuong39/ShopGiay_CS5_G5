@@ -1,24 +1,24 @@
 ﻿@model Data.Models.Sizes
 
 @{
-    ViewData["Title"] = "CreateSize";
+    ViewData["Title"] = "Create Size";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>CreateSize</h1>
+<h1>Create Size</h1>
 
-<h4>Sizes</h4>
-<hr />
+<hr/>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="CreateSize">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <p>Your Chose : <span id="size">0</span></p>
             <div class="form-group">
-                <label asp-for="SizeNumber" class="control-label"></label>
-                <input asp-for="SizeNumber" class="form-control" />
+                <input asp-for="SizeNumber" class="form-control mt-4" type="range" min="1" max="50" id="sizeRange" value="1"/>
                 <span asp-validation-for="SizeNumber" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group mt-3">
+                <input type="submit" value="Create" class="btn btn-primary"/>
             </div>
         </form>
     </div>
@@ -27,7 +27,11 @@
 <div>
     <a asp-action="ShowSize">Back to List</a>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+<script>
+    var slider = document.getElementById("sizeRange");
+    var output = document.getElementById("size");
+    output.innerHTML = slider.value;
+    slider.oninput = function() {
+        output.innerHTML = this.value;
+    }
+</script>

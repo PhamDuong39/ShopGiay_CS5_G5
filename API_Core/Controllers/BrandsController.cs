@@ -35,12 +35,14 @@ namespace API_Core.Controllers
             {
                 return false;
 
+            }
+            else
+            {
                 var brand = new Brands();
                 brand.Id = Guid.NewGuid();
                 brand.Name = brandName;
                 return this._brandsIRepos.Create(brand); // Create a new brand
             }
-            return false;
         }
 
         // delete
@@ -52,7 +54,7 @@ namespace API_Core.Controllers
             return false;
         }
 
-        [HttpDelete("delete-many-brands/{List<Id>}")]
+        [HttpDelete("delete-many-brands")]
         public bool DeleteManyBrand(List<Guid> Id)
         {
             try

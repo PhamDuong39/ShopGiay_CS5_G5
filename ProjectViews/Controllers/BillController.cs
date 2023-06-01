@@ -84,7 +84,7 @@ namespace ProjectViews.Controllers
             string apiDatauser = await responseGetuser.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<List<Users>>(apiDatauser);
             ViewBag.IdUser = user;
-            
+
 
             if (response.IsSuccessStatusCode)
             {
@@ -105,7 +105,7 @@ namespace ProjectViews.Controllers
             string apiData = await response.Content.ReadAsStringAsync();
             var bills = JsonConvert.DeserializeObject<Bills>(apiData);
             return View(bills);
-            
+
         }
 
         // POST: BillController/Edit/5
@@ -125,9 +125,6 @@ namespace ProjectViews.Controllers
 
             return this.View();
         }
-
-        
-
         // POST: BillController/Delete/5
         [HttpGet]
         [ValidateAntiForgeryToken]

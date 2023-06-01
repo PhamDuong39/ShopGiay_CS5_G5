@@ -32,6 +32,7 @@ namespace ProjectViews.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateSize(Sizes sizes)
         {
+            //Lay du lieu tu form gui len va tao moi
             string apiURL = $"https://localhost:7109/api/Size/create-size?sizeNumberCreate={sizes.SizeNumber}";
             var content = new StringContent(JsonConvert.SerializeObject(sizes), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(apiURL, content);
@@ -39,7 +40,7 @@ namespace ProjectViews.Controllers
             {
                 return this.RedirectToAction("ShowSize");
             }
-            return this.View();
+            return this.View(sizes);
         }
         //Details
         public async Task<IActionResult> DetailSize(Guid id)
