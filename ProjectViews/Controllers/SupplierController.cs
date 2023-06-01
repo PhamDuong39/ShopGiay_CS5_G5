@@ -44,7 +44,7 @@ namespace ProjectViews.Controllers
         //details
         public async Task<IActionResult> Detail(Guid id)
         {
-            var response = await _httpClient.GetAsync($"https://localhost:7109/api/Suppliers/get-supplier-by-id/{id}");
+            var response = await _httpClient.GetAsync($"https://localhost:7109/api/Suppliers/get-supplier-by-id?id={id}");
             var result = await response.Content.ReadAsStringAsync();
             var supplier = JsonConvert.DeserializeObject<Supplier>(result);
             if (response.IsSuccessStatusCode)
@@ -59,7 +59,8 @@ namespace ProjectViews.Controllers
         public async Task<IActionResult> Update(Guid id)
         {
             //get supplier by id
-            var response = await _httpClient.GetAsync($"https://localhost:7109/api/Suppliers/get-supplier-by-id/{id}");
+            var response =
+                await _httpClient.GetAsync($"https://localhost:7109/api/Suppliers/get-supplier-by-id?id={id}");
             var result = await response.Content.ReadAsStringAsync();
             var supplier = JsonConvert.DeserializeObject<Supplier>(result);
             if (response.IsSuccessStatusCode)
@@ -74,7 +75,7 @@ namespace ProjectViews.Controllers
         public async Task<IActionResult> Update(Supplier supplier)
         {
             var content = new StringContent(JsonConvert.SerializeObject(supplier), Encoding.UTF8, "application/json");
-            var response = await _httpClient.PutAsync($"https://localhost:7109/api/Suppliers/update-supplier", content);
+            var response = await _httpClient.PutAsync($"https://localhost:7109/api/Suppliers/update-supplier?id={supplier.Id}&address={supplier.Address}", content);
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("Show");
@@ -86,7 +87,7 @@ namespace ProjectViews.Controllers
         //delete
         public async Task<IActionResult> Delete(Guid id)
         {
-            var response = await _httpClient.DeleteAsync($"https://localhost:7109/api/Suppliers/delete-supplier/{id}");
+            var response = await _httpClient.DeleteAsync($"https://localhost:7109/api/Suppliers/delete-supplier?id={id}");
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("Show");

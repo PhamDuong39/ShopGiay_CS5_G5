@@ -84,7 +84,7 @@ namespace API_Core.Controllers
         }
 
         // get 
-        [HttpGet("get-one-shoeDetails")]
+        [HttpGet("get-shoeDetails-by-id")]
         public ShoeDetails GetShoeDetails(Guid id)
         {
             return this._iShoesDetails.GetAll().FirstOrDefault(p => p.Id == id);

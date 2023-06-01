@@ -29,10 +29,10 @@ namespace API_Core.Controllers
         [HttpPost("create-description")]
         public async Task<bool> CreateDescriptionAsync(Guid idShoesDetails, string note1, string note2, string note3)
         {
-            if (this._iDesRepos.GetAll().Any(p => p.IdShoeDetail == idShoesDetails))
-            {
-                return false;
-            }
+            //if (this._iDesRepos.GetAll().Any(p => p.IdShoeDetail == idShoesDetails))
+            //{
+            //    return false;
+            //}
             var des = new Descriptions();
             des.Id = Guid.NewGuid();
             des.Note1 = note1;

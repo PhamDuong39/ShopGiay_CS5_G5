@@ -24,7 +24,6 @@ namespace ProjectViews.Controllers
             var response = await _httpClient.GetAsync(apiURL);
             string apiData = await response.Content.ReadAsStringAsync();
             var bills = JsonConvert.DeserializeObject<List<Bills>>(apiData);
-
             return View(bills);
         }
 
