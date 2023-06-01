@@ -3,31 +3,23 @@
 
         <li class="nav-item">
             <a class="nav-link " data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-layout-text-window-reverse"></i><span>Quản lý</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-layout-text-window-reverse"></i><span>Quản lý thanh toán</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="tables-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a asp-area="Admin" asp-controller="AdminProducts" asp-action="Index" class="active">
-                        <i class="bi bi-circle"></i><span></span>
+                    <a asp-controller="Bill" asp-action="Show" class="active">
+                        <i class="bi bi-circle"></i><span>Quản lý hóa đơn</span>
                     </a>
-                    <a asp-area="Admin" asp-controller="AdminUsers" asp-action="Index" class="active">
-                        <i class="bi bi-circle"></i><span>Quản lý Users</span>
+                    <a asp-controller="PaymentMethod" asp-action="Show" class="active">
+                        <i class="bi bi-circle"></i><span>Quản lý phương thức thanh toán</span>
                     </a>
-                    <a asp-area="Admin" asp-controller="AdminRoles" asp-action="Index" class="active">
-                        <i class="bi bi-circle"></i><span>Quản lý Roles</span>
+                    <a  asp-controller="ShipMethod" asp-action="Show" class="active">
+                        <i class="bi bi-circle"></i><span>Quản lý phương thức vận chuyển</span>
                     </a>
-                    <a asp-area="Admin" asp-controller="AdminCarts" asp-action="Index" class="active">
-                        <i class="bi bi-circle"></i><span>Quản lý Carts</span>
+                    <a  asp-controller="Location" asp-action="ShowAllLocation" class="active">
+                        <i class="bi bi-circle"></i><span>Quản lý vị trí</span>
                     </a>
-                    <a asp-area="Admin" asp-controller="AdminCartDetails" asp-action="Index" class="active">
-                        <i class="bi bi-circle"></i><span>Quản lý Cart Details</span>
-                    </a>
-                    <a asp-area="Admin" asp-controller="AdminBills" asp-action="Index" class="active">
-                        <i class="bi bi-circle"></i><span>Quản lý Bills</span>
-                    </a>
-                    <a asp-area="Admin" asp-controller="AdminBillDetails" asp-action="Index" class="active">
-                        <i class="bi bi-circle"></i><span>Quản lý Bill Details</span>
-                    </a>
+                   
                 </li>
             </ul>
         </li><!-- End Tables Nav -->
