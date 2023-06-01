@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using System.Runtime.CompilerServices;
 using ProjectViews.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ProjectViews.Controllers
 {
@@ -23,6 +24,7 @@ namespace ProjectViews.Controllers
             var response = await _httpClient.GetAsync(apiURL);
             string apiData = await response.Content.ReadAsStringAsync();
             var bills = JsonConvert.DeserializeObject<List<Bills>>(apiData);
+
             return View(bills);
         }
 
@@ -30,22 +32,22 @@ namespace ProjectViews.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(Guid Id)
         {
-            //string apiURLGetBill = $"https://localhost:7109/api/Bill/GetBillByID/{Id}";
-            string apiURLGetBillDetail = $"https://localhost:7109/api/BillDetails/FillterByID/b2805f09-e799-4104-e1dd-08db5c14c0b9";
+            string apiURLGetBill = $"https://localhost:7109/api/Bill/{Id}";
+            string apiURLGetBillDetail = $"https://localhost:7109/api/BillDetails/FillterByID/{Id}";
 
-            //var responseGetBill = await _httpClient.GetAsync(apiURLGetBill);
+            var responseGetBill = await _httpClient.GetAsync(apiURLGetBill);
             var responseGetBillDT = await _httpClient.GetAsync(apiURLGetBillDetail);
 
-            //string apiDataBill = await responseGetBill.Content.ReadAsStringAsync();
+            string apiDataBill = await responseGetBill.Content.ReadAsStringAsync();
             string apiDataBillDT = await responseGetBillDT.Content.ReadAsStringAsync();
 
-            //var bill = JsonConvert.DeserializeObject<Bills>(apiDataBill);
+            var bill = JsonConvert.DeserializeObject<Bills>(apiDataBill);
             var billDTs = JsonConvert.DeserializeObject<List<BillDetails>>(apiDataBillDT);
 
-            //var apiURLCoupon = $"https://localhost:7109/api/Coupons/{bill.IdCoupon}";
-            //var responseGetCoupon = await _httpClient.GetAsync(apiURLCoupon);
-            //string apiDataCoupon = await responseGetCoupon.Content.ReadAsStringAsync();
-            //var coupon = JsonConvert.DeserializeObject<Coupons>(apiDataCoupon);
+            var apiURLCoupon = $"https://localhost:7109/api/Coupons/{bill.IdCoupon}";
+            var responseGetCoupon = await _httpClient.GetAsync(apiURLCoupon);
+            string apiDataCoupon = await responseGetCoupon.Content.ReadAsStringAsync();
+            var coupon = JsonConvert.DeserializeObject<Coupons>(apiDataCoupon);
 
             BillsViewModel billViewMD = new BillsViewModel();
             int price = 0;
@@ -54,9 +56,9 @@ namespace ProjectViews.Controllers
                 price += item.Price * item.Quantity;
             }
 
-           // billViewMD.bill = bill;
+            billViewMD.bill = bill;
             billViewMD.lstBillDT = billDTs;
-            //billViewMD.sumPrice = price - price * (coupon.DiscountValue / 100);
+            billViewMD.sumPrice = price - price * (coupon.DiscountValue / 100);
 
             return View(billViewMD);
         }
@@ -73,9 +75,16 @@ namespace ProjectViews.Controllers
         public async Task<IActionResult> Create(Bills bill)
         {
 
-            string apiURL = $"https://localhost:7109/api/Bill/CreateBill";
+            string apiURL = $"https://localhost:7109/api/Bill/CreateBill?IdUser={bill.IdUser}&Note={bill.Note}&status={bill.Status}&IdCoupon={bill.IdCoupon}&IdShipMethod={bill.IdShipAdressMethod}&IdLocation={bill.IdLocation}&IdPaymentMethod={bill.IdPaymentMethod}";
             var content = new StringContent(JsonConvert.SerializeObject(bill), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(apiURL, content);
+
+            string apiURLuser = $"https://localhost:7109/api/User/get-all-user";
+            var responseGetuser = await _httpClient.GetAsync(apiURLuser);
+            string apiDatauser = await responseGetuser.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<List<Users>>(apiDatauser);
+            ViewBag.IdUser = user;
+            
 
             if (response.IsSuccessStatusCode)
             {
@@ -89,9 +98,9 @@ namespace ProjectViews.Controllers
 
         // GET: BillController/Edit/5
         [HttpGet]
-        public async Task<IActionResult> Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid Id)
         {
-            string apiURL = $"https://localhost:7109/api/Bill/GetBillById/{id}";
+            string apiURL = $"https://localhost:7109/api/Bill/{Id}";
             var response = await _httpClient.GetAsync(apiURL);
             string apiData = await response.Content.ReadAsStringAsync();
             var bills = JsonConvert.DeserializeObject<Bills>(apiData);
@@ -102,9 +111,9 @@ namespace ProjectViews.Controllers
         // POST: BillController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, Bills bill)
+        public async Task<IActionResult> Edit(Guid Id, Bills bill)
         {
-            string apiURL = $"https://localhost:7109/api/Bill/UpdateBill/{id}";
+            string apiURL = $"https://localhost:7109/api/Bill/UpdateBill?id={Id}&IdUser={bill.IdUser}&Note={bill.Note}&status={bill.Status}&IdCoupon={bill.IdCoupon}&IdShipMethod={bill.IdShipAdressMethod}&IdLocation={bill.IdLocation}&IdPaymentMethod={bill.IdPaymentMethod}";
             var content = new StringContent(JsonConvert.SerializeObject(bill), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(apiURL , content);
 
@@ -117,16 +126,12 @@ namespace ProjectViews.Controllers
             return this.View();
         }
 
-        // GET: BillController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        
 
         // POST: BillController/Delete/5
-        [HttpPost]
+        [HttpGet]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(Guid Id)
         {
             try
             {

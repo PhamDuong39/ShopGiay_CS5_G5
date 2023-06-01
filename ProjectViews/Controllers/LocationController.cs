@@ -67,10 +67,9 @@ namespace ProjectViews.Controllers
             //}
 
 
-            string apiURL1 = $"https://localhost:7109/api/Location";
-            var content = new StringContent($"stage={location.Stage}&District={location.District}&ward={location.Ward}&street={location.Street}&Address={location.Address}", Encoding.UTF8, "application/x-www-form-urlencoded");
-            var response1 = await _httpClient.PostAsync(apiURL1, content);
-            
+            string apiURL = $"https://localhost:7109/api/Location/Createlocation?stage={location.Stage}&District={location.District}&ward={location.Ward}&street={location.Street}&Address={location.Address}";
+            var content = new StringContent(JsonConvert.SerializeObject(location), Encoding.UTF8, "application/json");
+            var response1 = await _httpClient.PostAsync(apiURL, content);
 
 
             if (response1.IsSuccessStatusCode)
@@ -82,9 +81,9 @@ namespace ProjectViews.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DetailLocation(Guid id)
+        public async Task<IActionResult> DetailLocation(Guid Id)
         {
-            string apiURL = $"https://localhost:7109/api/Location/{id}";
+            string apiURL = $"https://localhost:7109/api/Location/{Id}";
             var response = await _httpClient.GetAsync(apiURL);
             string apidata = await response.Content.ReadAsStringAsync();
             var location = JsonConvert.DeserializeObject<Location>(apidata);
@@ -92,9 +91,9 @@ namespace ProjectViews.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditLocation(Guid id)
+        public async Task<IActionResult> EditLocation(Guid Id)
         {
-            string apiURL = $"https://localhost:7109/api/Location/{id}";
+            string apiURL = $"https://localhost:7109/api/Location/{Id}";
             var response = await _httpClient.GetAsync(apiURL);
             string apidata = await response.Content.ReadAsStringAsync();
             var location = JsonConvert.DeserializeObject<Location>(apidata);
@@ -102,16 +101,29 @@ namespace ProjectViews.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditLocation(Location location)
+        public async Task<IActionResult> EditLocation(Guid Id, Location location)
         {
-            string apiURL = $"https://localhost:7109/api/Location/updateLocation?Id={location.Id}&stage={location.Stage}&District={location.District}&ward={location.Ward}&street={location.Street}&Address={location.Address}";
-            var response = await _httpClient.PutAsync(apiURL, null);        
-            
+            string apiURL = $"https://localhost:7109/api/Location/updateLocation?Id={Id}&stage={location.Stage}&District={location.District}&ward={location.Ward}&street={location.Street}&Address={location.Address}";
+            var content = new StringContent(JsonConvert.SerializeObject(location), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync(apiURL, content);
             if (response.IsSuccessStatusCode)
             {
-                return RedirectToAction("ShowAllLocation");
+                return this.RedirectToAction("ShowAllLocation");
             }
-            return View();
+            return this.View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> DeleteLocation(Guid Id)
+        {
+            string apiURL = $"https://localhost:7109/api/Location/deleteLocation/{Id}";
+            var response = await _httpClient.DeleteAsync(apiURL);
+            if (response.IsSuccessStatusCode)
+            {
+                return this.RedirectToAction("ShowAllLocation");
+            }
+
+            return this.RedirectToAction("ShowAllLocation");
+
         }
     }
 }
