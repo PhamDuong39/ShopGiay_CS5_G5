@@ -36,12 +36,33 @@
                 @Html.DisplayFor(modelItem => item.Note)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status)
+                
+                @if(item.Status == 1)
+                {
+                    <p>Đợi xác nhận</p>
+                }
+                @if(item.Status == 2)
+                {
+                    <p>Đang giao</p>
+                }
+                @if (item.Status == 3)
+                {
+                    <p>Đã được giao</p>
+                }
+                @if (item.Status == 0)
+                {
+                    <p>Đã hủy</p>
+                }
             </td>
          
             <td>
-                @Html.DisplayFor(modelItem => item.IdUser)
-           
+                    @foreach (var user in ViewData["lstUser"] as SelectList)
+                    {
+                        if (user.Value == item.IdUser.ToString())
+                        {
+                            @user.Text
+                        }
+                    }
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
