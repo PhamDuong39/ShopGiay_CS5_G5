@@ -1,0 +1,59 @@
+﻿@using Data.Models
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Newtonsoft.Json
+@model Data.Models.Descriptions
+
+@{
+    HttpClient _httpClient = new HttpClient();
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Descriptions</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger">Shoe name</div>
+            <div class="form-group">
+                @{
+                    //lay data tu bang ShoeDetail
+                    string apiUrls = $"https://localhost:7109/api/ShoeDetails/get-all-shoeDetails";
+                    var responses = await _httpClient.GetAsync(apiUrls); // goi api lay data
+                    string apiDatas = await responses.Content.ReadAsStringAsync();// doc data tra ve
+                    var shoeDetails = JsonConvert.DeserializeObject<List<ShoeDetails>>(apiDatas);
+                    <select asp-for="IdShoeDetail" class="form-select">
+                        <option>Chose Shoes </option>
+                        @foreach (var item in shoeDetails)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="Note1" class="control-label"></label>
+                <textarea asp-for="Note1" class="form-control" id="tiny"></textarea>
+                <span asp-validation-for="Note1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Note2" class="control-label"></label>
+                <textarea asp-for="Note2" class="form-control" id="tiny"></textarea>
+                <span asp-validation-for="Note2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Note3" class="control-label"></label>
+                <textarea asp-for="Note3" class="form-control" id="tiny"></textarea>
+                <span asp-validation-for="Note3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Show">Back to List</a>
+</div>

@@ -64,7 +64,7 @@ namespace ProjectViews.Controllers
             string apiDatauser = await responseGetuser.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<List<Users>>(apiDatauser);
             ViewData["lstUser"] = new SelectList(user, "Id", "Username");
-            
+
             // location
             string apiURLLocation = $"https://localhost:7109/api/Location";
             var responseGetLocation = await _httpClient.GetAsync(apiURLLocation);
@@ -79,7 +79,10 @@ namespace ProjectViews.Controllers
                     Value = item.Id.ToString(),
                     Text = item.Stage + "" + item.District + "" + item.Ward + "" + item.Street + "" + item.Address
                 });
-            }   
+
+            }
+
+
             ViewData["lstLocation"] = selectListLocation;
 
             // Payment method
@@ -112,7 +115,9 @@ namespace ProjectViews.Controllers
 
             billViewMD.bill = bill;
             billViewMD.lstBillDT = billDTs;
-            billViewMD.DiscountMoney = (double)price * (Convert.ToDouble(coupon.DiscountValue) * 0.01);     
+
+            billViewMD.DiscountMoney = (double)price * (Convert.ToDouble(coupon.DiscountValue) * 0.01);
+
             billViewMD.deliveryFee = shipMethod.FirstOrDefault(p => p.Id == bill.IdShipAdressMethod).Price;
             billViewMD.sumPrice = ((double)price + shipMethod.FirstOrDefault(p => p.Id == bill.IdShipAdressMethod).Price) - (double)price * (Convert.ToDouble(coupon.DiscountValue) * 0.01);
             billViewMD.NoDiscountPrice = ((double)price + shipMethod.FirstOrDefault(p => p.Id == bill.IdShipAdressMethod).Price);
@@ -140,7 +145,7 @@ namespace ProjectViews.Controllers
             string apiDatauser = await responseGetuser.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<List<Users>>(apiDatauser);
             ViewBag.IdUser = user;
-            
+
 
             if (response.IsSuccessStatusCode)
             {
@@ -161,7 +166,7 @@ namespace ProjectViews.Controllers
             string apiData = await response.Content.ReadAsStringAsync();
             var bills = JsonConvert.DeserializeObject<Bills>(apiData);
             return View(bills);
-            
+
         }
 
         // POST: BillController/Edit/5
@@ -182,7 +187,7 @@ namespace ProjectViews.Controllers
             return this.View();
         }
 
-        
+
 
         // POST: BillController/Delete/5
         [HttpGet]

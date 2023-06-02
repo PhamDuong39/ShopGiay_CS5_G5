@@ -18,8 +18,7 @@ namespace ProjectViews.Controllers
             string apiUrl = "https://localhost:7109/api/Color/get-all-colors";
             var response = await _httpClient.GetAsync(apiUrl);
             string apidata = await response.Content.ReadAsStringAsync();
-
-            var clor = JsonConvert.DeserializeObject<List<Colors>>(apidata);
+            var clor = JsonConvert.DeserializeObject<IEnumerable<Colors>>(apidata);
             return View(clor);
         }
         public IActionResult Create()
@@ -31,20 +30,19 @@ namespace ProjectViews.Controllers
         public async Task<IActionResult> Create(Colors colors)
         {
             // Validate the location object and perform necessary checks
-
             // Call the API to create the location
-            string apiUrl = $"https://localhost:7109/api/Color/create-color?colorName={colors.ColorName}";
+            string apiUrl = $"https://localhost:7109/api/Color/create-color?colorName={colors.ColorName.TrimStart('#')}";
             var content = new StringContent(JsonConvert.SerializeObject(colors), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(apiUrl, content);
 
             // Check the response and handle success/failure accordingly
             if (response.IsSuccessStatusCode)
             {
-                // Location created successfully
                 return this.RedirectToAction("Show");
+            }else
+            {
+                return View(colors);
             }
-
-            return this.View();
         }
         public async Task<IActionResult> Detail(Guid id)
         {
@@ -70,7 +68,7 @@ namespace ProjectViews.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Colors clors)
         {
-            string apiUrl = $"https://localhost:7109/api/Color/update-color-by-id?Id={clors.Id}&colorName={clors.ColorName}";
+            string apiUrl = $"https://localhost:7109/api/Color/update-color-by-id?Id={clors.Id}&colorName={clors.ColorName.TrimStart('#')}";
             var content = new StringContent(JsonConvert.SerializeObject(clors), Encoding.UTF8, "application/json");
             var response = await _httpClient.PutAsync(apiUrl, content);
 
@@ -90,8 +88,12 @@ namespace ProjectViews.Controllers
             {
                 return this.RedirectToAction("Show");
             }
-
             return this.RedirectToAction("Show");
+        }
+
+        public async Task<IActionResult> DeleteMany(List<Guid> id)
+        {
+            return View();
         }
     }
 }
