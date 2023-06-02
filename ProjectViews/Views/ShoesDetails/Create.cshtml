@@ -48,7 +48,6 @@
                         }
                     </select>
                 }
-
             </div>
             <div class="form-group">
                 <label asp-for="IdCategory" class="control-label">Category</label>
@@ -148,7 +147,7 @@
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             @foreach (var item in sz)
                             {
-                                <input type="checkbox" name="IdSize" value="@item.Id" class="form-check-input" /> @item.SizeNumber
+                                <input type="checkbox" name="sizesList" value="@item.Id" class="form-check-input" /> @item.SizeNumber
                             }
                         </ul>
                     </div>
@@ -169,7 +168,7 @@
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             @foreach (var item in cl)
                             {
-                                <input type="checkbox" name="IdSize" value="@item.Id" class="form-check-input" />
+                                <input type="checkbox" name="colorsList" value="@item.Id" class="form-check-input" />
                                 <span class="dot" style="background-color: #@item.ColorName"></span>
                             }
                         </ul>
@@ -178,7 +177,7 @@
             </div>
         </div>
         <div class="form-group mt-5 mb-4">
-            <input type="submit mt-5" value="Create" class="btn btn-primary" />
+            <input type="submit" value="Create" class="btn btn-primary" />
             <input type="button" value="Clear Form" class="btn btn-danger" onclick="clearForm()" />
         </div>
     </form>

@@ -9,7 +9,6 @@
 }
 
 <h1>Create</h1>
-
 <h4>Images</h4>
 <hr/>
 <div class="row">
@@ -23,11 +22,36 @@
                     var responses = await _httpClient.GetAsync(apiUrls); // goi api lay data
                     string apiDatas = await responses.Content.ReadAsStringAsync(); // doc data tra ve
                     var shoeDetails = JsonConvert.DeserializeObject<List<ShoeDetails>>(apiDatas);
+                    //lay dữ liệu color từ bảng Color
+                    string apiUrlcolr = $"https://localhost:7109/api/Color/get-all-colors";
+                    var responsecolr = await _httpClient.PostAsync(apiUrlcolr, null);
+                    string apiDatacolr = await responsecolr.Content.ReadAsStringAsync();
+                    var colors = JsonConvert.DeserializeObject <List<Colors>>(apiDatacolr);
+                    //lay dữ liệu size từ bảng Size
+                    string apiUrlsize = $"https://localhost:7109/api/Size/get-all-sizes";
+                    var responsesize = await _httpClient.PostAsync(apiUrlsize, null);
+                    string apiDatasize = await responsesize.Content.ReadAsStringAsync();
+                    var sizes = JsonConvert.DeserializeObject<List<Sizes>>(apiDatasize);
+                    //lay du lieu tu bang Brand
+                    string apiUrlbrand = $"https://localhost:7109/api/Brand/get-all-brands";
+                    var responsebrand = await _httpClient.PostAsync(apiUrlbrand, null);
+                    string apiDatabrand = await responsebrand.Content.ReadAsStringAsync();
+                    var brands = JsonConvert.DeserializeObject<List<Brands>>(apiDatabrand);
+                    //lay du lieu tu bang size_shoeDetail
+                    string apiUrlsize_shoeDetail = $"https://localhost:7109/api/SIzes_ShoeDetails/get-all-size-shoe-details";
+                    var responsesize_shoeDetail = await _httpClient.PostAsync(apiUrlsize_shoeDetail, null);
+                    string apiDatasize_shoeDetail = await responsesize_shoeDetail.Content.ReadAsStringAsync();
+                    var size_shoeDetails = JsonConvert.DeserializeObject<List<Sizes_ShoeDetails>>(apiDatasize_shoeDetail);
+                    //lay du lieu tu bang color_shoeDetail
+                    string apiUrlcolor_shoeDetail = $"https://localhost:7109/api/Color_ShoeDetails/get-all-color_shoeDetails";
+                    var responsecolor_shoeDetail = await _httpClient.PostAsync(apiUrlcolor_shoeDetail, null);
+                    string apiDatacolor_shoeDetail = await responsecolor_shoeDetail.Content.ReadAsStringAsync();
+                    var color_shoeDetails = JsonConvert.DeserializeObject<List<Color_ShoeDetails>>(apiDatacolor_shoeDetail);
                     <select asp-for="IdShoeDetail" class="form-select">
                         <option>Chose Shoes </option>
                         @foreach (var item in shoeDetails)
                         {
-                            <option value="@item.Id">@item.Name</option>
+                            <option value="@item.Id">@item.Name </option>
                         }
                     </select>
                 }

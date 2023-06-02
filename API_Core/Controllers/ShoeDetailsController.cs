@@ -25,7 +25,7 @@ namespace API_Core.Controllers
         }
 
         // create
-        [HttpPost("create-shoedetails")]
+        [HttpPost("create-shoeDetails")]
         public bool CreateShoeDetails(
             Guid idSupplier,
             Guid idCategory,
@@ -38,13 +38,6 @@ namespace API_Core.Controllers
             Guid idSale)
         {
             if (string.IsNullOrEmpty(name)) return false;
-
-            // Check if brandName already exists
-            if (this._iShoesDetails.GetAll().Any(p => p.Name == name))
-            {
-                return false;
-            }
-
             var shoeDetails = new ShoeDetails();
             shoeDetails.Id = Guid.NewGuid();
             shoeDetails.IdSupplier = idSupplier;
@@ -56,7 +49,6 @@ namespace API_Core.Controllers
             shoeDetails.AvailableQuantity = availableQuantity;
             shoeDetails.Status = status;
             shoeDetails.IdSale = idSale;
-
             // check name trung nhau
             return this._iShoesDetails.Create(shoeDetails); // tạo shoeDetails mới
         }
@@ -83,7 +75,7 @@ namespace API_Core.Controllers
             return this._iShoesDetails.GetAll();
         }
 
-        // get 
+        // get
         [HttpGet("get-shoeDetails-by-id")]
         public ShoeDetails GetShoeDetails(Guid id)
         {
