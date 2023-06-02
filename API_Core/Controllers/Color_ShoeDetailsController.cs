@@ -28,7 +28,7 @@ namespace API_Core.Controllers
         }
 
         // create
-        [HttpPost("create-color_shoedetails")]
+        [HttpPost("create-color_shoeDetails")]
         public bool CreateColor_ShoeDetails(Guid idShoeDetails, Guid idColor)
         {
             var color_shoeDetails = new Color_ShoeDetails();

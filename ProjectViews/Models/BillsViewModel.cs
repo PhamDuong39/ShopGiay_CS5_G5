@@ -23,7 +23,7 @@ namespace ProjectViews.Models
 
         public int deliveryFee { get; set; }
         public double DiscountMoney { get; set; }
-        
+
         public double NoDiscountPrice { get; set;}
     }
 }

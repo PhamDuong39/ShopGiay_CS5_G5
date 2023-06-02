@@ -1,0 +1,140 @@
+﻿@using Data.Models
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Newtonsoft.Json
+@model IEnumerable<Data.Models.ShoeDetails>
+
+@{
+    HttpClient _httpClient = new HttpClient();
+    ViewData["Title"] = "Show";
+}
+@if (Model.Count() == 0)
+{
+    <h1>There are no shoes in the database <a asp-action="Create">Create Now ?</a> </h1>
+}
+else
+{
+    <h1>Manager Shoes</h1>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <form asp-action="DeleteMany">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    😢
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Supplier
+                </th>
+                <th>
+                    Brand
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Cost Price
+                </th>
+                <th>
+                    Sell Price
+                </th>
+                <th>
+                    Available Quantity
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Sale Name
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" value="@item.Id" name="deleteMany" class="form-check-input"/>
+                    </td>
+                    <td>
+                        @{
+                            //lay du lieu category
+                            string apiUrl = $"https://localhost:7109/api/Categories/get-all-categories";
+                            var response = await _httpClient.GetAsync(apiUrl);
+                            string apidata = await response.Content.ReadAsStringAsync();
+                            var cat = JsonConvert.DeserializeObject<List<Categories>>(apidata);
+                            //convert list json thanh list string
+                        }
+                        @cat.Where(x => x.Id == item.IdCategory).Select(x => x.CategoryName).FirstOrDefault()
+                    </td>
+                    <td>
+                        @{
+                            //lay du lieu supplier
+                            string apiUrl1 = "https://localhost:7109/api/Suppliers/get-all-supplier";
+                            var response1 = await _httpClient.GetAsync(apiUrl1);
+                            string apidata1 = await response1.Content.ReadAsStringAsync();
+                            var sp = JsonConvert.DeserializeObject<List<Supplier>>(apidata1);
+                        }
+                        @sp.Where(x => x.Id == item.IdSupplier).Select(x => x.Address).FirstOrDefault()
+                    </td>
+                    <td>
+                        @{
+                            // lay du lieu brand
+                            string apiUrl2 = "https://localhost:7109/api/Brands/get-all-brands";
+                            var response2 = await _httpClient.GetAsync(apiUrl2);
+                            string apidata2 = await response2.Content.ReadAsStringAsync();
+                            var br = JsonConvert.DeserializeObject<List<Brands>>(apidata2);
+                        }
+                        @br.Where(x => x.Id == item.IdBrand).Select(x => x.Name).FirstOrDefault()
+                    </td>
+                    <td>
+                        <strong> @item.Name</strong>
+                    </td>
+                    <td>
+                        <p style="color:green">@item.CostPrice $</p>
+                    </td>
+                    <td>
+                        <p style="color:red">@item.SellPrice $</p>
+                    </td>
+                    <td>
+                        @item.AvailableQuantity (Product)
+                    </td>
+                    <td>
+                        @if (item.Status == 1 && item.AvailableQuantity > 0)
+                        {
+                            <p style="color:green">Available</p>
+                        }
+                        else
+                        {
+                            <p style="color:red">Out of stock</p>
+                        }
+                    </td>
+                    <td>
+                        @{
+                            //lay du lieu sale
+                            string apiUrl3 = "https://localhost:7109/api/Sales/Show-Sales";
+                            var response3 = await _httpClient.GetAsync(apiUrl3);
+                            string apidata3 = await response3.Content.ReadAsStringAsync();
+                            var sl = JsonConvert.DeserializeObject<List<Sales>>(apidata3);
+                        }
+                        @sl.Where(x => x.Id == item.IdSale).Select(x => x.SaleName).FirstOrDefault()
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+            </tbody>
+
+        </table >
+        <input type="submit" value="Delete Many" class="btn btn-danger"/>
+    </form>
+}
