@@ -8,7 +8,7 @@
     string apiUrl = "https://localhost:7109/api/Role/get-all-role";
     var response = await _httpClient.GetAsync(apiUrl);
     string apidata = await response.Content.ReadAsStringAsync();
-    var role = JsonConvert.DeserializeObject<List<Roles>>(apidata);
+    var roles = JsonConvert.DeserializeObject<List<Roles>>(apidata);
 }
 
 <h1>Edit</h1>
@@ -19,12 +19,12 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Id" />          
             <div class="form-group">
                 <label asp-for="IdRole" class="control-label"></label>
                 <select asp-for="IdRole" class="form-select">
                     <option selected>Select User</option>
-                    @foreach (var item in role)
+                    @foreach (var item in roles)
                     {
                         <option value="@item.Id">@item.RoleName</option>
                     }
@@ -76,5 +76,4 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
 

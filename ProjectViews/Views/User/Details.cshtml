@@ -10,6 +10,7 @@
     string apidata = await response.Content.ReadAsStringAsync();
     var roles = JsonConvert.DeserializeObject<List<Roles>>(apidata);
     ViewData["lstrole"] = new SelectList(roles, "Id", "RoleName");
+    var x = "**************";
 }
 
 <h1>Details</h1>
@@ -28,7 +29,7 @@
             @Html.DisplayNameFor(model => model.Password)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Password)
+          @x
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Address)
@@ -40,13 +41,13 @@
             @Html.DisplayNameFor(model => model.Phonenumber)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Phonenumber)
+            @x
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Email)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
+            @x
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Status)

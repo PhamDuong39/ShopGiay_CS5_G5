@@ -10,6 +10,8 @@
     string apidata = await response.Content.ReadAsStringAsync();
     var roles = JsonConvert.DeserializeObject<List<Roles>>(apidata);
     ViewData["lstrole"] = new SelectList(roles, "Id", "RoleName");
+
+    var x = "**************";
 }
 <h1>Show</h1>
 
@@ -53,16 +55,16 @@
                 @Html.DisplayFor(modelItem => item.Username)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Password)
+               @x
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Phonenumber)
+              @x
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @x
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
@@ -80,7 +82,8 @@
                     }
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id">Editfull</a>
+                <a asp-action="Edit2" asp-route-id="@item.Id">Editstatus</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>

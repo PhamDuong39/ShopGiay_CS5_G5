@@ -83,6 +83,29 @@ namespace ProjectViews.Controllers
             }
             return View(users);
         }
+        [HttpGet]
+        public async Task<IActionResult> Edit2(Guid id)
+        {
+            string apiUrl = $"https://localhost:7109/api/User/{id}";
+            var response = await _httpClient.GetAsync(apiUrl);
+            string apidata = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<Users>(apidata);
+            return View(user);
+        }
+        // POST: UserController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit2(Guid Id, Users users)
+        {
+            string apiUrl = $"https://localhost:7109/api/User/update-user-by-id?Id={Id}&IdRole={users.IdRole}&Username={users.Username}&Password={users.Password}&Address={users.Address}&Phonenumber={users.Phonenumber}&Email={users.Email}&Status={users.Status}&Fullname={users.Fullname}";
+            var content = new StringContent(JsonConvert.SerializeObject(users), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync(apiUrl, content);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Show");
+            }
+            return View(users);
+        }
 
         // GET: UserController/Delete/5
         public async Task<IActionResult> Delete(Guid id)

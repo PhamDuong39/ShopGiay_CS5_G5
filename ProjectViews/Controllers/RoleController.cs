@@ -1,5 +1,4 @@
 ﻿using Data.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
@@ -45,7 +44,7 @@ namespace ProjectViews.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Roles roles)
         {
-            string apiURL = $"https://localhost:7109/api/Role/create-role?RoleName={roles.RoleName}&Status={roles.Status}";
+            string apiURL = $"https://localhost:7109/api/Role/create-role?RoleName={roles.RoleName}&Status={roles.Status = 1}";
             var content = new StringContent(JsonConvert.SerializeObject(roles), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(apiURL, content);
             if (response.IsSuccessStatusCode)
