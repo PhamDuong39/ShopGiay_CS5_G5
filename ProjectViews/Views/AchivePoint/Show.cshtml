@@ -1,0 +1,57 @@
+﻿@using Data.Models;
+@using Newtonsoft.Json;
+@model IEnumerable<Data.Models.AchivePoint>
+
+@{
+    ViewData["Title"] = "Show";
+    HttpClient _httpClient = new HttpClient();
+    string apiUrl = "https://localhost:7109/api/User/get-all-user";
+    var response = await _httpClient.GetAsync(apiUrl);
+    string apidata = await response.Content.ReadAsStringAsync();
+    var users = JsonConvert.DeserializeObject<List<Users>>(apidata);
+    ViewData["lstUser"] = new SelectList(users, "Id", "Username");
+
+
+}
+
+<h1>Show</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PointValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PointValue)
+            </td>
+            <td>
+                    @foreach( var user in ViewData["lstUser"] as SelectList)
+                    {
+                        if(user.Value == item.IdUser.ToString())
+                        {
+                            @user.Text;
+                        }
+                    }
+                </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
