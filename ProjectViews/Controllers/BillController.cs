@@ -79,7 +79,10 @@ namespace ProjectViews.Controllers
                     Value = item.Id.ToString(),
                     Text = item.Stage + "" + item.District + "" + item.Ward + "" + item.Street + "" + item.Address
                 });
+
             }
+
+
             ViewData["lstLocation"] = selectListLocation;
 
             // Payment method
@@ -112,7 +115,9 @@ namespace ProjectViews.Controllers
 
             billViewMD.bill = bill;
             billViewMD.lstBillDT = billDTs;
+
             billViewMD.DiscountMoney = (double)price * (Convert.ToDouble(coupon.DiscountValue) * 0.01);
+
             billViewMD.deliveryFee = shipMethod.FirstOrDefault(p => p.Id == bill.IdShipAdressMethod).Price;
             billViewMD.sumPrice = ((double)price + shipMethod.FirstOrDefault(p => p.Id == bill.IdShipAdressMethod).Price) - (double)price * (Convert.ToDouble(coupon.DiscountValue) * 0.01);
             billViewMD.NoDiscountPrice = ((double)price + shipMethod.FirstOrDefault(p => p.Id == bill.IdShipAdressMethod).Price);
