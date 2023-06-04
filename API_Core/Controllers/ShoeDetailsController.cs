@@ -27,6 +27,7 @@ namespace API_Core.Controllers
         // create
         [HttpPost("create-shoeDetails")]
         public bool CreateShoeDetails(
+            Guid IDShoeDetails,
             Guid idSupplier,
             Guid idCategory,
             Guid idBrand,
@@ -39,7 +40,7 @@ namespace API_Core.Controllers
         {
             if (string.IsNullOrEmpty(name)) return false;
             var shoeDetails = new ShoeDetails();
-            shoeDetails.Id = Guid.NewGuid();
+            shoeDetails.Id = IDShoeDetails;
             shoeDetails.IdSupplier = idSupplier;
             shoeDetails.IdCategory = idCategory;
             shoeDetails.IdBrand = idBrand;

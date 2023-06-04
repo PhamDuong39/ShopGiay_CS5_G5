@@ -43,10 +43,8 @@ namespace ProjectViews.Controllers
                 {
                     await file.CopyToAsync(fileStream);
                 }
-
                 images.ImageSource = fileName;
             }
-
             string url =
                 $"https://localhost:7109/api/Images/create-image?imageUrl={images.ImageSource}&idShoesDetails={images.IdShoeDetail}";
             var json = JsonConvert.SerializeObject(images);
@@ -56,8 +54,8 @@ namespace ProjectViews.Controllers
             {
                 return RedirectToAction("Show");
             }
+            return RedirectToAction("Show");
 
-            return View(images);
         }
 
         //details
@@ -70,7 +68,6 @@ namespace ProjectViews.Controllers
             {
                 return View(image);
             }
-
             return NotFound();
         }
 
@@ -115,8 +112,8 @@ namespace ProjectViews.Controllers
             {
                 return RedirectToAction("Show");
             }
+            return RedirectToAction("Show");
 
-            return View(images);
         }
         //delete
         public async Task<IActionResult> Delete(Guid Id)

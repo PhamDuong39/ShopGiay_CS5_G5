@@ -1,8 +1,7 @@
 ﻿<aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
-
-            <a class="nav-link" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-layout-text-window-reverse"></i><span>Quản lý</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="tables-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
@@ -12,16 +11,23 @@
                             Users
                         </button>
                         <ul class="dropdown-menu">
+
+                            <a class="dropdown-item" asp-controller="" asp-action="Index" class="active">
+                                <i class="bi bi-circle"></i><span>Users</span>
+                            </a>
+                            <a class="dropdown-item" asp-controller="" asp-action="Index" class="active">
+
                             <a class="dropdown-item" asp-controller="User" asp-action="Show" class="active">
                                 <i class="bi bi-circle"></i><span>Users</span>
                             </a>
                             <a class="dropdown-item" asp-controller="Role" asp-action="Show" class="active">
+
                                 <i class="bi bi-circle"></i><span>Roles</span>
                             </a>
-                            <a class="dropdown-item" asp-controller="AdminBills" asp-action="Index" class="active">
+                            <a class="dropdown-item" asp-controller="" asp-action="Index" class="active">
                                 <i class="bi bi-circle"></i><span>Bills</span>
                             </a>
-                            <a class="dropdown-item" asp-controller="AdminBillDetails" asp-action="Index" class="active">
+                            <a class="dropdown-item" asp-controller="" asp-action="Index" class="active">
                                 <i class="bi bi-circle"></i><span>Bill Details</span>
                             </a>
                         </ul>
@@ -74,9 +80,9 @@
                     </a>
                     <a  asp-controller="Location" asp-action="ShowAllLocation" class="active">
                         <i class="bi bi-circle"></i><span>Quản lý vị trí</span>
-                    </a>
+
                 </li>
             </ul>
         </li><!-- End Tables Nav -->
-    </ul>
+            </ul></ul>
 </aside>

@@ -35,51 +35,45 @@ namespace ProjectViews.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ShoeDetails shoeDetails, List<Guid> sizesList, List<Guid> colorsList)
         {
-            //check shoeDetails, sizesList, colorsList is null return badrequest
+            // Check shoeDetails, sizesList, colorsList is null and return BadRequest
             if (shoeDetails == null || sizesList == null || colorsList == null)
             {
-                return Content($"Size : {sizesList.Count} Color : {colorsList.Count}");
+                // Print the count of sizes and colors
+                return Content($"Size: {sizesList?.Count ?? 0} Color: {colorsList?.Count ?? 0}");
             }
             else
             {
-                //Vd Đầu vào là 1 shoeDetails, 1 list size bao gồm 5 size, 1 list color 5 color thì sẽ tạo ra 25 ShoeDetails mới và tương đương 25 size_shoeDetaisl và 25 color_shoeDetails
-                //Tạo ra 1 list shoeDetails mới
-                //Duyệt qua từng size trong list size
-                foreach (var size in sizesList)
+                for (int i = 0; i < sizesList.Count(); i++)
                 {
-                    //Duyệt qua từng color trong list color
-                    foreach (var color in colorsList)
+                    for (int j = 0; j < colorsList.Count(); j++)
                     {
-                        //Tạo ra 1 shoeDetails mới
-                        var newShoeDetails = new ShoeDetails()
+                        ShoeDetails newshoes = new ShoeDetails()
                         {
                             Id = Guid.NewGuid(),
-                            IdSupplier = shoeDetails.IdSupplier,
-                            IdCategory = shoeDetails.IdCategory,
-                            IdBrand = shoeDetails.IdBrand,
                             Name = shoeDetails.Name,
                             CostPrice = shoeDetails.CostPrice,
                             SellPrice = shoeDetails.SellPrice,
                             AvailableQuantity = shoeDetails.AvailableQuantity,
                             Status = shoeDetails.Status,
+                            IdSupplier = shoeDetails.IdSupplier,
+                            IdCategory = shoeDetails.IdCategory,
+                            IdBrand = shoeDetails.IdBrand,
                             IdSale = shoeDetails.IdSale
                         };
-                        //Thêm shoeDetails mới vào database
                         string urlApi =
-                            $"https://localhost:7109/api/ShoeDetails/create-shoeDetails?name={newShoeDetails.Name}&costPrice={newShoeDetails.CostPrice}&sellPrice={newShoeDetails.SellPrice}&availableQuantity={newShoeDetails.AvailableQuantity}&status={newShoeDetails.Status}&idSupplier={newShoeDetails.IdSupplier}&idCategory={newShoeDetails.IdCategory}&idBrand={newShoeDetails.IdBrand}&idSale={newShoeDetails.IdSale}";
+                            $"https://localhost:7109/api/ShoeDetails/create-shoeDetails?IDShoeDetails={newshoes.Id}&name={newshoes.Name}&costPrice={newshoes.CostPrice}&sellPrice={newshoes.SellPrice}&availableQuantity={newshoes.AvailableQuantity}&status={newshoes.Status}&idSupplier={newshoes.IdSupplier}&idCategory={newshoes.IdCategory}&idBrand={newshoes.IdBrand}&idSale={newshoes.IdSale}";
                         var response = await _httpClient.PostAsync(urlApi, null);
-                        //tao mới size_shoesDetails
                         string urlApiSize =
-                            $"https://localhost:7109/api/SIzes_ShoeDetails/create-size-shoe-details?sizeId={size}&shoeDetailsId={newShoeDetails.Id}";
+                            $"https://localhost:7109/api/SIzes_ShoeDetails/create-size-shoe-details?sizeId={sizesList[i]}&shoeDetailsId={newshoes.Id}";
                         var responseSize = await _httpClient.PostAsync(urlApiSize, null);
-                        //Thêm  mới vào list shoeDetails
                         string urlApiColor =
-                            $"https://localhost:7109/api/Color_ShoeDetails/create-color_shoeDetails?idShoeDetails={newShoeDetails.Id}&idColor={color}";
+                            $"https://localhost:7109/api/Color_ShoeDetails/create-color-shoeDetails?idShoeDetails={newshoes.Id}&idColor={colorsList[j]}";
                         var responseColor = await _httpClient.PostAsync(urlApiColor, null);
                     }
                 }
             }
-            //check shoeDetails, sizesList, colorsList is null return badrequest
+
+            // Check shoeDetails, sizesList, colorsList is null and return BadRequest
             return RedirectToAction("Show");
         }
 
@@ -133,6 +127,7 @@ namespace ProjectViews.Controllers
 
             return this.RedirectToAction("Show");
         }
+
         //delete many
         public async Task<IActionResult> DeleteMany(List<Guid> deleteMany)
         {

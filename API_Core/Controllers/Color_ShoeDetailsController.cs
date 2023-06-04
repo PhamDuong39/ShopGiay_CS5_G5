@@ -28,13 +28,20 @@ namespace API_Core.Controllers
         }
 
         // create
-        [HttpPost("create-color_shoeDetails")]
+        [HttpPost("create-color-shoeDetails")]
         public bool CreateColor_ShoeDetails(Guid idShoeDetails, Guid idColor)
         {
+
             var color_shoeDetails = new Color_ShoeDetails();
             color_shoeDetails.Id = Guid.NewGuid();
             color_shoeDetails.IdShoeDetail = idShoeDetails;
             color_shoeDetails.IdColor = idColor;
+            //neu nhu idshoesdetails da co idcolor thi khong cho tao
+            var check = this._iColor_ShoeDtails.GetAll().FirstOrDefault(p => p.IdShoeDetail == idShoeDetails && p.IdColor == idColor);
+            if (check != null)
+            {
+                return false;
+            }
             return this._iColor_ShoeDtails.Create(color_shoeDetails); // tạo color_shoeDetails mới
         }
 
