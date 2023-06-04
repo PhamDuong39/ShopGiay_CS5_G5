@@ -91,9 +91,5 @@ namespace ProjectViews.Controllers
             return this.RedirectToAction("Show");
         }
 
-        public async Task<IActionResult> DeleteMany(List<Guid> id)
-        {
-            return View();
-        }
     }
 }

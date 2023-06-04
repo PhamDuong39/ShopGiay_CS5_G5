@@ -6,6 +6,36 @@
 @{
     HttpClient _httpClient = new HttpClient();
     ViewData["Title"] = "Show";
+    //lay data tu bang ShoeDetail
+    string apiUrls = $"https://localhost:7109/api/ShoeDetails/get-all-shoeDetails";
+    var responses = await _httpClient.GetAsync(apiUrls); // goi api lay data
+    string apiDatas = await responses.Content.ReadAsStringAsync(); // doc data tra ve
+    var shoeDetails = JsonConvert.DeserializeObject<List<ShoeDetails>>(apiDatas);
+    //lay dữ liệu color từ bảng Color
+    string apiUrlcolr = $"https://localhost:7109/api/Color/get-all-colors";
+    var responsecolr = await _httpClient.GetAsync(apiUrlcolr);
+    string apiDatacolr = await responsecolr.Content.ReadAsStringAsync();
+    var colors = JsonConvert.DeserializeObject<List<Colors>>(apiDatacolr);
+    //lay dữ liệu size từ bảng Size
+    string apiUrlsize = $"https://localhost:7109/api/Size/get-all-size";
+    var responsesize = await _httpClient.GetAsync(apiUrlsize);
+    string apiDatasize = await responsesize.Content.ReadAsStringAsync();
+    var sizes = JsonConvert.DeserializeObject<List<Sizes>>(apiDatasize);
+    //lay du lieu tu bang Brand
+    string apiUrlbrand = $"https://localhost:7109/api/Brand/get-all-brands";
+    var responsebrand = await _httpClient.PostAsync(apiUrlbrand, null);
+    string apiDatabrand = await responsebrand.Content.ReadAsStringAsync();
+    var brands = JsonConvert.DeserializeObject<List<Brands>>(apiDatabrand);
+    //lay du lieu tu bang size_shoeDetail
+    string apiUrlsize_shoeDetail = $"https://localhost:7109/api/SIzes_ShoeDetails/get-all-size-shoe-details";
+    var responsesize_shoeDetail = await _httpClient.GetAsync(apiUrlsize_shoeDetail);
+    string apiDatasize_shoeDetail = await responsesize_shoeDetail.Content.ReadAsStringAsync();
+    var size_shoeDetails = JsonConvert.DeserializeObject<List<Sizes_ShoeDetails>>(apiDatasize_shoeDetail);
+    //lay du lieu tu bang color_shoeDetail
+    string apiUrlcolor_shoeDetail = $"https://localhost:7109/api/Color_ShoeDetails/get-all-color_shoeDetails";
+    var apiDatacolor_shoeDetail = await _httpClient.GetAsync(apiUrlcolor_shoeDetail);
+    string apiColorShoesDetails = await apiDatacolor_shoeDetail.Content.ReadAsStringAsync();
+    var color_shoeDetails = JsonConvert.DeserializeObject<List<Color_ShoeDetails>>(apiColorShoesDetails);
 }
 @if (Model.Count() == 0)
 {
@@ -14,7 +44,6 @@
 else
 {
     <h1>Manager Shoes</h1>
-
     <p>
         <a asp-action="Create">Create New</a>
     </p>
@@ -94,8 +123,11 @@ else
                         @br.Where(x => x.Id == item.IdBrand).Select(x => x.Name).FirstOrDefault()
                     </td>
                     <td>
-                        <strong> @item.Name</strong>
-                    </td>
+                    @{
+                        var colorDetails = color_shoeDetails.FirstOrDefault(p => p.IdShoeDetail == item.Id).IdColor;
+                        var sizeDetails = size_shoeDetails.FirstOrDefault(p => p.IdShoeDetails == item.Id).IdSize;
+                    }
+                    <strong> @item.Name - @sizes.FirstOrDefault(p=>p.Id ==sizeDetails).SizeNumber </strong> <span class="dot" style="background-color: #@colors.FirstOrDefault(p=> p.Id == colorDetails).ColorName"></span>
                     <td>
                         <p style="color:green">@item.CostPrice $</p>
                     </td>
@@ -138,3 +170,11 @@ else
         <input type="submit" value="Delete Many" class="btn btn-danger"/>
     </form>
 }
+<style>
+    .dot {
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+</style>
