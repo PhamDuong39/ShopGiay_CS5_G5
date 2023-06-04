@@ -11,10 +11,17 @@
                             Users
                         </button>
                         <ul class="dropdown-menu">
+
                             <a class="dropdown-item" asp-controller="" asp-action="Index" class="active">
                                 <i class="bi bi-circle"></i><span>Users</span>
                             </a>
                             <a class="dropdown-item" asp-controller="" asp-action="Index" class="active">
+
+                            <a class="dropdown-item" asp-controller="User" asp-action="Show" class="active">
+                                <i class="bi bi-circle"></i><span>Users</span>
+                            </a>
+                            <a class="dropdown-item" asp-controller="Role" asp-action="Show" class="active">
+
                                 <i class="bi bi-circle"></i><span>Roles</span>
                             </a>
                             <a class="dropdown-item" asp-controller="" asp-action="Index" class="active">
@@ -73,8 +80,6 @@
                     </a>
                     <a  asp-controller="Location" asp-action="ShowAllLocation" class="active">
                         <i class="bi bi-circle"></i><span>Quản lý vị trí</span>
-                    </a>
-
 
                 </li>
             </ul>
