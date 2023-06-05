@@ -6,6 +6,35 @@
 @{
     ViewData["Title"] = "Edit";
     HttpClient _httpClient = new HttpClient();
+    string apiUrls = $"https://localhost:7109/api/ShoeDetails/get-all-shoeDetails";
+    var responses = await _httpClient.GetAsync(apiUrls); // goi api lay data
+    string apiDatas = await responses.Content.ReadAsStringAsync(); // doc data tra ve
+    var shoeDetails = JsonConvert.DeserializeObject<List<ShoeDetails>>(apiDatas);
+    //lay dữ liệu color từ bảng Color
+    string apiUrlcolr = $"https://localhost:7109/api/Color/get-all-colors";
+    var responsecolr = await _httpClient.GetAsync(apiUrlcolr);
+    string apiDatacolr = await responsecolr.Content.ReadAsStringAsync();
+    var colors = JsonConvert.DeserializeObject<List<Colors>>(apiDatacolr);
+    //lay dữ liệu size từ bảng Size
+    string apiUrlsize = $"https://localhost:7109/api/Size/get-all-size";
+    var responsesize = await _httpClient.GetAsync(apiUrlsize);
+    string apiDatasize = await responsesize.Content.ReadAsStringAsync();
+    var sizes = JsonConvert.DeserializeObject<List<Sizes>>(apiDatasize);
+    //lay du lieu tu bang Brand
+    string apiUrlbrand = $"https://localhost:7109/api/Brand/get-all-brands";
+    var responsebrand = await _httpClient.PostAsync(apiUrlbrand, null);
+    string apiDatabrand = await responsebrand.Content.ReadAsStringAsync();
+    var brands = JsonConvert.DeserializeObject<List<Brands>>(apiDatabrand);
+    //lay du lieu tu bang size_shoeDetail
+    string apiUrlsize_shoeDetail = $"https://localhost:7109/api/SIzes_ShoeDetails/get-all-size-shoe-details";
+    var responsesize_shoeDetail = await _httpClient.GetAsync(apiUrlsize_shoeDetail);
+    string apiDatasize_shoeDetail = await responsesize_shoeDetail.Content.ReadAsStringAsync();
+    var size_shoeDetails = JsonConvert.DeserializeObject<List<Sizes_ShoeDetails>>(apiDatasize_shoeDetail);
+    //lay du lieu tu bang color_shoeDetail
+    string apiUrlcolor_shoeDetail = $"https://localhost:7109/api/Color_ShoeDetails/get-all-color_shoeDetails";
+    var apiDatacolor_shoeDetail = await _httpClient.GetAsync(apiUrlcolor_shoeDetail);
+    string apiColorShoesDetails = await apiDatacolor_shoeDetail.Content.ReadAsStringAsync();
+    var color_shoeDetails = JsonConvert.DeserializeObject<List<Color_ShoeDetails>>(apiColorShoesDetails);
 }
 
 <h1>Edit</h1>
@@ -18,6 +47,10 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="col-md-12">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group mt-3">
+                    <input type="hidden" asp-for="Id" class="form-control"></input>
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
                 <div class="form-group">
                     <label asp-for="IdCategory" class="control-label">Supplier </label>
                     @{
@@ -162,6 +195,34 @@
                             </ul>
                         </div>
                     }
+                </div>
+                <div class="form-group mt-3">
+                    @{
+                        //Lay size san pham cung ten chua co + size dang o day
+                    }
+                    <label class="control-label">Size : </label>
+                    <select name="idSize">
+                        <option selected>Select Size</option>
+                        @foreach (var item in sizes)
+                        {
+                            <option value="@item.Id">@item.SizeNumber</option>
+                        }
+                    </select>
+                    <span asp-validation-for="" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-3">
+                    @{
+                        //Lay size san pham cung ten chua co + size dang o day
+                    }
+                    <label class="control-label">Color : </label>
+                    <select name="idColor">
+                        <option selected>Select Color</option>
+                        @foreach (var item in colors)
+                        {
+                            <option value="@item.Id">@item.ColorName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group">

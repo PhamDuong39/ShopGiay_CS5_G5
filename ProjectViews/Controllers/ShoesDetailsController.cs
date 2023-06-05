@@ -96,6 +96,45 @@ namespace ProjectViews.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(ShoeDetails shoeDetails)
         {
+            var responseCheck =
+                await _httpClient.GetAsync(
+                    $"https://localhost:7109/api/ShoeDetails/get-shoeDetails-by-name?name={shoeDetails.Name}");
+            //check neu san pham cung ten da ton tai size va color nay thi khong cho update
+            var resultCheck = await responseCheck.Content.ReadAsStringAsync();
+            var shoeDetailsCheck = JsonConvert.DeserializeObject<ShoeDetails>(resultCheck);
+            if (shoeDetailsCheck != null)
+            {
+                var responseCheckSize =
+                    await _httpClient.GetAsync(
+                        $"https://localhost:7109/api/SIzes_ShoeDetails/get-size-shoe-details-by-id?sizeId={idSize}&shoeDetailsId={shoeDetailsCheck.Id}");
+                var resultCheckSize = await responseCheckSize.Content.ReadAsStringAsync();
+                var sizeCheck = JsonConvert.DeserializeObject<Sizes_ShoeDetails>(resultCheckSize);
+                var responseCheckColor =
+                    await _httpClient.GetAsync(
+                        $"https://localhost:7109/api/Color_ShoeDetails/get-color-shoe-details-by-id?idShoeDetails={shoeDetailsCheck.Id}&idColor={idColor}");
+                var resultCheckColor = await responseCheckColor.Content.ReadAsStringAsync();
+                var colorCheck = JsonConvert.DeserializeObject<Color_ShoeDetails>(resultCheckColor);
+                if (sizeCheck != null && colorCheck != null)
+                {
+                    return Content("San pham da ton tai");
+                }
+            }
+            string urlApi =
+                $"https://localhost:7109/api/ShoeDetails/update-shoeDetails?IDShoeDetails={shoeDetails.Id}&name={shoeDetails.Name}&costPrice={shoeDetails.CostPrice}&sellPrice={shoeDetails.SellPrice}&availableQuantity={shoeDetails.AvailableQuantity}&status={shoeDetails.Status}&idSupplier={shoeDetails.IdSupplier}&idCategory={shoeDetails.IdCategory}&idBrand={shoeDetails.IdBrand}&idSale={shoeDetails.IdSale}";
+            var content = new StringContent(JsonConvert.SerializeObject(shoeDetails), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync(urlApi, content);
+            //update size_shoeDetails
+            string urlApiSize =
+                $"https://localhost:7109/api/SIzes_ShoeDetails/update-size-shoe-details?sizeId={idSize}&shoeDetailsId={shoeDetails.Id}";
+            var responseSize = await _httpClient.PutAsync(urlApiSize, null);
+            //update color_shoeDetails
+            string urlApiColor =
+                $"https://localhost:7109/api/Color_ShoeDetails/update-color-shoesDetails?idShoeDetails={shoeDetails.Id}&idColor={idColor}";
+            var responseColor = await _httpClient.PutAsync(urlApiColor, null);
+            if (response.IsSuccessStatusCode && responseSize.IsSuccessStatusCode && responseColor.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Show");
+            }
             return View(shoeDetails);
         }
 
