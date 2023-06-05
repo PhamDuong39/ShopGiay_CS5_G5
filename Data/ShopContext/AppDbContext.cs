@@ -26,7 +26,7 @@ namespace Data.ShopContext
         {
 
             optionsBuilder.UseSqlServer("Data Source=DESKTOP-50K05FU\\SQLEXPRESS;Initial Catalog = DbCS5_Test;Integrated Security=True;Trust Server Certificate=True");
-            //push
+            //push4
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
