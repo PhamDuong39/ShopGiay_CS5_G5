@@ -105,13 +105,7 @@ namespace API_Core.Controllers
             Guid idSale)
         {
             if (string.IsNullOrEmpty(name)) return false;
-
             // Check if brandName already exists
-            if (this._iShoesDetails.GetAll().Any(p => p.Name == name))
-            {
-                return false;
-            }
-
             var shoeDetails = this._iShoesDetails.GetAll().FirstOrDefault(p => p.Id == id);
             shoeDetails.IdSupplier = idSupplier;
             shoeDetails.IdCategory = idCategory;
