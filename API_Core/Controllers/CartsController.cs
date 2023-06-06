@@ -55,7 +55,7 @@ namespace API_Core.Controllers
         }
 
         //delete api/<valuescontroller>/5
-        [HttpDelete("{id}")]
+        [HttpDelete("delete")]
         public bool delete(Guid id)
         {
             Carts obj = _irepos.GetAll().First(p => p.IdUser == id);

@@ -69,6 +69,20 @@
             </a>
             <ul id="tables-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
                 <li>
+                    <a asp-area="Admin" asp-controller="AdminProducts" asp-action="Index" class="active">
+                        <i class="bi bi-circle"></i><span></span>
+                    </a>
+                    <a asp-area="Admin" asp-controller="AdminUsers" asp-action="Index" class="active">
+                        <i class="bi bi-circle"></i><span>Quản lý Users</span>
+                    </a>
+                    <a asp-area="Admin" asp-controller="AdminRoles" asp-action="Index" class="active">
+                        <i class="bi bi-circle"></i><span>Quản lý Roles</span>
+                    </a>
+                    <a asp-area="Admin" asp-controller="Cart" asp-action="Show" class="active">
+                        <i class="bi bi-circle"></i><span>Quản lý Carts</span>
+                    </a>
+                    <a asp-area="Admin" asp-controller="CartDetail" asp-action="Show" class="active">
+                        <i class="bi bi-circle"></i><span>Quản lý Cart Details</span>
                     <a asp-controller="Bill" asp-action="Show" class="active">
                         <i class="bi bi-circle"></i><span>Quản lý hóa đơn</span>
                     </a>
@@ -77,6 +91,9 @@
                     </a>
                     <a  asp-controller="ShipMethod" asp-action="Show" class="active">
                         <i class="bi bi-circle"></i><span>Quản lý phương thức vận chuyển</span>
+                    </a>
+                    <a asp-area="Admin" asp-controller="FavouriteShoes" asp-action="Show" class="active">
+                        <i class="bi bi-circle"></i><span> Sản Phẩm Yêu Thích</span>
                     </a>
                     <a  asp-controller="Location" asp-action="ShowAllLocation" class="active">
                         <i class="bi bi-circle"></i><span>Quản lý vị trí</span>
