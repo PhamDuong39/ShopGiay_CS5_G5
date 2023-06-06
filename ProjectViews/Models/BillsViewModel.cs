@@ -5,19 +5,25 @@ namespace ProjectViews.Models
     {
         public Bills bill { get; set; }
         public List<BillDetails> lstBillDT { get; set; }
-        private int _sumPrice;
+        //private int _sumPrice;
 
-        public int sumPrice
+        public double sumPrice
         {
-            get
-            {
-                _sumPrice = lstBillDT.Sum(bill => bill.Quantity * bill.Price);
-                return _sumPrice;
-            }
-            set
-            {
-                _sumPrice = value;
-            }
+            get; set;
+            //get
+            //{
+            //    _sumPrice = lstBillDT.Sum(bill => bill.Quantity * bill.Price);
+            //    return _sumPrice;
+            //}
+            //set
+            //{
+            //    _sumPrice = value;
+            //}
         }
+
+        public int deliveryFee { get; set; }
+        public double DiscountMoney { get; set; }
+
+        public double NoDiscountPrice { get; set;}
     }
 }

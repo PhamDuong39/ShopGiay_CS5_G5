@@ -13,7 +13,7 @@ namespace Data.ShopContext
     {
         public AppDbContext()
         {
-            
+
         }
 
         public AppDbContext(DbContextOptions options) : base(options)
@@ -26,7 +26,7 @@ namespace Data.ShopContext
         {
 
             optionsBuilder.UseSqlServer("Data Source=DESKTOP-50K05FU\\SQLEXPRESS;Initial Catalog = DbCS5_Test;Integrated Security=True;Trust Server Certificate=True");
-            //push4
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -51,7 +51,7 @@ namespace Data.ShopContext
         public DbSet<Location> Location { get; set; }
         public DbSet<ShipAdressMethod> ShipAdressMethods { get; set; }
         public DbSet<PaymentMethods> PaymentMethods { get; set; }
-        
+
 
         public DbSet<Images> Images { get; set; }
         public DbSet<Roles> Roles { get; set; }

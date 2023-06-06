@@ -1,0 +1,45 @@
+﻿@using Data.Models;
+@using Newtonsoft.Json;
+@model Data.Models.AchivePoint
+
+@{
+    ViewData["Title"] = "Details";
+    HttpClient _httpClient = new HttpClient();
+    string apiUrl = "https://localhost:7109/api/User/get-all-user";
+    var response = await _httpClient.GetAsync(apiUrl);
+    string apidata = await response.Content.ReadAsStringAsync();
+    var users = JsonConvert.DeserializeObject<List<Users>>(apidata);
+    ViewData["lstUser"] = new SelectList(users, "Id", "Username");
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>AchivePoint</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PointValue)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PointValue)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Users)
+        </dt>
+        <dd class = "col-sm-10">
+            @foreach (var user in ViewData["lstUser"] as SelectList)
+            {
+                if (user.Value == Model.IdUser.ToString())
+                {
+                    @user.Text;
+                    ;
+                }
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

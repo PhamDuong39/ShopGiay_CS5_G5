@@ -3,21 +3,18 @@
 @{
     ViewData["Title"] = "Create";
 }
+<h1>Create Color</h1>
 
-<h1>Create</h1>
-
-<h4>Colors</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" >
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <p>Your Chose Color : <span id="value"></span></p>
             <div class="form-group">
-                <label asp-for="ColorName" class="control-label"></label>
-                <input asp-for="ColorName" class="form-control" />
-                <span asp-validation-for="ColorName" class="text-danger"></span>
+                <input asp-for="ColorName" type="color" id="colorPicker"/>
             </div>
-            <div class="form-group">
+            <div class="form-group mt-3">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -27,7 +24,11 @@
 <div>
     <a asp-action="Show">Back to List</a>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+<script>
+    var colorPicker = document.getElementById("colorPicker");
+    var value = document.getElementById("value");
+    value.innerHTML = colorPicker.value;
+    colorPicker.oninput = function() {
+        value.innerHTML = this.value.toString();
+    }
+</script>

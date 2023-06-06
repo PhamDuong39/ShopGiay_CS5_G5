@@ -25,8 +25,9 @@ namespace API_Core.Controllers
         }
 
         // create
-        [HttpPost("create-shoedetails")]
+        [HttpPost("create-shoeDetails")]
         public bool CreateShoeDetails(
+            Guid IDShoeDetails,
             Guid idSupplier,
             Guid idCategory,
             Guid idBrand,
@@ -38,15 +39,8 @@ namespace API_Core.Controllers
             Guid idSale)
         {
             if (string.IsNullOrEmpty(name)) return false;
-
-            // Check if brandName already exists
-            if (this._iShoesDetails.GetAll().Any(p => p.Name == name))
-            {
-                return false;
-            }
-
             var shoeDetails = new ShoeDetails();
-            shoeDetails.Id = Guid.NewGuid();
+            shoeDetails.Id = IDShoeDetails;
             shoeDetails.IdSupplier = idSupplier;
             shoeDetails.IdCategory = idCategory;
             shoeDetails.IdBrand = idBrand;
@@ -56,7 +50,6 @@ namespace API_Core.Controllers
             shoeDetails.AvailableQuantity = availableQuantity;
             shoeDetails.Status = status;
             shoeDetails.IdSale = idSale;
-
             // check name trung nhau
             return this._iShoesDetails.Create(shoeDetails); // tạo shoeDetails mới
         }
@@ -83,8 +76,8 @@ namespace API_Core.Controllers
             return this._iShoesDetails.GetAll();
         }
 
-        // get 
-        [HttpGet("get-one-shoeDetails")]
+        // get
+        [HttpGet("get-shoeDetails-by-id")]
         public ShoeDetails GetShoeDetails(Guid id)
         {
             return this._iShoesDetails.GetAll().FirstOrDefault(p => p.Id == id);
@@ -112,13 +105,7 @@ namespace API_Core.Controllers
             Guid idSale)
         {
             if (string.IsNullOrEmpty(name)) return false;
-
             // Check if brandName already exists
-            if (this._iShoesDetails.GetAll().Any(p => p.Name == name))
-            {
-                return false;
-            }
-
             var shoeDetails = this._iShoesDetails.GetAll().FirstOrDefault(p => p.Id == id);
             shoeDetails.IdSupplier = idSupplier;
             shoeDetails.IdCategory = idCategory;

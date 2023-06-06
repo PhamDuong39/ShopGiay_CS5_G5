@@ -33,7 +33,7 @@ namespace API_Core.Controllers
             if (string.IsNullOrEmpty(categoryName)) return false;
 
             // Check if brandName already exists
-            if (this._categoriesIRepos.GetAll().Any(p => p.CategoryName == categoryName))
+            if (this._categoriesIRepos.GetAll().Any(p => p.CategoryName.ToUpper().Trim() == categoryName.ToUpper().Trim()))
             {
                 return false;
             }
@@ -107,6 +107,10 @@ namespace API_Core.Controllers
         [HttpPut("update-category")]
         public bool UpdateCategory(Guid id, string categoryName)
         {
+            if (this._categoriesIRepos.GetAll().Any(p => p.CategoryName.ToUpper().Trim() == categoryName.ToUpper().Trim()))
+            {
+                return false;
+            }
             var category = this._categoriesIRepos.GetAll().FirstOrDefault(p => p.Id == id);
             category.CategoryName = categoryName;
             return this._categoriesIRepos.Update(category);

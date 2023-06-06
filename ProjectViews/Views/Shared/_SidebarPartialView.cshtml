@@ -1,35 +1,88 @@
 ﻿<aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
-
         <li class="nav-item">
-            <a class="nav-link " data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-layout-text-window-reverse"></i><span>Quản lý</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="tables-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+                <li class="nav-item">
+                    <div class="dropdown mt-3">
+                        <button class="btn  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Users
+                        </button>
+                        <ul class="dropdown-menu">
+
+                            <a class="dropdown-item" asp-controller="" asp-action="Index" class="active">
+                                <i class="bi bi-circle"></i><span>Users</span>
+                            </a>
+                            <a class="dropdown-item" asp-controller="" asp-action="Index" class="active">
+                                </a>
+                            <a class="dropdown-item" asp-controller="User" asp-action="Show" class="active">
+                                <i class="bi bi-circle"></i><span>Users</span>
+                            </a>
+                            <a class="dropdown-item" asp-controller="Role" asp-action="Show" class="active">
+
+                                <i class="bi bi-circle"></i><span>Roles</span>
+                            </a>
+                            <a class="dropdown-item" asp-controller="" asp-action="Index" class="active">
+                                <i class="bi bi-circle"></i><span>Bills</span>
+                            </a>
+                            <a class="dropdown-item" asp-controller="" asp-action="Index" class="active">
+                                <i class="bi bi-circle"></i><span>Bill Details</span>
+                            </a>
+                        </ul>
+                    </div>
+                    <div class="dropdown mt-3">
+                        <button class="btn  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Product Shoes
+                        </button>
+                        <ul class="dropdown-menu">
+                            <a class="dropdown-item" asp-controller="Size" asp-action="ShowSize" class="active">
+                                <i class="bi bi-circle"></i><span>Size</span>
+                            </a>
+                            <a class="dropdown-item" asp-controller="Colors" asp-action="Show" class="active">
+                                <i class="bi bi-circle"></i><span>Color</span>
+                            </a>
+                            <a class="dropdown-item" asp-controller="Categories" asp-action="Show" class="active">
+                                <i class="bi bi-circle"></i><span>Category</span>
+                            </a>
+                            <a class="dropdown-item" asp-controller="Brands" asp-action="Show" class="active">
+                                <i class="bi bi-circle"></i><span>Brands</span>
+                            </a>
+                            <a class="dropdown-item" asp-controller="Supplier" asp-action="Show" class="active">
+                                <i class="bi bi-circle"></i><span>Supplier</span>
+                            </a>
+                            <a class="dropdown-item" asp-controller="ShoesDetails" asp-action="Show" class="active">
+                                <i class="bi bi-circle"></i><span>Shoes</span>
+                            </a>
+                            <a class="dropdown-item" asp-controller="Description" asp-action="Show" class="active">
+                                <i class="bi bi-circle"></i><span>Description</span>
+                            </a>
+                            <a class="dropdown-item" asp-controller="Images" asp-action="Show" class="active">
+                                <i class="bi bi-circle"></i><span>Image</span>
+                            </a>
+                        </ul>
+                    </div>
+
+            <a class="nav-link " data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-layout-text-window-reverse"></i><span>Quản lý thanh toán</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="tables-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a asp-area="Admin" asp-controller="AdminProducts" asp-action="Index" class="active">
-                        <i class="bi bi-circle"></i><span></span>
+                    <a asp-controller="Bill" asp-action="Show" class="active">
+                        <i class="bi bi-circle"></i><span>Quản lý hóa đơn</span>
                     </a>
-                    <a asp-area="Admin" asp-controller="AdminUsers" asp-action="Index" class="active">
-                        <i class="bi bi-circle"></i><span>Quản lý Users</span>
+                    <a asp-controller="PaymentMethod" asp-action="Show" class="active">
+                        <i class="bi bi-circle"></i><span>Quản lý phương thức thanh toán</span>
                     </a>
-                    <a asp-area="Admin" asp-controller="AdminRoles" asp-action="Index" class="active">
-                        <i class="bi bi-circle"></i><span>Quản lý Roles</span>
+                    <a  asp-controller="ShipMethod" asp-action="Show" class="active">
+                        <i class="bi bi-circle"></i><span>Quản lý phương thức vận chuyển</span>
                     </a>
-                    <a asp-area="Admin" asp-controller="AdminCarts" asp-action="Index" class="active">
-                        <i class="bi bi-circle"></i><span>Quản lý Carts</span>
-                    </a>
-                    <a asp-area="Admin" asp-controller="AdminCartDetails" asp-action="Index" class="active">
-                        <i class="bi bi-circle"></i><span>Quản lý Cart Details</span>
-                    </a>
-                    <a asp-area="Admin" asp-controller="AdminBills" asp-action="Index" class="active">
-                        <i class="bi bi-circle"></i><span>Quản lý Bills</span>
-                    </a>
-                    <a asp-area="Admin" asp-controller="AdminBillDetails" asp-action="Index" class="active">
-                        <i class="bi bi-circle"></i><span>Quản lý Bill Details</span>
-                    </a>
+                    <a  asp-controller="Location" asp-action="ShowAllLocation" class="active">
+                        <i class="bi bi-circle"></i><span>Quản lý vị trí</span>
+                        </a>
                 </li>
             </ul>
         </li><!-- End Tables Nav -->
-    </ul>
+            </ul></ul>
 </aside>

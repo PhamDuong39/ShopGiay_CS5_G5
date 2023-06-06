@@ -34,12 +34,15 @@ namespace API_Core.Controllers
             if (this._brandsIRepos.GetAll().Any(p => p.Name == brandName))
             {
                 return false;
-            }
 
-            var brand = new Brands();
-            brand.Id = Guid.NewGuid();
-            brand.Name = brandName;
-            return this._brandsIRepos.Create(brand); // Create a new brand
+            }
+            else
+            {
+                var brand = new Brands();
+                brand.Id = Guid.NewGuid();
+                brand.Name = brandName;
+                return this._brandsIRepos.Create(brand); // Create a new brand
+            }
         }
 
         // delete
@@ -51,7 +54,7 @@ namespace API_Core.Controllers
             return false;
         }
 
-        [HttpDelete("delete-many-brands/{List<Id>}")]
+        [HttpDelete("delete-many-brands")]
         public bool DeleteManyBrand(List<Guid> Id)
         {
             try
