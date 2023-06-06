@@ -150,80 +150,31 @@
                             }
                         </select>
                     }
-
                 </div>
-                <div class="form-group mt-3">
-                    @{
-                        //lay du lieu size
-                        string apiUrl4 = $"https://localhost:7109/api/Size/get-all-size";
-                        var response4 = await _httpClient.GetAsync(apiUrl4);
-                        string apidata4 = await response4.Content.ReadAsStringAsync();
-                        var sz = JsonConvert.DeserializeObject<List<Sizes>>(apidata4);
-                        //load du lieu vao dropdownlist Checkbox
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                Chose Size
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                @foreach (var item in sz)
-                                {
-                                    <input type="checkbox" name="sizesList" value="@item.Id" class="form-check-input"/>
-                                    @item.SizeNumber
-                                }
-                            </ul>
-                        </div>
-                    }
-                </div>
-                <div class="form-group mt-3">
-                    @{
-                        //lay du lieu size
-                        string apiUrl5 = $"https://localhost:7109/api/Color/get-all-colors";
-                        var response5 = await _httpClient.GetAsync(apiUrl5);
-                        string apidata5 = await response5.Content.ReadAsStringAsync();
-                        var cl = JsonConvert.DeserializeObject<List<Colors>>(apidata5);
-                        //load du lieu vao dropdownlist Checkbox
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                Chose Color
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                @foreach (var item in cl)
-                                {
-                                    <input type="checkbox" name="colorsList" value="@item.Id" class="form-check-input"/>
-                                    <span class="dot" style="background-color: #@item.ColorName"></span>
-                                }
-                            </ul>
-                        </div>
-                    }
-                </div>
-                <div class="form-group mt-3">
-                    @{
-                        //Lay size san pham cung ten chua co + size dang o day
-                    }
-                    <label class="control-label">Size : </label>
-                    <select name="idSize">
-                        <option selected>Select Size</option>
-                        @foreach (var item in sizes)
-                        {
-                            <option value="@item.Id">@item.SizeNumber</option>
-                        }
-                    </select>
-                    <span asp-validation-for="" class="text-danger"></span>
-                </div>
-                <div class="form-group mt-3">
-                    @{
-                        //Lay size san pham cung ten chua co + size dang o day
-                    }
-                    <label class="control-label">Color : </label>
-                    <select name="idColor">
-                        <option selected>Select Color</option>
-                        @foreach (var item in colors)
-                        {
-                            <option value="@item.Id">@item.ColorName</option>
-                        }
-                    </select>
-                    <span asp-validation-for="" class="text-danger"></span>
-                </div>
+                @* <div class="form-group mt-3"> *@
+                @*     @{ *@
+                @*         //Lay size san pham cung ten chua co + size dang o day *@
+                @*     } *@
+                @*     <label class="control-label">Size : </label> *@
+                @*     <select> *@
+                @*         @foreach (var item in sizes) *@
+                @*         { *@
+                @*             <option value="@item.Id">@item.SizeNumber</option> *@
+                @*         } *@
+                @*     </select> *@
+                @* </div> *@
+                @* <div class="form-group mt-3"> *@
+                @*     @{ *@
+                @*         //Lay size san pham cung ten chua co + size dang o day *@
+                @*     } *@
+                @*     <label class="control-label">Color : </label> *@
+                @*     <select > *@
+                @*         @foreach (var item in colors) *@
+                @*         { *@
+                @*             <option value="@item.Id">@item.ColorName</option> *@
+                @*         } *@
+                @*     </select> *@
+                @* </div> *@
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary"/>
