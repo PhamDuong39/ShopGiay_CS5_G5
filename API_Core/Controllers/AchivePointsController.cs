@@ -18,7 +18,7 @@ namespace API_Core.Controllers
             var _achivepoint = new AllRepositories1<AchivePoint>(_context, _context.AchivePoints);
             _achivepointIrepos = _achivepoint;
         }
-        [HttpGet("get-all-achivepoint")]
+        [HttpGet("get-all-ackhivepoint")]
         public IEnumerable<AchivePoint> GetAllUser()
         {
             return _achivepointIrepos.GetAll();
@@ -33,10 +33,21 @@ namespace API_Core.Controllers
         public bool Createachivepoint(Guid IdUser, int PointValue)
         {
             AchivePoint achivePoint = new AchivePoint();
+            //neu khong co id thi se tu dong tao i
             achivePoint.Id = Guid.NewGuid();
             achivePoint.IdUser = IdUser;
-            achivePoint.PointValue = PointValue;
-            return _achivepointIrepos.Create(achivePoint);
+            //check id user neu ton tại thi cong point chứ không tạo bản mới
+            var check = _achivepointIrepos.GetAll().FirstOrDefault(x => x.IdUser == IdUser);
+            if (check != null)
+            {
+                check.PointValue = check.PointValue + PointValue;
+                return _achivepointIrepos.Update(check);
+            }
+            else
+            {
+                achivePoint.PointValue = PointValue;
+                return _achivepointIrepos.Create(achivePoint);
+            }
         }
         [HttpDelete("delete-achivepoint")]
         public bool Deleteachivepoint(Guid Id)

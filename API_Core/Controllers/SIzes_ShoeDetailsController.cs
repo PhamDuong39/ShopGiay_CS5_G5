@@ -34,6 +34,13 @@ namespace API_Core.Controllers
             sizeShoeDetails.Id = Guid.NewGuid();
             sizeShoeDetails.IdSize = sizeId;
             sizeShoeDetails.IdShoeDetails = shoeDetailsId;
+            //neu nhu idshoesdetails da co sizeId thi khong cho tao
+            var check = this._iSizeShoeDetailsRepos.GetAll()
+                .FirstOrDefault(p => p.IdSize == sizeId && p.IdShoeDetails == shoeDetailsId);
+            if (check!= null)
+            {
+                return false;
+            }
             return this._iSizeShoeDetailsRepos.Create(sizeShoeDetails); // tạo size mới
         }
 
@@ -53,23 +60,9 @@ namespace API_Core.Controllers
 
         // delete
         [HttpDelete("delete-size-shoe-details")]
-        public bool DeleteSizeShoeDetails(Guid sizeId, Guid shoeDetailsId)
+        public bool DeleteSizeShoeDetails(Guid ID)
         {
-            var sizeShoeDetails = this._iSizeShoeDetailsRepos.GetAll()
-                .Where(p => p.IdSize == sizeId && p.IdShoeDetails == shoeDetailsId).FirstOrDefault();
-
-            // check trung ten size
-            if (sizeId == null || shoeDetailsId == null)
-            {
-                Console.WriteLine("SizeId or ShoeDetailsId is null or empty");
-            }
-            else
-            {
-                Console.WriteLine("Delete Done!");
-                return this._iSizeShoeDetailsRepos.Delete(sizeShoeDetails); // tạo size mới
-            }
-
-            return false;
+            return this._iSizeShoeDetailsRepos.Delete(_iSizeShoeDetailsRepos.GetAll().FirstOrDefault(p => p.Id == ID));
         }
 
         // get

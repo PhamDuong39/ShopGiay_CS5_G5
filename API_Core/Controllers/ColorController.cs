@@ -30,11 +30,10 @@ namespace API_Core.Controllers
             if (string.IsNullOrEmpty(colorName)) return false;
 
             // Check if brandName already exists
-            if (this._colorIrepos.GetAll().Any(p => p.ColorName == colorName))
+            if (this._colorIrepos.GetAll().Any(p => p.ColorName.ToUpper().Trim() == colorName.ToUpper().Trim()))
             {
                 return false;
             }
-
             var color = new Colors();
             color.Id = Guid.NewGuid();
             color.ColorName = colorName;
@@ -54,10 +53,9 @@ namespace API_Core.Controllers
             var colors = new List<Colors>();
             foreach (var id in Id)
             {
-                var color = new Colors { Id = id };
+                var color = this._colorIrepos.GetAll().FirstOrDefault(i => i.Id == id); // lấy màu có id tương ứng
                 colors.Add(color);
             }
-
             return this._colorIrepos.DeleteMany(colors); // xóa nhiều màu
         }
 
@@ -83,6 +81,12 @@ namespace API_Core.Controllers
         [HttpPut("update-color-by-id")]
         public bool UpdateColor(Guid Id, string colorName)
         {
+            //Kieemr tra xem co ton tai hay khong
+            if (string.IsNullOrEmpty(colorName)) return false;
+            if (this._colorIrepos.GetAll().Any(p => p.ColorName.ToUpper().Trim() == colorName.ToUpper().Trim()))
+            {
+                return false;
+            }
             var colorUpdate = this._colorIrepos.GetAll().FirstOrDefault(i => i.Id == Id); // lấy màu có id tương ứng
             colorUpdate.ColorName = colorName; // cập nhật tên màu
             return this._colorIrepos.Update(colorUpdate); // cập nhật màu
