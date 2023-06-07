@@ -18,7 +18,7 @@ namespace API_Core.Controllers
             var _achivepoint = new AllRepositories1<AchivePoint>(_context, _context.AchivePoints);
             _achivepointIrepos = _achivepoint;
         }
-        [HttpGet("get-all-ackhivepoint")]
+        [HttpGet("get-all-achivepoint")]
         public IEnumerable<AchivePoint> GetAllUser()
         {
             return _achivepointIrepos.GetAll();
