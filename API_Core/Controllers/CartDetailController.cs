@@ -3,6 +3,7 @@ using Data.Models;
 using Data.Repositories;
 using Data.ShopContext;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,6 +26,9 @@ namespace API_Core.Controllers
             AllRepositories1<ShoeDetails> shoesrepos = new AllRepositories1<ShoeDetails>(DbContext, DbContext.ShoeDetails);
             _ishoesrepos = shoesrepos;
         }
+        // API Controller
+      
+
         // GET: api/<ValuesController>
         [HttpGet]
         public IEnumerable<CartDetails> Get()
@@ -46,10 +50,6 @@ namespace API_Core.Controllers
             if (!_ishoesrepos.GetAll().Any(p => p.Id == IdShoesDetail))
             {
                 return "Loại giày không tồn tại";
-            }
-            else if (Quantity > _irepos.GetAll().First(p => p.Id == IdShoesDetail).ShoeDetails.AvailableQuantity)
-            {
-                return "So luong san pham khong du";
             }
             else
             {
@@ -81,30 +81,40 @@ namespace API_Core.Controllers
         }
 
         // PUT api/<ValuesController>/5
+        //[HttpPut]
+        //[Route("update-cartdetail")]
+        //public string UpdateCartDetail(Guid id, Guid idShoeDetail, Guid idUser, int quantity)
+        //{
+        //    CartDetails cartdetail = _irepos.GetAll().First(p => p.Id == id);
+        //    //check quantity have more than AvailableQuantity
+        //    if (quantity > _irepos.GetAll().First(p => p.Id == id).ShoeDetails.AvailableQuantity)
+        //    {
+        //        return "Quantity is not enough";
+        //    }
+
+        //    cartdetail.Quantity = quantity;
+        //    cartdetail.IdUser = idUser;
+        //    cartdetail.IdShoeDetail = idShoeDetail;
+        //    if (_irepos.Update(cartdetail))
+        //    {
+        //        return "Update success !";
+        //    }
+        //    else
+        //    {
+        //        return "Update fail !";
+        //    }
+        //}
+        // PUT api/<ValuesController>/5
         [HttpPut]
         [Route("update-cartdetail")]
-        public string UpdateCartDetail(Guid id, Guid idShoeDetail, Guid idUser, int quantity)
+        public bool UpdateCartDetail(Guid id, Guid idShoeDetail, Guid idUser, int quantity)
         {
             CartDetails cartdetail = _irepos.GetAll().First(p => p.Id == id);
-            //check quantity have more than AvailableQuantity
-            if (quantity > _irepos.GetAll().First(p => p.Id == id).ShoeDetails.AvailableQuantity)
-            {
-                return "Quantity is not enough";
-            }
-            
             cartdetail.Quantity = quantity;
             cartdetail.IdUser = idUser;
             cartdetail.IdShoeDetail = idShoeDetail;
-            if (_irepos.Update(cartdetail))
-            {
-                return "Update success !";
-            }
-            else
-            {
-                return "Update fail !";
-            }
+            return _irepos.Update(cartdetail);
         }
-
         // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
         public bool Delete(Guid id)

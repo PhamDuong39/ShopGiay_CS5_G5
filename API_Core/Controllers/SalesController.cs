@@ -3,6 +3,7 @@ using Data.Models;
 using Data.Repositories;
 using Data.ShopContext;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace API_Core.Controllers
 {
@@ -20,6 +21,8 @@ namespace API_Core.Controllers
             _irepos = repos;
 
         }
+        [HttpGet]
+        
         // GET: api/<BillController>
         [HttpGet("Show-Sales")]
         public IEnumerable<Sales> GetAllSales()
@@ -28,39 +31,39 @@ namespace API_Core.Controllers
         }
 
 
-        // GET api/<ValuesController>/5
         [HttpGet("{id}")]
         public Sales Get(Guid id)
         {
             return _irepos.GetAll().First(p => p.Id == id);
         }
-        // POST api/<BillController>
         [HttpPost("Create-Sales")]
         public bool CreateSales(int DiscountValue, string SaleName)
         {
+
             Sales sale = new Sales();
             sale.DiscountValue = DiscountValue;
             sale.SaleName = SaleName;
             sale.StartDate = DateTime.Now;
             sale.EndDate = DateTime.Now.AddDays(7);
 
+            string formattedStartDate = sale.StartDate.ToString("yyyy-MM-ddTHH:mm:ss");
+            string formattedEndDate = sale.EndDate.ToString("yyyy-MM-ddTHH:mm:ss");
+
             return _irepos.Create(sale);
         }
 
-        // PUT api/<BillController>/5
-        [HttpPut("edit-Sales-{id}")]
-        public bool UpdateSales(Guid id, int DiscountValue, string SaleName, DateTime StartDate, DateTime EndDate)
+        [HttpPut("EditSales")]
+        public bool UpdateSales(Guid id, int DiscountValue, string SaleName, DateTime EndDate)
         {
-            Sales sale = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
+            var sale = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
             sale.DiscountValue = DiscountValue;
             sale.SaleName = SaleName;
-            sale.StartDate = StartDate;
+            //sale.EndDate = DateTime.ParseExact(EndDate, "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture);
             sale.EndDate = EndDate;
             return _irepos.Update(sale);
         }
 
-        // DELETE api/<BillController>/5
-        [HttpDelete("Delete-Sales-/{id}")]
+        [HttpDelete("Delete-Sales-/{id}")]  
         public bool Delete(Guid id)
         {
             Sales sale = _irepos.GetAll().FirstOrDefault(p => p.Id == id);
