@@ -1,8 +1,12 @@
 ﻿using System.Text;
+using AspNetCore;
 using Data.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Newtonsoft.Json;
 using ProjectViews.Models;
+using ProjectViews.Services;
+using static ProjectViews.Services.PaginationExtension;
 
 namespace ProjectViews.Controllers
 {
@@ -15,15 +19,36 @@ namespace ProjectViews.Controllers
             _httpClient = new HttpClient();
         }
 
-        public async Task<IActionResult> Show()
+        [HttpGet]
+        public async Task<IActionResult> Show(int? page, int? pageSize)
         {
+            int defaultPageSize = 5;
+
+            // kiem tra gia tri cua page. Neu page k co gia tri thi pageNumber = 1. Neu co thi pageNumber = page
+            int pageNumber = (page ?? 1);
+
+            // Hiuen thi voi gia tri mac dinh cua so phan tu trong moi trang. Hooc co the tuy chon
+            int itemsPerPage = pageSize ?? defaultPageSize;
+
             //Lay List Shoes Detail
             string apiUrls = $"https://localhost:7109/api/ShoeDetails/get-all-shoeDetails";
             var responses = await _httpClient.GetAsync(apiUrls); // goi api lay data
             string apiDatas = await responses.Content.ReadAsStringAsync(); // doc data tra ve
-            var shoeDetails =
-                JsonConvert.DeserializeObject<IEnumerable<ShoeDetails>>(apiDatas); // chuyen data thanh list
-            return View(shoeDetails);
+            var shoeDetails = JsonConvert.DeserializeObject<IEnumerable<ShoeDetails>>(apiDatas); // chuyen data thanh list
+
+            List<ShoeDetails> shoeDetailsList = shoeDetails.ToList();
+            PagedResult<ShoeDetails> pagedResult = PaginationExtension.GetPagedData(shoeDetailsList, pageNumber, itemsPerPage);
+
+
+            // Tinh toan du lieu cho moi trang
+            ViewBag.CurrentPage = pagedResult.CurrentPage;
+            ViewBag.TotalPages = pagedResult.TotalPages;
+            ViewBag.HasPreviousPage = pagedResult.HasPreviousPage;
+            ViewBag.HasNextPage = pagedResult.HasNextPage;
+            ViewBag.PreviousPage = pagedResult.CurrentPage - 1;
+            ViewBag.NextPage = pagedResult.CurrentPage + 1;
+
+            return View(pagedResult.Data);
         }
 
         //create

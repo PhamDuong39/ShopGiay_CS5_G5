@@ -1,9 +1,12 @@
 ﻿using Data.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Newtonsoft.Json;
 using NuGet.Protocol.Core.Types;
+using ProjectViews.Services;
 using System.Text;
 using System.Text.Json.Serialization;
+using static ProjectViews.Services.PaginationExtension;
 
 namespace ProjectViews.Controllers
 {
@@ -15,16 +18,35 @@ namespace ProjectViews.Controllers
             _httpClient = new HttpClient();
         }
 
-        public async Task<IActionResult> ShowAllLocation()
+        [HttpGet]
+        public async Task<IActionResult> ShowAllLocation(int? page, int? pageSize)
         {
             // Call API
+            int defaultPageSize = 5;
+
+            // kiem tra gia tri cua page. Neu page k co gia tri thi pageNumber = 1. Neu co thi pageNumber = page
+            int pageNumber = (page ?? 1);
+
+            // Hiuen thi voi gia tri mac dinh cua so phan tu trong moi trang. Hooc co the tuy chon
+            int itemsPerPage = pageSize ?? defaultPageSize;
+
             string apiUrl = $"https://localhost:7109/api/Location";
-            
             var response = await _httpClient.GetAsync(apiUrl);
             string apidata = await response.Content.ReadAsStringAsync();
-
             var locations = JsonConvert.DeserializeObject<List<Location>>(apidata);
-            return View(locations);
+
+            // ap dung phan trang
+            PagedResult<Location> pagedResult = PaginationExtension.GetPagedData(locations, pageNumber, itemsPerPage);
+
+            // Tinh toan du lieu cho moi trang
+            ViewBag.CurrentPage = pagedResult.CurrentPage;
+            ViewBag.TotalPages = pagedResult.TotalPages;
+            ViewBag.HasPreviousPage = pagedResult.HasPreviousPage;
+            ViewBag.HasNextPage = pagedResult.HasNextPage;
+            ViewBag.PreviousPage = pagedResult.CurrentPage - 1;
+            ViewBag.NextPage = pagedResult.CurrentPage + 1;
+
+            return View(pagedResult.Data);
 
             // ASync Await
 
@@ -125,5 +147,7 @@ namespace ProjectViews.Controllers
             return this.RedirectToAction("ShowAllLocation");
 
         }
+
+      
     }
 }

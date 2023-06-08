@@ -47,6 +47,17 @@ else
     <p>
         <a asp-action="Create">Create New</a>
     </p>
+
+    <form action="/ShoesDetails/Show" method="get">
+        <label for="pageSize">Số lượng hiển thị:</label>
+        <select id="pageSize" name="pageSize">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+        </select>
+        <input type="submit" value="Xem">
+    </form>
+
     <form asp-action="DeleteMany">
         <table class="table">
             <thead>
@@ -169,6 +180,31 @@ else
         </table >
         <input type="submit" value="Delete Many" class="btn btn-danger"/>
     </form>
+
+    <div class="pagination">
+        @if (ViewBag.HasPreviousPage)
+        {
+            <a href="@Url.Action("Show", new { page = ViewBag.PreviousPage })">Previous</a>
+        }
+
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            if (i == ViewBag.CurrentPage)
+            {
+                <span>@i</span>
+            }
+            else
+            {
+                <a href="@Url.Action("Show", new { page = i })">@i</a>
+            }
+        }
+
+        @if (ViewBag.HasNextPage)
+        {
+            <a href="@Url.Action("Show", new { page = ViewBag.NextPage })">Next</a>
+        }
+    </div>
+
 }
 <style>
     .dot {
