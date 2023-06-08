@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using ProjectViews.Models;
+using System.Drawing;
 using System.Text;
 
 namespace ProjectViews.Controllers
@@ -24,15 +25,19 @@ namespace ProjectViews.Controllers
             
             string apiURL = $"https://localhost:7109/api/CartDetail";
             string apiUrlShoe = $"https://localhost:7109/api/ShoeDetails/get-all-shoeDetails";
+            string apiImage = $"https://localhost:7109/api/Images/get-all-image";
 
             var response = await _httpClient.GetAsync(apiURL);
             var reponce2 = await _httpClient.GetAsync(apiUrlShoe);
+            var reponce3 = await _httpClient.GetAsync(apiImage);
 
             var apiData = await response.Content.ReadAsStringAsync();
             var apiDataShoe = await reponce2.Content.ReadAsStringAsync();
+            var apiDataImage = await reponce3.Content.ReadAsStringAsync();
 
             var cartdetail = JsonConvert.DeserializeObject<List<CartDetails>>(apiData);
             var shoes = JsonConvert.DeserializeObject<List<ShoeDetails>>(apiDataShoe);
+            var image = JsonConvert.DeserializeObject<List<Images>>(apiDataImage);
 
             ViewData["Name"] = new SelectList(shoes, "Id", "Name");
             ViewData["SellPrice"] = new SelectList(shoes, "Id", "SellPrice");
@@ -45,11 +50,13 @@ namespace ProjectViews.Controllers
                 model.cartDetail = item;
                 model.Id = item.Id;
                 model.quantity = item.Quantity;
+                
                 var shoe = shoes.FirstOrDefault(s => s.Id == item.IdShoeDetail);
                 model.name = shoe.Name;
                 model.price = shoe.SellPrice;
                 model.ToTalPrice = item.Quantity * shoe.SellPrice;
-
+                var imageShoe = image.FirstOrDefault(p => p.IdShoeDetail == item.IdShoeDetail);
+                model.ImageSource = imageShoe.ImageSource;
                 lstModel.Add(model);
             }
 
