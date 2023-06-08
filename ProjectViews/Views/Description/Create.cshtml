@@ -48,10 +48,6 @@
             <div class="form-group">
                 @{
                     //lay data tu bang ShoeDetail
-                    string apiUrls = $"https://localhost:7109/api/ShoeDetails/get-all-shoeDetails";
-                    var responses = await _httpClient.GetAsync(apiUrls); // goi api lay data
-                    string apiDatas = await responses.Content.ReadAsStringAsync(); // doc data tra ve
-                    var shoeDetails = JsonConvert.DeserializeObject<List<ShoeDetails>>(apiDatas);
                     <select asp-for="IdShoeDetail" class="form-select">
                         <option>Chose Shoes </option>
                         @foreach (var item in shoeDetails)
