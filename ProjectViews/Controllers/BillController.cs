@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Identity;
 using System.Runtime.CompilerServices;
 using ProjectViews.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
+using ProjectViews.Services;
+using static ProjectViews.Services.PaginationExtension;
 
 namespace ProjectViews.Controllers
 {
@@ -18,22 +21,40 @@ namespace ProjectViews.Controllers
             _httpClient = new HttpClient();
         }
         // GET: BillController
-        public async Task<IActionResult> Show()
+        [HttpGet]
+        public async Task<IActionResult> Show(int? page, int? pageSize)
         {
+            int defaultPageSize = 5;
+
+            // kiem tra gia tri cua page. Neu page k co gia tri thi pageNumber = 1. Neu co thi pageNumber = page
+            int pageNumber = (page ?? 1);
+
+            // Hiuen thi voi gia tri mac dinh cua so phan tu trong moi trang. Hooc co the tuy chon
+            int itemsPerPage = pageSize ?? defaultPageSize;
+
             string apiURL = $"https://localhost:7109/api/Bill";
             var response = await _httpClient.GetAsync(apiURL);
             string apiData = await response.Content.ReadAsStringAsync();
             var bills = JsonConvert.DeserializeObject<List<Bills>>(apiData);
 
+            PagedResult<Bills> pagedResult = PaginationExtension.GetPagedData(bills, pageNumber, itemsPerPage);
+
+            // Tinh toan du lieu cho moi trang
+            ViewBag.CurrentPage = pagedResult.CurrentPage;
+            ViewBag.TotalPages = pagedResult.TotalPages;
+            ViewBag.HasPreviousPage = pagedResult.HasPreviousPage;
+            ViewBag.HasNextPage = pagedResult.HasNextPage;
+            ViewBag.PreviousPage = pagedResult.CurrentPage - 1;
+            ViewBag.NextPage = pagedResult.CurrentPage + 1;
+
             string apiURLuser = $"https://localhost:7109/api/User/get-all-user";
             var responseGetuser = await _httpClient.GetAsync(apiURLuser);
             string apiDatauser = await responseGetuser.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<List<Users>>(apiDatauser);
-
             ViewData["lstUser"] = new SelectList(user, "Id", "Username");
 
 
-            return View(bills);
+            return View(pagedResult.Data);
         }
 
         // GET: BillController/Details/5
@@ -69,7 +90,7 @@ namespace ProjectViews.Controllers
             string apiURLLocation = $"https://localhost:7109/api/Location";
             var responseGetLocation = await _httpClient.GetAsync(apiURLLocation);
             string apiDataLocation = await responseGetLocation.Content.ReadAsStringAsync();
-            var location = JsonConvert.DeserializeObject<List<Location>>(apiDataLocation);
+            var location = JsonConvert.DeserializeObject<List<Data.Models.Location>>(apiDataLocation);
 
             List<SelectListItem> selectListLocation = new List<SelectListItem>();
             foreach (var item in location)
