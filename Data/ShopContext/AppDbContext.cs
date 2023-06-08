@@ -21,14 +21,10 @@ namespace Data.ShopContext
 
         }
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
-
             optionsBuilder.UseSqlServer(
                 "Server=localhost,1433;Database=DbCS5_Test;User Id=SA;Password=Dthai16gg!;");
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -53,8 +49,6 @@ namespace Data.ShopContext
         public DbSet<Location> Location { get; set; }
         public DbSet<ShipAdressMethod> ShipAdressMethods { get; set; }
         public DbSet<PaymentMethods> PaymentMethods { get; set; }
-
-
         public DbSet<Images> Images { get; set; }
         public DbSet<Roles> Roles { get; set; }
         public DbSet<Sales> Sales { get; set; }

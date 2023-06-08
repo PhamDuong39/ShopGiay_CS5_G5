@@ -2,6 +2,18 @@
 @{
 	ViewData["Title"] = "Show";
 }
+@{
+    HttpClient _httpClient = new HttpClient();
+    ViewData["Title"] = "Show";
+    List<string> imageExtensions = new List<string>()
+    {
+        ".png", ".jpg", ".jpeg", ".gif", ".tiff", ".pdf"
+    };
+}
+@if (Model.Count() == 0)
+{
+	<h1>There are no Ship Method in the database <a asp-action="Create">Create New ?</a> </h1>
+}
 <h1>Giỏ Hàng</h1>
 <p>
 	<a asp-action="Create">Create New</a>
@@ -11,6 +23,9 @@
 		<tr>
 			<th>
 				Sản phẩm
+			</th>
+			<th>
+
 			</th>
 			<th>
 				Số lượng
@@ -29,6 +44,17 @@
 			<tr>
 				<td>
 					@item.name
+				</td>
+				<td>
+					@{ string extension = System.IO.Path.GetExtension(item.ImageSource); }
+                    @if (imageExtensions.Contains(extension.Trim()))
+                    {
+                        <img src="~/images/@item.ImageSource" height="100px">
+                    }
+                    else
+                    {
+                        <img src="~/images/anhbanh.jpg" height="100px">
+                    }
 				</td>
 				<td>	
 					
