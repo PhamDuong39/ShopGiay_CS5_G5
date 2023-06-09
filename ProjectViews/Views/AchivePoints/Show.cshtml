@@ -1,7 +1,15 @@
-﻿@model IEnumerable<Data.Models.AchivePoint>
+﻿@using Data.Models;
+@using Newtonsoft.Json;
+@model IEnumerable<Data.Models.AchivePoint>
 
 @{
     ViewData["Title"] = "Show";
+    HttpClient _httpClient = new HttpClient();
+    string apiUrl = "https://localhost:7109/api/User/get-all-user";
+    var response = await _httpClient.GetAsync(apiUrl);
+    string apidata = await response.Content.ReadAsStringAsync();
+    var users = JsonConvert.DeserializeObject<List<Users>>(apidata);
+    ViewData["lstUser"] = new SelectList(users, "Id", "Username");
 }
 
 <h1>Show</h1>
@@ -11,12 +19,9 @@
 </p>
 <table class="table">
     <thead>
-        <tr>
+        <tr>          
             <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdUser)
+                @Html.DisplayNameFor(model => model.Users)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PointValue)
@@ -26,12 +31,16 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdUser)
+        <tr>          
+           <td>
+                    @foreach (var user in ViewData["lstUser"] as SelectList)
+                    {
+                        if (user.Value == item.IdUser.ToString())
+                        {
+                            @user.Text
+                            ;
+                        }
+                    }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PointValue)

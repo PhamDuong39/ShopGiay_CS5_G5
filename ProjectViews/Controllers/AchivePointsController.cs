@@ -9,10 +9,10 @@ using System.Net.Http;
 using System.Text;
 namespace ProjectViews.Controllers
 {
-    public class AchivePointController : Controller
+    public class AchivePointsController : Controller
     {
         private HttpClient _httpClient;
-        public AchivePointController()
+        public AchivePointsController()
         {
             _httpClient = new HttpClient();
         }
