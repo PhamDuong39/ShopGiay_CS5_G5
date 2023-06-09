@@ -123,8 +123,20 @@ namespace ProjectViews.Areas.User.Controllers
 
             #region BestDiscount
 
+            List<ShoeDetails> bestDiscountsList = new List<ShoeDetails>();
+            var topValueSale = sales.OrderByDescending(p => p.DiscountValue).Take(2).ToList();
+            foreach (var item in shoeDetails)
+            {
+                foreach (var sale in topValueSale)
+                {
+                    if (item.IdSale == sale.Id)
+                    {
+						bestDiscountsList.Add(item);
 
-
+					}
+                }
+            }
+            homeVMD.bestDiscounts = bestDiscountsList;
             #endregion
 
             return View();
