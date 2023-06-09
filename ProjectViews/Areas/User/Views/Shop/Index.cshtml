@@ -1,12 +1,12 @@
-﻿@model List<Data.Models.ShoeDetails>
+﻿@model List<ProjectViews.Areas.User.Models.ShoeCategory>
 @{
     ViewBag.Title = "Shop Ne";
     Layout = "~/Areas/User/Views/Shared/_UserLayout.cshtml";
 }
 
-@if (Model.Count() <= 0)
+@if (Model.Count() == 0)
 {
-    <h1>Không có sản phẩm nào</h1>
+    <h1 class="mt-5">Không có sản phẩm nào</h1>
 }
 else
 {
@@ -219,33 +219,30 @@ else
                     <!-- Product Grid -->
 
                     <div class="product-grid">
-
                         <!-- Product 1 -->
-
-                        <div class="product-item men">
-                            <div class="product discount product_filter">
-                                <div class="product_image">
-                                    <img src="~/UserAsssets/images/product_1.png" alt="">
-                                </div>
-                                <div class="favorite favorite_left"></div>
-                                <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center">
-                                    <span>-$20</span>
-                                </div>
-                                <div class="product_info">
-                                    <h6 class="product_name">
-                                        <a href="single.html">Fujifilm X100T 16 MP Digital Camera (Silver)</a>
-                                    </h6>
-                                    <div class="product_price">$520.00<span>$590.00</span></div>
-                                </div>
-                            </div>
-                            <div class="red_button add_to_cart_button">
-                                <a href="#">add to cart</a>
-                            </div>
-                        </div>
-
-                        <!-- Product 2 -->
-
-
+                        @foreach (var item in Model)
+                       {
+                           <div class="product-item men">
+                               <div class="product discount product_filter">
+                                   <div class="product_image">
+                                       <img src="~/UserAsssets/images/product_1.png" alt="">
+                                   </div>
+                                   <div class="favorite favorite_left"></div>
+                                   <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center">
+                                       <span>-$20</span>
+                                   </div>
+                                   <div class="product_info">
+                                       <h6 class="product_name">
+                                           <a href="single.html">@item.Name</a>
+                                       </h6>
+                                       <div class="product_price">@item.CostPrice<span>@item.SellPrice</span></div>
+                                   </div>
+                               </div>
+                               <div class="red_button add_to_cart_button">
+                                   <a href="#">add to cart</a>
+                               </div>
+                           </div>
+                       }
                     </div>
 
                     <!-- Product Sorting -->
