@@ -11,13 +11,15 @@ namespace ProjectViews.Areas.User.Controllers
     {
       _httpClient = new HttpClient();
     }
-    public async Task<IActionResult> ShowProduct()
+    public async Task<IActionResult> Category()
     {
       string apiShoes = $"https://localhost:7109/api/ShoeDetails/get-all-shoeDetails";
       var responseShoes = await _httpClient.GetAsync(apiShoes);
       string apiDataShoes = await responseShoes.Content.ReadAsStringAsync();
       var shoeDetails = JsonConvert.DeserializeObject<List<ShoeDetails>>(apiDataShoes);
-      return View(shoeDetails);
+      // add shoeDetails to viewbag
+      ViewBag.shoeDetails = shoeDetails;
+      return View();
     }
   }
 }
