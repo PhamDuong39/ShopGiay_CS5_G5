@@ -66,7 +66,7 @@ namespace ProjectViews.Areas.User.Controllers
                     }
                 }
 
-                // Tổng hiển thị là 4sp => lấy số sản phẩm còn lại bằng cách sử dụng for loop. CHọn random các sp còn
+                // Tổng hiển thị là 4sp => lấy số sản phẩm còn lại bằng cách sử dụng for loop. CHọn random các sp còn lại. Đủ 4 là dừng
                 int numberOfLoop = 4 - TopBillQuantity.Count;
                 Random r = new Random();
                 for (int i = 0; i < numberOfLoop; i++)
@@ -89,9 +89,16 @@ namespace ProjectViews.Areas.User.Controllers
 
             homeVMD.bestSellers = lstTopShoe;
 
-
             #endregion
 
+            #region New Arrivals
+
+            //for (int i = shoeDetails.Count - 4; i < ; i--)
+            //{
+                
+            //}
+
+            #endregion
 
             return View();
         }
