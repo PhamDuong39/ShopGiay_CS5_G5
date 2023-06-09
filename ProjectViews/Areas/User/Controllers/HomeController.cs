@@ -16,6 +16,8 @@ namespace ProjectViews.Areas.User.Controllers
         {
             _httpClient = new HttpClient();
         }
+
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             
@@ -102,7 +104,7 @@ namespace ProjectViews.Areas.User.Controllers
             #region New Arrivals
 
             List<ShoeDetails> lstNewArrival = new List<ShoeDetails>();
-            if (shoeDetails.Count < 4)
+            if (shoeDetails.Count <= 4)
             {
                 foreach (var item in shoeDetails)
                 {
@@ -119,11 +121,24 @@ namespace ProjectViews.Areas.User.Controllers
             }
             homeVMD.newArrivals = lstNewArrival;
 
-            #endregion
+            // Cho nay nhe
+            List<ShoeHomePageViewModel> lstShoeVMD = new List<ShoeHomePageViewModel>();
+            var groupList = lstNewArrival.GroupBy(p => p.Name).Select(p => p.First()).ToList();
+            foreach (var item in groupList)
+            {
+				ShoeHomePageViewModel shoeVMD = new ShoeHomePageViewModel();
+                shoeVMD.Name = item.Name;
+                shoeVMD.Price = item.SellPrice;
+                lstShoeVMD.Add(shoeVMD);
+			}
 
-            #region BestDiscount
+		    homeVMD.shoeHomePageViewModels = lstShoeVMD;
 
-            List<ShoeDetails> bestDiscountsList = new List<ShoeDetails>();
+			#endregion
+
+			#region BestDiscount
+
+			List<ShoeDetails> bestDiscountsList = new List<ShoeDetails>();
             var topValueSale = sales.OrderByDescending(p => p.DiscountValue).Take(2).ToList();
             foreach (var item in shoeDetails)
             {
@@ -139,7 +154,7 @@ namespace ProjectViews.Areas.User.Controllers
             homeVMD.bestDiscounts = bestDiscountsList;
             #endregion
 
-            return View();
+            return View(homeVMD);
         }
     }
 }
