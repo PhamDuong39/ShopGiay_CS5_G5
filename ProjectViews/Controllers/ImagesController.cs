@@ -38,7 +38,7 @@ namespace ProjectViews.Controllers
             if (file != null && file.Length > 0)
             {
                 var fileName = Path.GetFileName(file.FileName);
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UserAsssets/images", fileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(fileStream);
@@ -94,7 +94,7 @@ namespace ProjectViews.Controllers
             if (file != null && file.Length > 0)
             {
                 var fileName = Path.GetFileName(file.FileName);
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UserAsssets/images", fileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(fileStream);

@@ -9,10 +9,10 @@ using System.Net.Http;
 using System.Text;
 namespace ProjectViews.Controllers
 {
-    public class AchivePointController : Controller
+    public class AchivePointsController : Controller
     {
         private HttpClient _httpClient;
-        public AchivePointController()
+        public AchivePointsController()
         {
             _httpClient = new HttpClient();
         }
@@ -22,7 +22,7 @@ namespace ProjectViews.Controllers
             string apiURL = $"https://localhost:7109/api/AchivePoints/get-all-achivepoint";
             var response = await _httpClient.GetAsync(apiURL);
             var apiData = await response.Content.ReadAsStringAsync();
-            var achivepoint = JsonConvert.DeserializeObject<List<AchivePoint>>(apiData);
+            var achivepoint = JsonConvert.DeserializeObject<IEnumerable<AchivePoint>>(apiData);
             return View(achivepoint);
         }
         // GET: AchivePointController/Details/5
