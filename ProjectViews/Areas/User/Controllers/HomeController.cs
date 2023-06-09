@@ -1,4 +1,5 @@
-﻿using Data.Models;
+﻿
+using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Newtonsoft.Json;
@@ -30,6 +31,12 @@ namespace ProjectViews.Areas.User.Controllers
             var responses = await _httpClient.GetAsync(apiUrls); // goi api lay data
             string apiDatas = await responses.Content.ReadAsStringAsync(); // doc data tra ve
             var shoeDetails = JsonConvert.DeserializeObject<List<ShoeDetails>>(apiDatas);
+
+            // Get all Sale Event
+            string apiURLss = $"https://localhost:7109/api/Sales/Show-Sales";
+            var responsess = await _httpClient.GetAsync(apiURLss);
+            var apiDatass = await responsess.Content.ReadAsStringAsync();
+            var sales = JsonConvert.DeserializeObject<List<Sales>>(apiData);
 
             HomeUserViewModel homeVMD = new HomeUserViewModel();
 
@@ -91,12 +98,32 @@ namespace ProjectViews.Areas.User.Controllers
 
             #endregion
 
+            // Get the top 4 newest shoe in the shoeDEtail - NEW ARRIVALS IN SHOP
             #region New Arrivals
 
-            //for (int i = shoeDetails.Count - 4; i < ; i--)
-            //{
-                
-            //}
+            List<ShoeDetails> lstNewArrival = new List<ShoeDetails>();
+            if (shoeDetails.Count < 4)
+            {
+                foreach (var item in shoeDetails)
+                {
+                    lstNewArrival.Add(item);
+                }
+            }
+            else
+            {
+                for (int i = shoeDetails.Count - 4; i < shoeDetails.Count; i++)
+                {
+                    ShoeDetails shoe = shoeDetails[i];
+                    lstNewArrival.Add(shoe);
+                }
+            }
+            homeVMD.newArrivals = lstNewArrival;
+
+            #endregion
+
+            #region BestDiscount
+
+
 
             #endregion
 
