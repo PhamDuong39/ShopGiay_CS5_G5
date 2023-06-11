@@ -74,10 +74,9 @@
 				</td>
 				<td>
 					@*@Html.ActionLink("Details", "Details", new {  id=item.Id  }) |*@
-					<button>@Html.ActionLink("Delete", "Delete", new {  id=item.Id  })</button>
+					<button>@Html.ActionLink("Delete", "Delete2", new {  id=item.Id  })</button>
 				</td>		
 			</tr>
-			
 		}
 		
 
@@ -92,4 +91,15 @@
 }
 <h3>Tổng Thanh Toán : <a style="color:red">@sumPrice</a> <a style="color:black">VND</a> </h3>
 
-
+<center>
+	<form method="post" asp-action="Pay" asp-controller="CartDetail">
+		<input type="hidden" name="IdUser" value="edb21b08-3af8-46f5-d9ae-08db3a8c7f0b" />
+        <button type="submit" style="background-color: red">
+            <div class="d-flex justify-content-between">
+                <span>
+                    Thanh toán
+                </span>
+            </div>
+        </button>
+    </form>
+</center>

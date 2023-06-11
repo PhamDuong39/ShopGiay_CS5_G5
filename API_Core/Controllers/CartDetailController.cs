@@ -79,32 +79,6 @@ namespace API_Core.Controllers
             }
            
         }
-
-        // PUT api/<ValuesController>/5
-        //[HttpPut]
-        //[Route("update-cartdetail")]
-        //public string UpdateCartDetail(Guid id, Guid idShoeDetail, Guid idUser, int quantity)
-        //{
-        //    CartDetails cartdetail = _irepos.GetAll().First(p => p.Id == id);
-        //    //check quantity have more than AvailableQuantity
-        //    if (quantity > _irepos.GetAll().First(p => p.Id == id).ShoeDetails.AvailableQuantity)
-        //    {
-        //        return "Quantity is not enough";
-        //    }
-
-        //    cartdetail.Quantity = quantity;
-        //    cartdetail.IdUser = idUser;
-        //    cartdetail.IdShoeDetail = idShoeDetail;
-        //    if (_irepos.Update(cartdetail))
-        //    {
-        //        return "Update success !";
-        //    }
-        //    else
-        //    {
-        //        return "Update fail !";
-        //    }
-        //}
-        // PUT api/<ValuesController>/5
         [HttpPut]
         [Route("update-cartdetail")]
         public bool UpdateCartDetail(Guid id, Guid idShoeDetail, Guid idUser, int quantity)
@@ -122,5 +96,36 @@ namespace API_Core.Controllers
             CartDetails obj = _irepos.GetAll().First(p => p.Id == id);
             return _irepos.Delete(obj);
         }
+        // POST api/<ValuesController>/payment
+        //[HttpPost("payment")]
+        //public string Payment(Guid idUser)
+        //{
+        //    // chuyền vào thg User để xem giỏ hàng của nó có những gì
+        //    var cartDetails = _irepos.GetAll().Where(p => p.IdUser == idUser).ToList();
+
+        //    if (cartDetails.Count == 0)
+        //    {
+        //        return "Giỏ hàng trống";
+        //    }
+        //    // update lại số lượng sp
+        //    foreach (var cartDetail in cartDetails)
+        //    {
+        //        var shoeDetail = _ishoesrepos.GetAll().FirstOrDefault(p => p.Id == cartDetail.IdShoeDetail);
+        //        if (shoeDetail != null)
+        //        {
+        //            // Reduce the quantity of the shoe detail
+        //            shoeDetail.AvailableQuantity -= cartDetail.Quantity;
+        //            _ishoesrepos.Update(shoeDetail);
+        //        }
+        //    }
+        //    // xóa đi giỏ hàng
+        //    foreach (var cartDetail in cartDetails)
+        //    {
+        //        _irepos.Delete(cartDetail);
+        //    }
+
+        //    return "Thanh toán thành công.";
+        //}
+
     }
 }

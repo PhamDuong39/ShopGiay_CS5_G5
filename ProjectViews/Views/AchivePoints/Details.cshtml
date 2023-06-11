@@ -2,6 +2,12 @@
 
 @{
     ViewData["Title"] = "Details";
+    HttpClient _httpClient = new HttpClient();
+    string apiUrl = "https://localhost:7109/api/User/get-all-user";
+    var response = await _httpClient.GetAsync(apiUrl);
+    string apidata = await response.Content.ReadAsStringAsync();
+    var users = JsonConvert.DeserializeObject<List<Users>>(apidata);
+    ViewData["lstUser"] = new SelectList(users, "Id", "Username");
 }
 
 <h1>Details</h1>
@@ -20,7 +26,14 @@
             @Html.DisplayNameFor(model => model.IdUser)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdUser)
+            @foreach (var user in ViewData["lstUser"] as SelectList)
+            {
+                if (user.Value == Model.IdUser.ToString())
+                {
+                    @user.Text
+                    ;
+                }
+            }
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.PointValue)
