@@ -25,9 +25,4 @@
     <ProjectReference Include="..\Data\Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\User\Data\" />
-    <Folder Include="wwwroot\images\" />
-  </ItemGroup>
-
 </Project>
