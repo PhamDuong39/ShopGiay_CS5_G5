@@ -1,4 +1,4 @@
-﻿using Data.Models;
+using Data.Models;
 using Data.ShopContext;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
