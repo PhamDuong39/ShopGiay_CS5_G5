@@ -83,61 +83,60 @@ public class ShopController : Controller
     var responseFeedbackGetAll = await _httpClient.GetAsync(apiUrlFeedbackGetAll);
     string apiDataFeedbackGetAll = await responseFeedbackGetAll.Content.ReadAsStringAsync();
     var feedbacks = JsonConvert.DeserializeObject<List<Feedbacks>>(apiDataFeedbackGetAll);
-
     //Group shoe by name and add to list
     var lstShoes = new List<ShoeCategory>();
     var gourpList = shoeDetails.GroupBy(p => p.Name).Select(p => p.First()).ToList();
     foreach (var item in gourpList)
     {
-      var shoe = new ShoeCategory();
+      ShoeCategory shoe = new ShoeCategory();
       shoe.Id = item.Id;
       shoe.Name = item.Name;
-      shoe.Supplier = sp.FirstOrDefault(p => p.Id == item.IdSupplier).Address;
-      shoe.Brand = br.FirstOrDefault(p => p.Id == item.IdBrand).Name;
-      shoe.Category = cat.FirstOrDefault(p => p.Id == item.IdCategory).CategoryName;
-      shoe.CostPrice = item.CostPrice;
+      // shoe.Supplier = sp.FirstOrDefault(p => p.Id == item.IdSupplier).Address;
+      // shoe.Brand = br.FirstOrDefault(p => p.Id == item.IdBrand).Name;
+      // shoe.Category = cat.FirstOrDefault(p => p.Id == item.IdCategory).CategoryName;
+      // shoe.CostPrice = item.CostPrice;
       shoe.SellPrice = item.SellPrice;
       shoe.Status = item.Status;
       shoe.AvailableQuantity = item.AvailableQuantity;
       shoe.DiscountValue = sales.FirstOrDefault(p => p.Id == item.IdSale).DiscountValue;
-      shoe.ColorValue = "#" + colors.FirstOrDefault(p => p.Id == color_shoeDetails.FirstOrDefault(p => p.IdShoeDetail == item.Id).IdColor).ColorName;
-      shoe.SizeValue = sizes.FirstOrDefault(p => p.Id == size_shoeDetails.FirstOrDefault(p => p.IdShoeDetails == item.Id).IdSize).SizeNumber;
+      // shoe.ColorValue = "#" + colors.FirstOrDefault(p => p.Id == color_shoeDetails.FirstOrDefault(p => p.IdShoeDetail == item.Id).IdColor).ColorName;
+      // shoe.SizeValue = sizes.FirstOrDefault(p => p.Id == size_shoeDetails.FirstOrDefault(p => p.IdShoeDetails == item.Id).IdSize).SizeNumber;
       //check image null
       if (image_shoeDetails.FirstOrDefault(p => p.IdShoeDetail == item.Id) == null)
       {
-        shoe.ImageSource = new List<string>();
-        shoe.ImageSource.Add("https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg");
+        shoe.ImageSource="https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg";
       }
       else
       {
-        shoe.ImageSource = image_shoeDetails.Where(p => p.IdShoeDetail == item.Id).Select(p => p.ImageSource).ToList();
+        shoe.ImageSource = image_shoeDetails.FirstOrDefault(p => p.IdShoeDetail == item.Id).ImageSource;
       }
-      if (descriptions.FirstOrDefault(p => p.IdShoeDetail == item.Id) != null)
-      {
-        shoe.Decriptions1 = descriptions.FirstOrDefault(p => p.IdShoeDetail == item.Id).Note1;
-        shoe.Decriptions2 = descriptions.FirstOrDefault(p => p.IdShoeDetail == item.Id).Note2;
-        shoe.Decriptions3 = descriptions.FirstOrDefault(p => p.IdShoeDetail == item.Id).Note3;
-      }
-      else
-      {
-        shoe.Decriptions1 = "No description";
-        shoe.Decriptions2 = "No description";
-        shoe.Decriptions3 = "No description";
-      }
-      //check feedback null
-      if (feedbacks.FirstOrDefault(p => p.IdShoeDetail == item.Id) == null)
-      {
-        shoe.RateStar = new List<int>();
-        shoe.RateStar.Add(0);
-        shoe.LstFeedbacks = new List<string>();
-        shoe.LstFeedbacks.Add("No feedback");
-      }
-      else
-      {
-        shoe.LstFeedbacks = feedbacks.Where(p => p.IdShoeDetail == item.Id).Select(p => p.Note).ToList();
-        shoe.RateStar = feedbacks.Where(p => p.IdShoeDetail == item.Id).Select(p => p.RatingStar).ToList();
-        lstShoes.Add(shoe);
-      }
+      // if (descriptions.FirstOrDefault(p => p.IdShoeDetail == item.Id) != null)
+      // {
+      //   shoe.Decriptions1 = descriptions.FirstOrDefault(p => p.IdShoeDetail == item.Id).Note1;
+      //   shoe.Decriptions2 = descriptions.FirstOrDefault(p => p.IdShoeDetail == item.Id).Note2;
+      //   shoe.Decriptions3 = descriptions.FirstOrDefault(p => p.IdShoeDetail == item.Id).Note3;
+      // }
+      // else
+      // {
+      //   shoe.Decriptions1 = "No description";
+      //   shoe.Decriptions2 = "No description";
+      //   shoe.Decriptions3 = "No description";
+      // }
+      // //check feedback null
+      // if (feedbacks.FirstOrDefault(p => p.IdShoeDetail == item.Id) == null)
+      // {
+      //   shoe.RateStar = new List<int>();
+      //   shoe.RateStar.Add(0);
+      //   shoe.LstFeedbacks = new List<string>();
+      //   shoe.LstFeedbacks.Add("No feedback");
+      // }
+      // else
+      // {
+      //   shoe.LstFeedbacks = feedbacks.Where(p => p.IdShoeDetail == item.Id).Select(p => p.Note).ToList();
+      //   shoe.RateStar = feedbacks.Where(p => p.IdShoeDetail == item.Id).Select(p => p.RatingStar).ToList();
+      //
+      // }
+      lstShoes.Add(shoe);
     }
     return View(lstShoes);
   }

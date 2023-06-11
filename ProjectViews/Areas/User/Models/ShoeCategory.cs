@@ -14,7 +14,7 @@ public class ShoeCategory
   public int DiscountValue { get; set; }
   public string ColorValue { get; set; }
   public float SizeValue { get; set; }
-  public List<string> ImageSource { get; set; }
+  public string ImageSource { get; set; }
   public string Decriptions1 { get; set; }
   public string Decriptions2 { get; set; }
   public string Decriptions3 { get; set; }

@@ -818,7 +818,6 @@ section
 }
 .red_button
 {
-	display: -webkit-inline-box;
 	display: -moz-inline-box;
 	display: -ms-inline-flexbox;
 	display: -webkit-inline-flex;
