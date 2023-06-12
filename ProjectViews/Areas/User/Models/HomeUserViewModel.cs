@@ -7,7 +7,6 @@ namespace ProjectViews.Areas.User.Models
         public List<ShoeDetails> bestSellers { get; set; }
         public List<ShoeDetails> newArrivals { get; set; }
         public List<ShoeDetails> bestDiscounts { get; set; }
-
         public List<ShoeHomePageViewModel> shoeHomePageViewModels { get; set; }
     }
 }

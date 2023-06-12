@@ -20,7 +20,7 @@ namespace ProjectViews.Areas.User.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            
+
             // Get all bill
             string apiURL = $"https://localhost:7109/api/BillDetails";
             var response = await _httpClient.GetAsync(apiURL);

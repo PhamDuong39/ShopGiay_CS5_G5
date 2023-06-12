@@ -12,4 +12,4 @@ namespace Data.Models
         public string Name { get; set; }
         public List<ShoeDetails> ShoeDetails { get; set; }
     }
-}
+}   
