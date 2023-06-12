@@ -56,8 +56,8 @@
                         <img src="~/images/anhbanh.jpg" height="100px">
                     }
 				</td>
-				<td>	
-					
+				<td>
+
 						<!-- Nút giảm số lượng -->
 						@*<input type="submit" name="quantity" value="-"/>*@
 						<!-- Số lượng hiện tại -->
@@ -74,11 +74,11 @@
 				</td>
 				<td>
 					@*@Html.ActionLink("Details", "Details", new {  id=item.Id  }) |*@
-					<button>@Html.ActionLink("Delete", "Delete2", new {  id=item.Id  })</button>
-				</td>		
+					<button>@Html.ActionLink("Delete", "", new {  id=item.Id  })</button>
+				</td>
 			</tr>
 		}
-		
+
 
 	</tbody>
 </table>
@@ -92,7 +92,7 @@
 <h3>Tổng Thanh Toán : <a style="color:red">@sumPrice</a> <a style="color:black">VND</a> </h3>
 
 <center>
-	<form method="post" asp-action="Pay" asp-controller="CartDetail">
+	<form method="post" asp-action="" asp-controller="CartDetail">
 		<input type="hidden" name="IdUser" value="edb21b08-3af8-46f5-d9ae-08db3a8c7f0b" />
         <button type="submit" style="background-color: red">
             <div class="d-flex justify-content-between">

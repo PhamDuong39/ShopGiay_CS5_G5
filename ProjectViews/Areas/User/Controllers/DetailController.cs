@@ -171,7 +171,7 @@ namespace ProjectViews.Areas.User.Controllers
       }
       ViewBag.Feedbacks = lstFeedbacks;
     }
-    public async Task<int> GetAvailableQuantity(Guid idColor, Guid idSize)
+    public async void GetAvailableQuantity(Guid idColor, Guid idSize)
     {
       //get shoes from api
       var apiUrls = "https://localhost:7109/api/ShoeDetails/get-all-shoeDetails";
@@ -201,15 +201,46 @@ namespace ProjectViews.Areas.User.Controllers
       //get shoeDetail by idColor and idSize
       var colors_shoeDetails = color_shoeDetails.FirstOrDefault(p => p.IdColor == idColor);
       var sizes_shoeDetails = size_shoeDetails.FirstOrDefault(p => p.IdSize == idSize);
-      var shoeDetail = shoeDetails.FirstOrDefault(p => p.Id == colors_shoeDetails.IdShoeDetail && p.Id == sizes_shoeDetails.IdShoeDetails);
-      if (shoeDetail == null)
+      //neu guid idColor null thì sẽ trả về id dau danh sach color lay theo ten san pham
+      Color_ShoeDetails colorShoe = new Color_ShoeDetails();
+      if (colors_shoeDetails == null)
       {
-        return 0;
+        //Lst shoes by name
+        var getShoesByName = shoeDetails.Where(p => p.Name == nameShoe).Select(p=>p.Id).ToList();
+        List<Guid> lstColor = new List<Guid>();
+        foreach (var item in getShoesByName)
+        {
+          lstColor.Add(color_shoeDetails.FirstOrDefault(p=>p.IdShoeDetail == item).IdColor);
+        }
+        colorShoe = color_shoeDetails.FirstOrDefault(p => p.IdColor == lstColor[0]);
+      }else
+      {
+        colorShoe = color_shoeDetails.FirstOrDefault(p => p.IdColor == idColor);
+      }
+      //neu guid idSize null thì sẽ trả về id dau danh sach size lay theo ten san pham
+      Sizes_ShoeDetails sizesShoe = new Sizes_ShoeDetails();
+      if (sizes_shoeDetails == null)
+      {
+        //Lst shoes by name
+        var getShoesByName = shoeDetails.Where(p => p.Name == nameShoe).Select(p => p.Id).ToList();
+        List<Guid> lstSize = new List<Guid>();
+        foreach (var item in getShoesByName)
+        {
+          lstSize.Add(size_shoeDetails.FirstOrDefault(p => p.IdShoeDetails == item).IdSize);
+        }
+        sizesShoe = size_shoeDetails.FirstOrDefault(p => p.IdSize == lstSize[0]);
       }
       else
       {
-        return shoeDetail.AvailableQuantity;
+        sizesShoe = size_shoeDetails.FirstOrDefault(p => p.IdSize == idSize);
       }
+
+      if (shoeDetails == null)
+      {
+        ViewBag.shoeDetailsGetByIdColorAndSize = null;
+      }
+      //get shoeDetail by idColor and idSize
+      ViewBag.shoeDetailsGetByIdColorAndSize = shoeDetails.FirstOrDefault(p => p.Id == colorShoe.IdShoeDetail && p.Id == sizesShoe.IdShoeDetails);
     }
   }
 }
